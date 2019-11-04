@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "noEmit": true,
+        "experimentalDecorators": true,
+        "baseUrl": ".",
+        "allowJs": true,
+        "paths": {
+            "@/*": ["./src/*"],
+            "cloud-ui.css": ["./ui/index.css"],
+            "cloud-ui.js": ["./ui/index.js"]
+        }
+    },
+    "exclude": ["node_modules", "public", "dll"]
+}
