@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const crypto = require('crypto');
 const fs = require('fs');
-const pkg = require('package.json');
+const pkg = require('./package.json');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const md5 = function (str, len = 16) {
