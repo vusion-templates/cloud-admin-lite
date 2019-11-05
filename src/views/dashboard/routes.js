@@ -1,12 +1,19 @@
-import { importSubRoutes } from '@/global/utils/routerUtils';
 import Layout from './layout/views/index.vue';
+import moduleInfos from './getModules';
+let routes = moduleInfos.routes;
+routes = routes.map((moduleRoutes) => {
+    if (typeof moduleRoutes === 'function') {
+        return moduleRoutes(routes);
+    }
+    return moduleRoutes;
+});
 export default [
     {
         path: '/',
         component: Layout,
         children: [
             { path: '', redirect: 'overview' },
-            ...importSubRoutes(require.context('./', true, /\.\/(views\/)?[^\\/]+\/routes\.js$/)),
+            ...routes,
         ],
     },
     { path: '*', beforeEnter(to, from, next) {

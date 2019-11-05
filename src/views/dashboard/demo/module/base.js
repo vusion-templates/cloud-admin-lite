@@ -1,4 +1,5 @@
 export default {
+    module: 'demo',
     sidebar: {
         title: 'demo',
         children: [
