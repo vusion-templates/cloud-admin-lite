@@ -1,13 +1,12 @@
 <template>
     <u-linear-layout direction="vertical" gap="small">
         <u-page-sum>
-            系统更新的最新消息。相关描述可以查看<u-link href="https://vusion.github.io/cloud-ui/components/u-actions">链接</u-link>
+            常见的路由组织方式页
         </u-page-sum>
-        <u-linear-layout>
-            <u-button square icon="refresh" @click="refresh"></u-button>
+        <u-linear-layout type="flex" justify="end">
+            <u-search v-model="form.search" placeholder="搜索"></u-search>
         </u-linear-layout>
-        <u-table-view :class="$style.tableView" :data="list" :loading="loading" value-field="name" :values="selected">
-            <u-table-view-column type="checkbox" width="8%"></u-table-view-column>
+        <u-table-view :class="$style.tableView" :data="list" :loading="loading" value-field="name">
             <u-table-view-column title="消息标题">
                 <template slot="cell" slot-scope="{ item }">
                     {{ item.name }}
@@ -21,8 +20,11 @@
             <u-table-view-column title="操作">
                 <template slot="cell" slot-scope="scope">
                     <u-linear-layout>
-                        <u-link :to="{ path: '/notice/detail', query: {id: scope.item.ch_name}}">
+                        <u-link :to="{name: 'demo.router.detail', query: {id: scope.item.ch_name}}">
                             查看详情
+                        </u-link>
+                        <u-link @click="deleteItem">
+                            删除
                         </u-link>
                     </u-linear-layout>
                 </template>
@@ -32,62 +34,49 @@
             <u-linear-layout direction="vertical">
                 <u-combo-pagination show-total show-sizer show-jumper
                     :page-size-options="limitList" :total-items="total" :page-size.sync="limit"
-                    :total="totalPage" :page="page" @change="changePage($event)" @change-page-size="changeLimit">
+                    :total="totalPage" :page.sync="page" @change="changePage($event)" @change-page-size="changeLimit">
                 </u-combo-pagination>
             </u-linear-layout>
         </div>
-        <u-footbar :position="batchBtnPos">
-            <u-linear-layout>
-                <span>已选择 {{ selected.length }} 条</span>
-                <u-button :disabled="!allowBatchDelete" @click="batchDelete">删除</u-button>
-            </u-linear-layout>
-        </u-footbar>
     </u-linear-layout>
 </template>
 <script>
-import page from '@/global/mixins/page/page';
+import routerPage from '@/global/mixins/page/page.router';
 import noticeService from '../services/index';
 export default {
-    mixins: [page],
+    mixins: [routerPage],
     data() {
         return {
-            localPage: true,
-            selected: [],
+            form: {
+                search: this.$route.query.search || '',
+            },
         };
     },
-    computed: {
-        allowBatchDelete() {
-            return this.selected && this.selected.length;
-        },
-        batchBtnPos() {
-            const pos = this.selected && this.selected.length > 0 ? 'auto' : 'static';
-            return pos;
-        },
-    },
     watch: {
-        list() {
-            this.selected = [];
+        'form.search'(search) {
+            this.resetPage();
+            this.refresh();
+            this.$routerLock({
+                search: search || undefined,
+            });
         },
     },
     methods: {
         loadList() {
-            const page = this.getPage();
+            const { pageNum, pageSize } = this.getPage();
             return noticeService.list({
                 url: {
                     query: {
-                        page: page.pageNum,
+                        page: pageNum,
+                        search: this.form.search,
                     },
                 },
             }).then((result) => {
-                this.originList = result;
+                if (this.form.search) {
+                    result = result.filter((item) => JSON.stringify(item).includes(this.form.search));
+                }
+                this.list = result.slice((pageNum - 1) * pageSize, pageNum * pageSize);
                 this.total = result.length;
-            });
-        },
-        batchDelete() {
-            this.$confirm(`确认删除 ${this.selected.join(',')} 实例吗？`, '删除确认').then(() => {
-                this.refresh();
-            }, () => {
-                console.log('取消删除');
             });
         },
     },

@@ -27,6 +27,19 @@ export default {
             {
                 subnav: [
                     {
+                        title: '路由',
+                        children: [
+                            {
+                                title: '基础路由',
+                                to: '/demo/router/list',
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                subnav: [
+                    {
                         title: '表单',
                         children: [
                             {

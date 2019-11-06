@@ -9,7 +9,7 @@
                 <u-button icon="create" color="primary" to="/demo/form/basic">创建实例(路由)</u-button>
                 <u-button square icon="refresh" @click="refresh"></u-button>
             </u-linear-layout>
-            <u-linear-layout justify="end">
+            <u-linear-layout type="flex" justify="end">
                 <u-search v-model="form.search" placeholder="搜索"></u-search>
             </u-linear-layout>
         </u-linear-layout>
@@ -73,7 +73,7 @@ export default {
             this.selected = [];
         },
         'form.search'() {
-            this.reset();
+            this.resetPage();
             this.refresh();
         },
     },
@@ -85,16 +85,7 @@ export default {
                         search: this.form.search,
                     },
                 },
-            }).then((res) => {
-                let result = [];
-                res.data.result.forEach((item) => {
-                    item.channellist.forEach((channel) => {
-                        channel.thumb = channel.thumb || channel.avatar;
-                        channel.time = new Date() - 0;
-                        channel.cate_sname = channel.cate_sname || item.title;
-                    });
-                    result.push(...item.channellist);
-                });
+            }).then((result) => {
                 if (this.form.search) {
                     result = result.filter((item) => JSON.stringify(item).includes(this.form.search));
                 }

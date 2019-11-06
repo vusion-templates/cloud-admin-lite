@@ -1,6 +1,7 @@
 <template>
     <u-input :size="size"
         search="left"
+        v-model="searchInner"
         :placeholder="placeholder"
         @blur="()=>search = searchInner"
         @keyup.enter="() => search = searchInner"

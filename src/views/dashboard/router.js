@@ -3,12 +3,17 @@ import VueRouter from 'vue-router';
 import _ from 'lodash';
 import appConfig from './app.config';
 import routes from './routes';
+import routerLock from '@/global/utils/router.lock';
 
 Vue.use(VueRouter);
 
 const router = new VueRouter({
     routes,
 });
+
+// 自动传参
+router.beforeEach(routerLock.beforeEach);
+Vue.use(routerLock);
 
 // 权限验证
 router.beforeEach((to, from, next) => {

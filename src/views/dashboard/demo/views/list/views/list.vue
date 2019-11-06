@@ -45,8 +45,8 @@
         <div class="pager">
             <u-linear-layout direction="vertical">
                 <u-combo-pagination show-total show-sizer show-jumper
-                    :limit-list="limitList" :total-items="total" :limit="form.limit"
-                    :total="totalPage" :page="form.page" @change="changePage($event)" @change-page-size="changeLimit">
+                    :page-size-options="limitList" :total-items="total" :page-size.sync="limit"
+                    :total="totalPage" :page="page" @change="changePage($event)" @change-page-size="changeLimit">
                 </u-combo-pagination>
             </u-linear-layout>
         </div>
@@ -85,13 +85,13 @@ export default {
             this.selected = [];
         },
         'form.search'() {
-            this.reset();
+            this.resetPage();
             this.refresh();
         },
     },
     methods: {
         loadList() {
-            const page = this.getFormForPage();
+            const page = this.getPage();
             return noticeService.list({
                 url: {
                     query: {
@@ -99,20 +99,11 @@ export default {
                         search: this.form.search,
                     },
                 },
-            }).then((res) => {
-                let result = [];
-                res.data.result.forEach((item) => {
-                    item.channellist.forEach((channel) => {
-                        channel.thumb = channel.thumb || channel.avatar;
-                        channel.time = new Date() - 0;
-                        channel.cate_sname = channel.cate_sname || item.title;
-                    });
-                    result.push(...item.channellist);
-                });
+            }).then((result) => {
                 if (this.form.search) {
                     result = result.filter((item) => JSON.stringify(item).includes(this.form.search));
                 }
-                const { pageNum, pageSize } = this.getFormForPage();
+                const { pageNum, pageSize } = this.getPage();
                 this.list = result.slice((pageNum - 1) * pageSize, pageNum * pageSize);
                 this.total = result.length;
             });

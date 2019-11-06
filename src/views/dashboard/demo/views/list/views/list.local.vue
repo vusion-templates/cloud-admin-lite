@@ -33,8 +33,8 @@
         <div class="pager">
             <u-linear-layout direction="vertical">
                 <u-combo-pagination show-total show-sizer show-jumper
-                    :limit-list="limitList" :total-items="total" :limit="form.limit"
-                    :total="totalPage" :page="form.page" @change="changePage($event)" @change-page-size="changeLimit">
+                    :page-size-options="limitList" :total-items="total" :page-size.sync="limit"
+                    :total="totalPage" :page="page" @change="changePage($event)" @change-page-size="changeLimit">
                 </u-combo-pagination>
             </u-linear-layout>
         </div>
@@ -73,16 +73,7 @@ export default {
     },
     methods: {
         loadList() {
-            return noticeService.list().then((res) => {
-                const result = [];
-                res.data.result.forEach((item) => {
-                    item.channellist.forEach((channel) => {
-                        channel.thumb = channel.thumb || channel.avatar;
-                        channel.time = new Date() - 0;
-                        channel.cate_sname = channel.cate_sname || item.title;
-                    });
-                    result.push(...item.channellist);
-                });
+            return noticeService.list().then((result) => {
                 this.originList = result;
                 this.total = result.length;
             });

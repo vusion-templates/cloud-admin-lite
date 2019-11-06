@@ -11,7 +11,7 @@ export default {
             });
             return map;
         },
-        addLoadStatus(req, status, obj) {
+        updateLoadStatus(req, status, obj) {
             obj = obj || this;
             const ing = `${status}ing`;
             const error = `${status}Error`;
