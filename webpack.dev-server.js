@@ -10,6 +10,7 @@ module.exports = function (publicPathPrefix) {
         disableHostCheck: true,
         publicPath: publicPathPrefix,
         contentBase: __dirname,
+        watchContentBase: false, // dev slow on Windows
         clientLogLevel: 'info',
     };
 };
