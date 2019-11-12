@@ -18,22 +18,29 @@ export default {
             handler(to, from) {
                 const matched = to.matched || [];
 
-                this.crumbs = matched.map((route) => {
+                const crumbs = [];
+                matched.forEach((route) => {
                     let crumb = route.meta && route.meta.crumb;
-                    if (crumb) {
-                        if (_.isFunction(crumb))
-                            crumb = crumb(route, to, from);
-                        else if (_.isPlainObject(crumb))
-                            crumb = Object.assign({}, crumb);
-                        else if (typeof crumb === 'string')
-                            crumb = { title: crumb };
-                        if (!crumb.to && !crumb.readonly)
-                            crumb.to = route.path;
-                        if (crumb.readonly || crumb.to === to.path)
-                            crumb.type = 'text';
-                    }
-                    return crumb;
-                }).filter((crumb) => crumb);
+
+                    if (_.isFunction(crumb))
+                        crumb = crumb(route, to, from);
+                    else if (_.isPlainObject(crumb))
+                        crumb = Object.assign({}, crumb);
+                    else if (typeof crumb === 'string')
+                        crumb = { title: crumb };
+                    else
+                        crumb = { title: route.meta.title };
+
+                    if (!crumb.to && !crumb.readonly)
+                        crumb.to = route.path;
+                    if (crumb.readonly || crumb.to === to.path)
+                        crumb.type = 'text';
+
+                    if (crumb.title)
+                        crumbs.push(crumb);
+                });
+
+                this.crumbs = crumbs;
             },
             immediate: true,
         },
