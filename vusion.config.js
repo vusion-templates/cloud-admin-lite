@@ -3,7 +3,6 @@ const path = require('path');
 module.exports = {
     type: 'app',
     docs: false,
-    overwrite: false,
     staticPath: './src/static',
     srcPath: './src',
     libraryPath: './src/global',
