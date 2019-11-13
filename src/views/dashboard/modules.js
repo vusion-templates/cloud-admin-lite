@@ -15,5 +15,6 @@ function sort(modules, modulesOrder) {
         }
     });
 }
+
 export default modules;
 export const sortedModules = sort(modules, modulesOrder);
