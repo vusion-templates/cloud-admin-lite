@@ -92,12 +92,10 @@ export default {
     methods: {
         loadList() {
             const page = this.getPage();
-            return noticeService.list({
-                url: {
-                    query: {
-                        page: page.pageNum,
-                        search: this.form.search,
-                    },
+            return noticeService.loadList({
+                query: {
+                    page: page.pageNum,
+                    search: this.form.search,
                 },
             }).then((result) => {
                 if (this.form.search) {

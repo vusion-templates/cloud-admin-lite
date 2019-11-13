@@ -1,5 +1,5 @@
 export default {
-    list: {
+    loadList: {
         url: {
             path: '/musicBroadcasting',
             method: 'get',
@@ -8,7 +8,7 @@ export default {
             },
         },
     },
-    detail: {
+    loadDetail: {
         url: {
             path: '/musicBroadcastingDetails',
             method: 'get',

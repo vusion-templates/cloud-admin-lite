@@ -64,12 +64,10 @@ export default {
     methods: {
         loadList() {
             const { pageNum, pageSize } = this.getPage();
-            return noticeService.list({
-                url: {
-                    query: {
-                        page: pageNum,
-                        search: this.form.search,
-                    },
+            return noticeService.loadList({
+                query: {
+                    page: pageNum,
+                    search: this.form.search,
                 },
             }).then((result) => {
                 if (this.form.search) {
