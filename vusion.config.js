@@ -3,12 +3,11 @@ const path = require('path');
 module.exports = {
     type: 'app',
     docs: false,
-    overwrite: false,
     staticPath: './src/static',
     srcPath: './src',
     libraryPath: './src/global',
     baseCSSPath: './src/global/styles/index.css',
-    globalCSSPath: './src/global/styles/theme.css',
+    theme: './src/global/styles/theme.css',
     alias: {
         vue$: path.resolve(__dirname, 'node_modules/vue/dist/vue.esm.js'),
         'vue-i18n$': path.resolve(__dirname, 'node_modules/vue-i18n/dist/vue-i18n.esm.js'),

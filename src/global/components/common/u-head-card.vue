@@ -45,7 +45,7 @@
     position: relative;
     width: 90px;
     height: 90px;
-    background-color: $brand-primary;
+    background-color: var(--brand-primary);
     border-radius: 5px;
     overflow: hidden;
     line-height: 90px;
