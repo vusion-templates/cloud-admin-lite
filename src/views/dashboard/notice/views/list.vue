@@ -72,11 +72,9 @@ export default {
     methods: {
         loadList() {
             const page = this.getPage();
-            return noticeService.list({
-                url: {
-                    query: {
-                        page: page.pageNum,
-                    },
+            return noticeService.loadList({
+                query: {
+                    page: page.pageNum,
                 },
             }).then((result) => {
                 this.originList = result;

@@ -1,11 +1,11 @@
 export default {
-    list: {
+    loadList: {
         url: {
             path: '/musicBroadcasting',
             method: 'get',
         },
     },
-    detail: {
+    loadDetail: {
         url: {
             path: '/musicBroadcastingDetails',
             method: 'get',

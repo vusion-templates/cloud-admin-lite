@@ -22,11 +22,9 @@ export default {
     },
     methods: {
         loadDetail() {
-            noticeService.detail({
-                url: {
-                    query: {
-                        channelname: this.$route.query.id,
-                    },
+            noticeService.loadDetail({
+                query: {
+                    channelname: this.$route.query.id,
                 },
             }).then((res) => {
                 this.detail = res.data.result;

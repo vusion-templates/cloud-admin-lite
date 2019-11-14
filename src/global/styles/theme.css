@@ -1,2 +1,5 @@
-@import 'cloud-ui.vusion/src/base/global.css';
-@import './variables.css';
+@import 'cloud-ui.vusion/src/styles/theme.css';
+
+:root {
+    /* your variables */
+}

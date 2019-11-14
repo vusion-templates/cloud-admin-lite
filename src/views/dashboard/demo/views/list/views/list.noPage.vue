@@ -79,11 +79,9 @@ export default {
     },
     methods: {
         loadList() {
-            return noticeService.list({
-                url: {
-                    query: {
-                        search: this.form.search,
-                    },
+            return noticeService.loadList({
+                query: {
+                    search: this.form.search,
                 },
             }).then((result) => {
                 if (this.form.search) {

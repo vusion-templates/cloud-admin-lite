@@ -73,7 +73,7 @@ export default {
     },
     methods: {
         loadList() {
-            return noticeService.list().then((result) => {
+            return noticeService.loadList().then((result) => {
                 this.originList = result;
                 this.total = result.length;
             });

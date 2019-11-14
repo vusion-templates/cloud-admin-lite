@@ -5,8 +5,8 @@ const services = createService(apis, {
         baseURL: 'https://api.apiopen.top/',
     },
 });
-services.list = function (...args) {
-    return services.$list(...args).then((res) => {
+services.loadList = function (...args) {
+    return services.$loadList(...args).then((res) => {
         const result = [];
         res.data.result.forEach((item) => {
             item.channellist.forEach((channel) => {
