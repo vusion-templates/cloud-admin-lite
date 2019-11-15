@@ -15,8 +15,8 @@ module.exports = {
     ],
     moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/src/$1',
-        '^cloud-ui.css$': '<rootDir>/ui/index.css',
-        '^cloud-ui.js$': '<rootDir>/ui/index.js',
+        '^cloud-ui.vusion.css$': '<rootDir>/ui/index.css',
+        '^cloud-ui.vusion$': '<rootDir>/ui/index.js',
     },
     snapshotSerializers: [
         'jest-serializer-vue',

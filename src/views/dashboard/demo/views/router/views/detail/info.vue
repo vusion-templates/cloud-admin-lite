@@ -13,7 +13,7 @@
     </div>
 </template>
 <script>
-import { MSubscriber } from 'cloud-ui.js';
+import { MSubscriber } from 'cloud-ui.vusion';
 export default {
     mixins: [MSubscriber],
     subscribe: {

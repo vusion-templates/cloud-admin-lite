@@ -1,6 +1,6 @@
-import 'cloud-ui.css';
+import 'cloud-ui.vusion.css';
 import Vue from 'vue';
-import * as CloudUI from 'cloud-ui.js';
+import * as CloudUI from 'cloud-ui.vusion';
 import * as Components from '@/global/components';
 import filters from '@/global/filters';
 

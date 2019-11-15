@@ -18,7 +18,7 @@
     </component>
 </template>
 <script>
-import { MEmitter } from 'cloud-ui.js';
+import { MEmitter } from 'cloud-ui.vusion';
 
 export default {
     name: 's-sidebar',
