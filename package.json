@@ -22,6 +22,14 @@
     "template"
   ],
   "author": "zhangsanshi5566@gmail.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vusion-templates/cloud-admin-template.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vusion-templates/cloud-admin-template/issues"
+  },
+  "homepage": "https://vusion-templates.github.io/cloud-admin-template",
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.6.0",
@@ -76,5 +84,22 @@
       "npm run lint -- --fix",
       "git add"
     ]
+  },
+  "vusion": {
+    "ignore": [
+      "deploy.sh",
+      ".circleci"
+    ],
+    "type": "template",
+    "title": "Vusion Lite",
+    "category": "basic",
+    "base": "vue",
+    "ui": "cloud-ui",
+    "screenshots": [
+      "https://unpkg.com/cloud-admin-template/screenshots/0.jpg",
+      "https://unpkg.com/cloud-admin-template/screenshots/1.jpg"
+    ],
+    "team": "",
+    "auth": "public"
   }
 }
