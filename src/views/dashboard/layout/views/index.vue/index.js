@@ -41,7 +41,7 @@ export default {
                     href: 'https://github.com/vusion-templates/cloud-admin-template',
                 },
             ],
-            sidebarConfig: sortedModules.map((item) => item.module ? item.sidebar : item).filter((item) => item.exist !== false),
+            sidebarConfig: sortedModules.filter((item) => (item.exist !== false && item.module && item.sidebar)).map((item) => item.sidebar),
         };
     },
 };
