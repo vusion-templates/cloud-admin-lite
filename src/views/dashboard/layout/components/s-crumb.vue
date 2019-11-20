@@ -28,8 +28,6 @@ export default {
                         crumb = Object.assign({}, crumb);
                     else if (typeof crumb === 'string')
                         crumb = { title: crumb };
-                    else
-                        crumb = { title: route.meta.title };
 
                     if (!crumb.to && !crumb.readonly)
                         crumb.to = route.path;

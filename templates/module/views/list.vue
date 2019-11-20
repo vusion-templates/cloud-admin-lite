@@ -48,18 +48,16 @@ export default {
     },
     methods: {
         load() {
-            return sampleService.list().then(({ data }) => data);
+            return sampleService.loadList().then(({ data }) => data);
         },
         deleteItem(id) {
-            this.$confirm('是否删除该样本？', '提示').then(() => {
-                return sampleService.delete({
-                    url: {
-                        body: {
-                            InstanceId: id,
-                        },
+            this.$confirm('是否删除该样本？', '提示').then(() => sampleService.delete({
+                url: {
+                    body: {
+                        InstanceId: id,
                     },
-                });
-            }).then(() => {
+                },
+            })).then(() => {
                 this.$refs.tableView.reload();
             });
         },

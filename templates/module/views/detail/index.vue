@@ -41,7 +41,7 @@ export default {
     },
     methods: {
         getDetail() {
-            sampleService.detail({
+            sampleService.loadDetail({
                 url: {
                     query: {
                         InstanceId: this.$route.query.id,
@@ -51,7 +51,7 @@ export default {
         },
     },
     publish: {
-        loadDetail: 'instance',
+        'sample.loadDetail': 'instance',
     },
 };
 </script>

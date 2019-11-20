@@ -35,7 +35,7 @@ export default {
         };
     },
     subscribe: {
-        loadDetail(instance) {
+        'sample.loadDetail'(instance) {
             this.instance = instance;
         },
     },

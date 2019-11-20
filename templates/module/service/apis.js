@@ -1,11 +1,11 @@
 export default {
-    detail: {
+    loadDetail: {
         url: {
             method: 'get',
             path: '/getDetail',
         },
     },
-    list: {
+    loadList: {
         url: {
             method: 'get',
             path: '/getList',
