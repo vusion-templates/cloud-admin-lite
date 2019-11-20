@@ -41,7 +41,15 @@ export default {
                     href: 'https://github.com/vusion-templates/cloud-admin-template',
                 },
             ],
-            sidebarConfig: sortedModules.filter((item) => (item.exist !== false && item.module && item.sidebar)).map((item) => item.sidebar),
+            sidebarConfig: sortedModules.filter((item) => (item && item.module && item.exist !== false && item.sidebar)).map((item) => item.sidebar),
         };
+    },
+    computed: {
+        layoutComponent() {
+            return this.hasSideBar ? 'l-dashboard' : 'l-page';
+        },
+        hasSideBar() {
+            return this.sidebarConfig && this.sidebarConfig.length;
+        },
     },
 };

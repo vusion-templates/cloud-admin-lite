@@ -1,4 +1,4 @@
-<l-dashboard>
+<component :is="layoutComponent">
     <template #head>
         <s-navbar :config="navbarConfig">
             <template #left>
@@ -24,13 +24,13 @@
             </u-navbar-dropdown>
         </div>
     </u-navbar> -->
-    <template #side>
+    <template #side v-if="hasSideBar">
         <s-sidebar :config="sidebarConfig"></s-sidebar>
     </template>
     <template #default>
-        <u-linear-layout direction="vertical">
-            <s-crumb></s-crumb>
+        <u-linear-layout direction="vertical" :class="$style.main" :no-side="!hasSideBar">
+            <s-crumb :class="$style.crumb" :no-side="!hasSideBar"></s-crumb>
             <router-view></router-view>
         </u-linear-layout>
     </template>
-</l-dashboard>
+</component>
