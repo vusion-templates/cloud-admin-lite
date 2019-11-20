@@ -45,9 +45,9 @@ const vueConfig = {
     pages: {
         index: {
             entry: './src/views/dashboard/index.js',
-            template: path.join(__dirname, './src/templates/index.html'),
+            template: path.join(__dirname, './src/pages/index.html'),
             filename: 'index.html',
-            favicon: path.join(__dirname, './src/templates/favicon.ico'),
+            favicon: path.join(__dirname, './src/pages/favicon.ico'),
             title: 'Dashboard',
             inject: true,
             chunks: ['chunk-vendors', 'chunk-common', 'index'],
