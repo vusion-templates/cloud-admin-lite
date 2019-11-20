@@ -26,7 +26,7 @@ const requester = function (requestInfo) {
         headers,
         withCredentials: !baseURL,
     });
-    return req;
+    return req.then((data) => data.data);
 };
 export const createService = function createService(apiSchemaList, serviceConfig) {
     return new Service(apiSchemaList, serviceConfig, requester);

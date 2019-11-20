@@ -27,7 +27,7 @@ export default {
                     channelname: this.$route.query.id,
                 },
             }).then((res) => {
-                this.detail = res.data.result;
+                this.detail = res.result;
             });
         },
     },
