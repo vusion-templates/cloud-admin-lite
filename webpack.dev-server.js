@@ -12,5 +12,9 @@ module.exports = function (publicPathPrefix) {
         contentBase: __dirname,
         watchContentBase: false, // dev slow on Windows
         clientLogLevel: 'info',
+        // proxy: [{
+        //     context: ['**', '!/public/**', '!/', '!/index.html'],
+        //     target: 'http://test.com', // add host 127.0.0.1 test.com
+        // }],
     };
 };

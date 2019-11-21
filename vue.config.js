@@ -21,7 +21,7 @@ const fixDll = function () {
     return newPath;
 };
 const isDevelopment = process.env.NODE_ENV === 'development';
-const publicPathPrefix = !isDevelopment ? `/${pkg.name}/` : '/';
+const publicPathPrefix = !isDevelopment ? `/${pkg.name}/` : '/public';
 
 const devServer = require('./webpack.dev-server')(publicPathPrefix);
 const proxy = devServer.proxy;
