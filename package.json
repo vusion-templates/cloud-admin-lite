@@ -88,7 +88,7 @@
   "vusion": {
     "ignore": [
       "deploy.sh",
-      ".circleci"
+      ".circleci/**"
     ],
     "type": "template",
     "title": "Vusion Lite",
@@ -100,6 +100,6 @@
       "https://unpkg.com/cloud-admin-template/screenshots/1.jpg"
     ],
     "team": "",
-    "auth": "public"
+    "access": "public"
   }
 }
