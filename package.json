@@ -7,6 +7,7 @@
     "dev": "npm run update:ui && vue-cli-service serve",
     "build": "vue-cli-service build --apply-theme",
     "build:stage": "vue-cli-service build --mode staging",
+    "build:site": "vue-cli-service build --mode site",
     "lint": "npx eslint --quiet",
     "lint:fix": "npm run lint -- \"./src/**/*.{js,vue}\" --fix",
     "update:ui": "cd node_modules/cloud-ui.vusion && vue-cli-service library-build --cache --vusion-mode raw -o ../../ui --theme ../../src/global/styles/theme.css",
@@ -88,6 +89,7 @@
   "vusion": {
     "ignore": [
       "deploy.sh",
+      ".env.site",
       ".circleci/**"
     ],
     "type": "template",
