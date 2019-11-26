@@ -1,6 +1,6 @@
 {
   "name": "cloud-admin-template",
-  "version": "0.1.9",
+  "version": "0.1.11",
   "description": "base on vue cloud-ui.vusion template",
   "main": "src/views/dashboard/index.js",
   "scripts": {
@@ -101,7 +101,7 @@
       "https://unpkg.com/cloud-admin-template/screenshots/0.jpg",
       "https://unpkg.com/cloud-admin-template/screenshots/1.jpg"
     ],
-    "team": "",
+    "team": "necfe",
     "access": "public"
   }
 }
