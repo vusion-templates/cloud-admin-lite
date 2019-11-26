@@ -6,6 +6,9 @@ import Router from './views/router';
 export default {
     path: 'demo',
     component: Wrapper,
+    meta: {
+        crumb: 'demo',
+    },
     children: [
         {
             path: '',

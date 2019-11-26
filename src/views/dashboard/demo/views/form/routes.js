@@ -4,6 +4,7 @@ export default {
     component: Wrapper,
     meta: {
         title: '表单',
+        crumb: '表单',
     },
     children: [
         {
@@ -15,6 +16,7 @@ export default {
             component: () => import(/* webpackChunkName: 'demo' */ './views/basic.vue'),
             meta: {
                 title: '基础表单',
+                crumb: '基础表单',
             },
         },
         {
@@ -22,7 +24,8 @@ export default {
             name: 'demo.form.setting',
             component: () => import(/* webpackChunkName: 'demo' */ './views/setting.vue'),
             meta: {
-                title: '设置页',
+                title: '设置',
+                crumb: '设置',
             },
         },
     ],

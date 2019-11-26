@@ -4,6 +4,7 @@ export default {
     component: Wrapper,
     meta: {
         title: '列表',
+        crumb: '列表',
     },
     children: [
         { path: '', redirect: 'basic' },
@@ -13,6 +14,7 @@ export default {
             component: () => import(/* webpackChunkName: 'demo' */ './views/list.vue'),
             meta: {
                 title: '基础列表',
+                crumb: '基础列表',
             },
         },
         {
@@ -21,6 +23,7 @@ export default {
             component: () => import(/* webpackChunkName: 'demo' */ './views/list.local.vue'),
             meta: {
                 title: '本地分页',
+                crumb: '本地分页',
             },
         },
         {
@@ -30,7 +33,6 @@ export default {
                 title: 'tab 列表',
                 crumb: {
                     title: 'tab 列表',
-                    readonly: true,
                 },
             },
             children: [

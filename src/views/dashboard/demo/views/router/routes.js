@@ -4,6 +4,7 @@ export default {
     component: Wrapper,
     meta: {
         title: '路由',
+        crumb: '路由',
         locks: [{
             include: [/router/],
             params: ['search', 'demo.router.list.page'],
@@ -16,7 +17,8 @@ export default {
             name: 'demo.router.list',
             component: () => import(/* webpackChunkName: 'demo' */ './views/list.vue'),
             meta: {
-                title: '列表页(路由)',
+                title: '列表(路由)',
+                crumb: '列表(路由)',
             },
         },
         {
@@ -24,14 +26,16 @@ export default {
             name: 'demo.router.setting',
             component: () => import(/* webpackChunkName: 'demo' */ './views/setting.vue'),
             meta: {
-                title: '设置页',
+                title: '设置',
+                crumb: '设置',
             },
         },
         {
             path: 'detail',
             component: () => import(/* webpackChunkName: 'demo' */ './views/detail.vue'),
             meta: {
-                title: '详情页',
+                title: '详情',
+                crumb: '详情',
             },
             children: [
                 {
@@ -42,10 +46,16 @@ export default {
                 {
                     path: 'info',
                     component: () => import(/* webpackChunkName: 'demo' */ './views/detail/info.vue'),
+                    meta: {
+                        crumb: '详细信息',
+                    },
                 },
                 {
                     path: 'monitor',
                     component: () => import(/* webpackChunkName: 'demo' */ './views/detail/monitor.vue'),
+                    meta: {
+                        crumb: '监控',
+                    },
                 },
             ],
         },
