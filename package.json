@@ -25,12 +25,12 @@
   "author": "zhangsanshi5566@gmail.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vusion-templates/cloud-admin-template.git"
+    "url": "https://github.com/vusion-templates/cloud-admin-template.git"
   },
   "bugs": {
     "url": "https://github.com/vusion-templates/cloud-admin-template/issues"
   },
-  "homepage": "https://unpkg.com/cloud-admin-template@0.1.11/public/index.html",
+  "homepage": "https://vusion-templates.github.io/cloud-admin-template",
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.6.0",
