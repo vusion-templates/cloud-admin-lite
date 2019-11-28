@@ -30,7 +30,7 @@
   "bugs": {
     "url": "https://github.com/vusion-templates/cloud-admin-template/issues"
   },
-  "homepage": "https://vusion-templates.github.io/cloud-admin-template",
+  "homepage": "https://unpkg.com/cloud-admin-template@0.1.13/public/index.html",
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.6.0",
