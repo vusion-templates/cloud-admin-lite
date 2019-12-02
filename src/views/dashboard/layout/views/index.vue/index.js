@@ -38,7 +38,7 @@ export default {
                 },
                 {
                     title: 'GitHub',
-                    href: 'https://github.com/vusion-templates/cloud-admin-template',
+                    href: 'https://github.com/vusion-templates/cloud-admin-lite',
                 },
             ],
             sidebarConfig: sortedModules.filter((item) => (item && item.module && item.exist !== false && item.sidebar)).map((item) => item.sidebar),

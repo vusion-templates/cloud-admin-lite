@@ -1,4 +1,4 @@
-# cloud-admin-template
+# cloud-admin-lite
 
 开箱即用的中台前端解决方案[基础模板]
 
@@ -8,4 +8,4 @@
 
 [demo](https://vusion-templates.github.io/cloud-admin/)
 
-[模板 demo](https://vusion-templates.github.io/cloud-admin-template/)
+[模板 demo](https://vusion-templates.github.io/cloud-admin-lite/)
