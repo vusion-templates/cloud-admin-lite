@@ -1,7 +1,7 @@
 {
   "name": "cloud-admin-lite",
-  "version": "0.1.13",
   "description": "base on vue cloud-ui.vusion template",
+  "version": "0.1.13",
   "main": "src/views/dashboard/index.js",
   "scripts": {
     "dev": "npm run update:ui && vue-cli-service serve",
@@ -14,7 +14,8 @@
     "update:ui:force": "shx rm -rf ui && npm run update:ui",
     "dll": "npx webpack --config webpack.dll.config.js --env.NODE_ENV production && npx webpack --config webpack.dll.config.js --env.NODE_ENV development",
     "test:unit": "vue-cli-service test:unit",
-    "test:unit:watch": "npm run test:unit -- --watch"
+    "test:unit:watch": "npm run test:unit -- --watch",
+    "add": "plop"
   },
   "keywords": [
     "vue",
@@ -46,12 +47,14 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^23.6.0",
+    "chalk": "^3.0.0",
     "copy-webpack-plugin": "^5.0.4",
     "eslint": "^6.5.1",
     "eslint-config-vusion": "^3.0.2",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^3.0.5",
     "lint-staged": "^9.2.5",
+    "plop": "^2.5.3",
     "postcss-nested": "^4.1.2",
     "raw-loader": "^3.1.0",
     "shx": "^0.3.2",
@@ -65,6 +68,7 @@
     "babel-polyfill": "^6.26.0",
     "cloud-ui.vusion": "0.6.0",
     "date-fns": "^2.6.0",
+    "inquirer-directory": "^2.2.0",
     "lodash": "^4.17.15",
     "proto-ui.vusion": "0.6.1",
     "qs": "^6.8.0",

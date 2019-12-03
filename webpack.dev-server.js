@@ -8,12 +8,11 @@ module.exports = function (publicPathPrefix) {
         open: true,
         public: `http://${host}:${port}/index.html`,
         disableHostCheck: true,
-        publicPath: publicPathPrefix,
         contentBase: __dirname,
         watchContentBase: false, // dev slow on Windows
         clientLogLevel: 'info',
         // proxy: [{
-        //     context: ['**', '!/public/**', '!/', '!/index.html'],
+        //     context: ['**', `!${publicPathPrefix}/**`, '!/', '!/index.html', '!/index.html/'],
         //     target: 'http://test.com', // add host 127.0.0.1 test.com
         // }],
     };

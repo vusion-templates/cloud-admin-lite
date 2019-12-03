@@ -1,4 +1,4 @@
-// 用于指定模板顺序
+// 用于指定模块顺序
 export default [
     'overview',
     'demo',

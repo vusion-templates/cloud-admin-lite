@@ -21,7 +21,7 @@ const fixDll = function () {
     return newPath;
 };
 const isDevelopment = process.env.NODE_ENV === 'development';
-const publicPathPrefix = process.env.SITE_TYPE === 'gh-pages' ? `/${pkg.name}/` : '/public';
+const publicPathPrefix = process.env.SITE_TYPE === 'gh-pages' ? `/${pkg.name}` : '/public';
 
 const devServer = require('./webpack.dev-server')(publicPathPrefix);
 const proxy = devServer.proxy;

@@ -2,31 +2,31 @@ export default {
     loadDetail: {
         url: {
             method: 'get',
-            path: '/getDetail',
+            path: '/detail',
         },
     },
     loadList: {
         url: {
             method: 'get',
-            path: '/getList',
+            path: '/list',
         },
     },
     create: {
         url: {
             method: 'post',
-            path: '/createIngress',
+            path: '/create',
         },
     },
     update: {
         url: {
             method: 'put',
-            path: '/updateIngress',
+            path: '/update',
         },
     },
     delete: {
         url: {
             method: 'delete',
-            path: '/deleteIngress',
+            path: '/delete',
         },
     },
 };
