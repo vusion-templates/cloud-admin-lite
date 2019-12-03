@@ -70,7 +70,7 @@
     "date-fns": "^2.6.0",
     "inquirer-directory": "^2.2.0",
     "lodash": "^4.17.15",
-    "proto-ui.vusion": "0.6.1",
+    "proto-ui.vusion": "0.6.3",
     "qs": "^6.8.0",
     "request-pre": "0.1.0",
     "vue": "^2.6.10",
