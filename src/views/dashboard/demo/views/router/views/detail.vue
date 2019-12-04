@@ -1,25 +1,25 @@
 <template>
+<div>
+    <u-head-card :title="detail.name" :infos="infoMessage">
+        <div slot="logo">
+            {{ (detail.name || '').substring(0, 2).toUpperCase() }}
+        </div>
+        <div slot="act">
+            <u-button :to="{name: 'demo.router.setting', query: {id: $route.query.id}}">
+                设置
+            </u-button>
+        </div>
+    </u-head-card>
     <div>
-        <u-head-card :title="detail.name" :infos="infoMessage">
-            <div slot="logo">
-                {{ (detail.name || '').substring(0, 2).toUpperCase() }}
-            </div>
-            <div slot="act">
-                <u-button :to="{name: 'demo.router.setting', query: {id: $route.query.id}}">
-                    设置
-                </u-button>
-            </div>
-        </u-head-card>
+        <u-tabs router>
+            <u-tab title="详细信息" :to="{path:'/demo/router/detail/info', query: {id: $route.query.id}}"></u-tab>
+            <u-tab title="监控" :to="{path:'/demo/router/detail/monitor', query: {id: $route.query.id}}"></u-tab>
+        </u-tabs>
         <div>
-            <u-tabs router>
-                <u-tab title="详细信息" :to="{path:'/demo/router/detail/info', query: {id: $route.query.id}}"></u-tab>
-                <u-tab title="监控" :to="{path:'/demo/router/detail/monitor', query: {id: $route.query.id}}"></u-tab>
-            </u-tabs>
-            <div>
-                <router-view></router-view>
-            </div>
+            <router-view></router-view>
         </div>
     </div>
+</div>
 </template>
 
 <style module>

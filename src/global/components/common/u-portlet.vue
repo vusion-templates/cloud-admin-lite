@@ -1,7 +1,7 @@
 <template>
-    <div :class="$style.root">
-        <slot></slot>
-    </div>
+<div :class="$style.root">
+    <slot></slot>
+</div>
 </template>
 
 <style module>

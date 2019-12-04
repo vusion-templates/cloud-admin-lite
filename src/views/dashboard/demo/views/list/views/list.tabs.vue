@@ -1,11 +1,11 @@
 <template>
-    <div>
-        <u-page-sum>这里是 tab 列表，有个 tab 下面有一个不同的页面</u-page-sum>
-        <u-tabs router>
-            <u-tab v-for="tab in tabs" :title="tab.title" :to="tab.to" :key="tab.to"></u-tab>
-        </u-tabs>
-        <router-view></router-view>
-    </div>
+<div>
+    <u-page-sum>这里是 tab 列表，有个 tab 下面有一个不同的页面</u-page-sum>
+    <u-tabs router>
+        <u-tab v-for="tab in tabs" :title="tab.title" :to="tab.to" :key="tab.to"></u-tab>
+    </u-tabs>
+    <router-view></router-view>
+</div>
 </template>
 <script>
 export default {

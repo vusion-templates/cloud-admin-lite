@@ -14,7 +14,6 @@
     "camelcase": ["error", { "properties": "never" }],
     "new-cap": [ "error", { "newIsCap": true, "properties": false }],
     "vue/no-unused-components": [2],
-    "vue/html-indent": ["error", 4, { "alignAttributesVertically": false }],
     "vue/no-use-v-if-with-v-for": [0]
   },
   "overrides": [

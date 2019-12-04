@@ -1,11 +1,11 @@
 <template>
-    <u-input :size="size"
-        search="left"
-        v-model="searchInner"
-        :placeholder="placeholder"
-        @blur="()=>search = searchInner"
-        @keyup.enter="() => search = searchInner"
-        @input="($event) => searchInner = $event"></u-input>
+<u-input :size="size"
+         search="left"
+         v-model="searchInner"
+         :placeholder="placeholder"
+         @blur="()=>search = searchInner"
+         @keyup.enter="() => search = searchInner"
+         @input="($event) => searchInner = $event"></u-input>
 </template>
 
 <style module>

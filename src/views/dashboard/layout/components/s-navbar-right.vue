@@ -1,28 +1,28 @@
 <template>
-    <div>
-        <div :class="$style.item">
-            <u-badge corner dot :value="noticeCount">
-                <u-link
-                    :class="noticeActive ? $style.active : ''"
-                    to="/notice"
-                    title="通知">
-                    <i-icon name="notice" :class="$style.icon"></i-icon>
-                </u-link>
-            </u-badge>
-        </div>
-        <u-navbar-dropdown style="margin-right: 10px;">
-            <template #title>
-                <u-avatar :src="src" :size="36" :class="$style.avatar"></u-avatar>
-                <span :class="$style.username">{{ userInfo.username }}</span>
-            </template>
-            <template #default>
-                <u-navbar-menu>
-                    <u-navbar-menu-item to="/account/center">个人中心</u-navbar-menu-item>
-                    <u-navbar-menu-item @click="logout">安全退出</u-navbar-menu-item>
-                </u-navbar-menu>
-            </template>
-        </u-navbar-dropdown>
+<div>
+    <div :class="$style.item">
+        <u-badge corner dot :value="noticeCount">
+            <u-link
+                :class="noticeActive ? $style.active : ''"
+                to="/notice"
+                title="通知">
+                <i-icon name="notice" :class="$style.icon"></i-icon>
+            </u-link>
+        </u-badge>
     </div>
+    <u-navbar-dropdown style="margin-right: 10px;">
+        <template #title>
+            <u-avatar :src="src" :size="36" :class="$style.avatar"></u-avatar>
+            <span :class="$style.username">{{ userInfo.username }}</span>
+        </template>
+        <template #default>
+            <u-navbar-menu>
+                <u-navbar-menu-item to="/account/center">个人中心</u-navbar-menu-item>
+                <u-navbar-menu-item @click="logout">安全退出</u-navbar-menu-item>
+            </u-navbar-menu>
+        </template>
+    </u-navbar-dropdown>
+</div>
 </template>
 <script>
 import avatar from '../assets/avatar.png';

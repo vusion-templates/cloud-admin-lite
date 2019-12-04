@@ -1,11 +1,11 @@
 <template>
-    <div :class="$style.root">
-        <div :class="$style.head">
-            <h3 :class="$style.title">{{ title }}</h3>
-        </div>
-        <div :class="$style.body"><slot></slot></div>
-        <div :class="$style.foot"></div>
+<div :class="$style.root">
+    <div :class="$style.head">
+        <h3 :class="$style.title">{{ title }}</h3>
     </div>
+    <div :class="$style.body"><slot></slot></div>
+    <div :class="$style.foot"></div>
+</div>
 </template>
 
 <style module>

@@ -1,9 +1,9 @@
 <template>
-    <u-crumb v-if="crumbs.length > 1">
-        <template v-for="item in crumbs">
-            <u-crumb-item v-bind="item" :key="item.title">{{ item.title }}</u-crumb-item>
-        </template>
-    </u-crumb>
+<u-crumb v-if="crumbs.length > 1">
+    <template v-for="item in crumbs">
+        <u-crumb-item v-bind="item" :key="item.title">{{ item.title }}</u-crumb-item>
+    </template>
+</u-crumb>
 </template>
 <script>
 import _ from 'lodash';

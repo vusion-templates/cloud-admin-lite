@@ -1,32 +1,32 @@
 <template>
-    <div :class="$style.head" :size="headSize">
-        <div :class="$style.logo" :size="headSize">
-            <slot name="logo" v-if="$slots.logo"></slot>
-            <template v-else>
-                {{ (title || '').substring(0, 2).toUpperCase() }}
-            </template>
+<div :class="$style.head" :size="headSize">
+    <div :class="$style.logo" :size="headSize">
+        <slot name="logo" v-if="$slots.logo"></slot>
+        <template v-else>
+            {{ (title || '').substring(0, 2).toUpperCase() }}
+        </template>
+    </div>
+    <div :class="$style.main" :size="headSize">
+        <div :class="$style.tit">
+            <slot name="title">
+                <h3 :title="title">{{ title }}</h3>
+            </slot>
         </div>
-        <div :class="$style.main" :size="headSize">
-            <div :class="$style.tit">
-                <slot name="title">
-                    <h3 :title="title">{{ title }}</h3>
-                </slot>
-            </div>
-            <div :class="$style.info">
-                <slot name="info">
-                    <ul v-if="infos && infos.length">
-                        <li v-for="(info, index) in infos" :key="index">
-                            <label>{{ info.title }}:</label> {{ info.value }}
-                        </li>
-                    </ul>
-                </slot>
-            </div>
-            <div :class="$style.act">
-                <slot name="act">
-                </slot>
-            </div>
+        <div :class="$style.info">
+            <slot name="info">
+                <ul v-if="infos && infos.length">
+                    <li v-for="(info, index) in infos" :key="index">
+                        <label>{{ info.title }}:</label> {{ info.value }}
+                    </li>
+                </ul>
+            </slot>
+        </div>
+        <div :class="$style.act">
+            <slot name="act">
+            </slot>
         </div>
     </div>
+</div>
 </template>
 
 <style module>
