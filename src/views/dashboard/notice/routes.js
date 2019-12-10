@@ -1,7 +1,7 @@
-import Wrapper from '@/global/layouts/l-wrapper.vue';
+import { LWrapper } from 'cloud-ui.vusion';
 export default {
     path: 'notice',
-    component: Wrapper,
+    component: LWrapper,
     meta: {
         title: '系统通知',
         crumb: '系统通知',

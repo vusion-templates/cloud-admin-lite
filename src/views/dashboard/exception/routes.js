@@ -1,9 +1,9 @@
-import Wrapper from '@/global/layouts/l-wrapper.vue';
+import { LWrapper } from 'cloud-ui.vusion';
 import Exception404 from './views/404.vue';
 import Exception500 from './views/500.vue';
 export default {
     path: 'exception',
-    component: Wrapper,
+    component: LWrapper,
     children: [
         {
             path: '404',

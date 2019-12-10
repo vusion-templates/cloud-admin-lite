@@ -1,7 +1,7 @@
-import Wrapper from '@/global/layouts/l-wrapper.vue';
+import { LWrapper } from 'cloud-ui.vusion';
 export default {
     path: 'form',
-    component: Wrapper,
+    component: LWrapper,
     meta: {
         title: '表单',
         crumb: '表单',
