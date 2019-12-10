@@ -9,21 +9,6 @@
             </template>
         </s-navbar>
     </template>
-    <!-- <u-navbar #head>
-        <u-navbar-item href="/">首页</u-navbar-item>
-        <u-navbar-item href="https://vusion.github.io" target="_blank">Vusion</u-navbar-item>
-        <u-navbar-item href="https://github.com/vusion/cloud-ui" target="_blank">组件库</u-navbar-item>
-        <u-navbar-item href="https://github.com/vusion-templates/admin-cloud-fs" target="_blank">GitHub</u-navbar-item>
-        <div #right>
-            <u-navbar-dropdown style="width: 100px; margin-right: 10px;">
-                <div #title>user</div>
-                <u-navbar-menu>
-                    <u-navbar-menu-item to="/account/info">个人信息</u-navbar-menu-item>
-                    <u-navbar-menu-item>安全退出</u-navbar-menu-item>
-                </u-navbar-menu>
-            </u-navbar-dropdown>
-        </div>
-    </u-navbar> -->
     <template #side v-if="hasSideBar">
         <s-sidebar :config="sidebarConfig"></s-sidebar>
     </template>

@@ -12,10 +12,6 @@
     background: url('./logo-163yun-white.svg') 10px 0 no-repeat;
 }
 
-.root[color="2color"] .icon {
-    background: url('./logo-163yun-2color.svg') 10px 0 no-repeat;
-}
-
 .divider {
     margin: 0 1em;
     border-left: 1px solid white;

@@ -1,19 +1,12 @@
 import Layout from './layout/views/index.vue';
-import moduleInfos from './getModules';
-let routes = moduleInfos.routes;
-routes = routes.map((moduleRoutes) => {
-    if (typeof moduleRoutes === 'function') {
-        return moduleRoutes(routes);
-    }
-    return moduleRoutes;
-});
+import moduleInfos from './modules';
 export default [
     {
         path: '/',
         component: Layout,
         children: [
             { path: '', redirect: 'overview' },
-            ...routes,
+            ...moduleInfos.routes,
         ],
     },
     { path: '*', beforeEnter(to, from, next) {

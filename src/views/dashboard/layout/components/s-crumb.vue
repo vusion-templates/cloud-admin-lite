@@ -6,7 +6,7 @@
     </u-crumb>
 </template>
 <script>
-import _ from 'lodash';
+import { isFunction, isObject } from 'lodash';
 export default {
     data() {
         return {
@@ -17,14 +17,13 @@ export default {
         $route: {
             handler(to, from) {
                 const matched = to.matched || [];
-
                 const crumbs = [];
                 matched.forEach((route) => {
                     let crumb = route.meta && route.meta.crumb;
                     if (crumb) {
-                        if (_.isFunction(crumb))
+                        if (isFunction(crumb))
                             crumb = crumb(route, to, from);
-                        else if (_.isPlainObject(crumb))
+                        else if (isObject(crumb))
                             crumb = Object.assign({}, crumb);
                         else if (typeof crumb === 'string')
                             crumb = { title: crumb };

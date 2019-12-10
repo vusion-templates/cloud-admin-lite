@@ -1,4 +1,4 @@
-import { sortedModules } from '../../../modules';
+import moduleInfos from '../../../modules';
 import LDashboard from '@/global/layouts/l-dashboard.vue';
 import SLogo from '../../components/s-logo.vue';
 import SNavbar from '../../components/s-navbar.vue';
@@ -41,7 +41,7 @@ export default {
                     href: 'https://github.com/vusion-templates/cloud-admin-template',
                 },
             ],
-            sidebarConfig: sortedModules.filter((item) => (item && item.module && item.exist !== false && item.sidebar)).map((item) => item.sidebar),
+            sidebarConfig: moduleInfos.sortedModules.filter((item) => (item && item.module && item.exist !== false && item.sidebar)).map((item) => item.sidebar),
         };
     },
     computed: {

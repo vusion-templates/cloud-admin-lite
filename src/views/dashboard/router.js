@@ -1,44 +1,4 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import _ from 'lodash';
+import router from '@/global/page/router';
 import appConfig from './app.config';
 import routes from './routes';
-import routerLock from '@/global/utils/router.lock';
-
-Vue.use(VueRouter);
-
-const router = new VueRouter({
-    routes,
-});
-
-// 自动传参
-router.beforeEach(routerLock.beforeEach);
-Vue.use(routerLock);
-
-// 权限验证
-router.beforeEach((to, from, next) => {
-    let called = false;
-    const _next = function (...args) {
-        if (called) {
-            return;
-        }
-        called = true;
-        next(...args);
-    };
-    to.matched.every((item) => {
-        item.meta && item.meta.auth && item.meta.auth(to, from, _next);
-        return !called;
-    });
-    _next();
-});
-
-// 自动修改 title
-router.afterEach((to, from) => {
-    const moduleRoute = to.matched.concat().reverse().find((item) => item.meta.title);
-    if (moduleRoute) {
-        const metaTitle = moduleRoute.meta.title;
-        document.title = (_.isFunction(metaTitle) ? metaTitle(to, from) : metaTitle) + ' - ' + appConfig.title;
-    }
-});
-
-export default router;
+export default router(routes, (title) => title + ' - ' + appConfig.title);

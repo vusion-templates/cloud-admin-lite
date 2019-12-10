@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { isFunction } from 'lodash';
 export default {
     methods: {
         initLoadStatus(status) {
@@ -19,7 +19,7 @@ export default {
             obj[ing] = true;
             obj[error] = false;
             obj[done] = false;
-            return (_.isFunction(req) ? req() : req).then((data) => {
+            return (isFunction(req) ? req() : req).then((data) => {
                 obj[ing] = false;
                 obj[error] = false;
                 obj[done] = true;

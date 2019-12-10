@@ -24,12 +24,3 @@
 </u-linear-layout>
 ```
 
-### 颜色扩展
-
-``` html
-<u-linear-layout direction="vertical">
-    <div style="background: #343f4f;">
-        <l-logo name="163yun" color="2color"></l-logo>
-    </div>
-</u-linear-layout>
-```
