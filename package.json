@@ -1,7 +1,7 @@
 {
   "name": "cloud-admin-template",
   "description": "base on vue cloud-ui.vusion template",
-  "version": "0.2.2",
+  "version": "0.3.1",
   "main": "src/views/dashboard/index.js",
   "scripts": {
     "dev": "npm run update:ui && vue-cli-service serve",
