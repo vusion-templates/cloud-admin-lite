@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: circleci/node:latest
 
-    working_directory: ~/cloud-admin-template
+    working_directory: ~/cloud-admin-lite
 
     filters:
       branches:

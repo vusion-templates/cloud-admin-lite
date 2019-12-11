@@ -1,5 +1,5 @@
 {
-  "name": "cloud-admin-template",
+  "name": "cloud-admin-lite",
   "description": "base on vue cloud-ui.vusion template",
   "version": "0.3.1",
   "main": "src/views/dashboard/index.js",
@@ -26,12 +26,12 @@
   "author": "zhangsanshi5566@gmail.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vusion-templates/cloud-admin-template.git"
+    "url": "https://github.com/vusion-templates/cloud-admin-lite.git"
   },
   "bugs": {
-    "url": "https://github.com/vusion-templates/cloud-admin-template/issues"
+    "url": "https://github.com/vusion-templates/cloud-admin-lite/issues"
   },
-  "homepage": "https://vusion-templates.github.io/cloud-admin-template",
+  "homepage": "https://vusion-templates.github.io/cloud-admin-lite",
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.6.0",
@@ -102,8 +102,8 @@
     "base": "vue",
     "ui": "cloud-ui",
     "screenshots": [
-      "https://unpkg.com/cloud-admin-template/screenshots/0.jpg",
-      "https://unpkg.com/cloud-admin-template/screenshots/1.jpg"
+      "https://unpkg.com/cloud-admin-lite/screenshots/0.jpg",
+      "https://unpkg.com/cloud-admin-lite/screenshots/1.jpg"
     ],
     "team": "necfe",
     "access": "public"
