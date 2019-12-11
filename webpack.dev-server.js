@@ -6,7 +6,6 @@ module.exports = function (publicPathPrefix) {
         host,
         port,
         open: true,
-        public: `http://${host}:${port}/index.html`,
         disableHostCheck: true,
         contentBase: __dirname,
         watchContentBase: false, // dev slow on Windows

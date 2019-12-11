@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const crypto = require('crypto');
 const fs = require('fs');
 const pkg = require('./package.json');
+const pages = require('./pages.json');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const md5 = function (str, len = 16) {
@@ -39,21 +40,9 @@ const vueConfig = {
         /atom-validator/,
         /vusion-utils/,
         /lodash/,
-        'vue-echarts',
         'resize-detector',
     ],
-    pages: {
-        index: {
-            entry: './src/views/dashboard/index.js',
-            template: path.join(__dirname, './src/pages/index.html'),
-            filename: 'index.html',
-            favicon: path.join(__dirname, './src/pages/favicon.ico'),
-            title: 'Dashboard',
-            inject: true,
-            chunks: ['chunk-vendors', 'chunk-common', 'index'],
-            chunksSortMode: 'manual',
-        },
-    },
+    pages,
     chainWebpack(config) {
         config.output.filename(isDevelopment ? '[name].js' : '[name].[chunkhash:16].js');
 
