@@ -1,8 +1,8 @@
-import Wrapper from '@/global/layouts/l-wrapper.vue';
+import { LWrapper } from 'cloud-ui.vusion';
 
 export default {
     path: '{{ name }}',
-    component: Wrapper,
+    component: LWrapper,
     meta: {
         title: '',
         crumb: '列表',

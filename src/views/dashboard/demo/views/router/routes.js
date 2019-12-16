@@ -1,7 +1,7 @@
-import Wrapper from '@/global/layouts/l-wrapper.vue';
+import { LWrapper } from 'cloud-ui.vusion';
 export default {
     path: 'router',
-    component: Wrapper,
+    component: LWrapper,
     meta: {
         title: '路由',
         crumb: '路由',
