@@ -7,11 +7,18 @@
 </template>
 <script>
 import { isFunction, isObject } from 'lodash';
+import { MSubscriber } from 'cloud-ui.vusion';
 export default {
+    mixins: [MSubscriber],
     data() {
         return {
             crumbs: [],
         };
+    },
+    subscribe: {
+        'custom.crumb'(crumb) {
+            this.crumbs = crumb;
+        },
     },
     watch: {
         $route: {

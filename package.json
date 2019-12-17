@@ -67,10 +67,10 @@
   "dependencies": {
     "axios": "^0.19.0",
     "babel-polyfill": "^6.26.0",
-    "cloud-ui.vusion": "0.6.0",
+    "cloud-ui.vusion": "0.6.1",
     "date-fns": "^2.6.0",
     "lodash": "^4.17.15",
-    "proto-ui.vusion": "0.6.3",
+    "proto-ui.vusion": "0.6.4",
     "qs": "^6.8.0",
     "request-pre": "0.1.0",
     "vue": "^2.6.10",
