@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import '@/views/dashboard/library';
+import '@/global/page/library';
 import USearch from '@/global/components/common/u-search.vue';
 
 describe('global/components/common/u-search', () => {
