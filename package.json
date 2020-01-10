@@ -5,6 +5,7 @@
   "main": "src/views/dashboard/index.js",
   "scripts": {
     "dev": "npm run update:ui && vue-cli-service serve",
+    "serve": "npm run dev",
     "build": "vue-cli-service build --apply-theme",
     "build:stage": "vue-cli-service build --mode staging",
     "build:site": "vue-cli-service build --mode site",
