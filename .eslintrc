@@ -6,7 +6,7 @@
     "node": true
   },
   "globals": {
-    "SUB_ROUTES_RE": true
+    
   },
   "rules": {
     "no-debugger": ["error"],
