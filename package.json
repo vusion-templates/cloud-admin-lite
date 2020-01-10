@@ -95,18 +95,19 @@
     "ignore": [
       "deploy.sh",
       ".env.site",
+      "screenshots/**",
       ".circleci/**"
     ],
     "type": "template",
     "title": "Vusion Lite",
     "category": "basic",
     "base": "vue",
-    "ui": "cloud-ui",
+    "ui": "cloud-ui.vusion",
     "screenshots": [
       "https://unpkg.com/cloud-admin-lite/screenshots/0.jpg",
       "https://unpkg.com/cloud-admin-lite/screenshots/1.jpg"
     ],
-    "team": "necfe",
+    "team": "网易云计算前端",
     "access": "public"
   }
 }
