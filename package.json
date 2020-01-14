@@ -16,6 +16,7 @@
     "dll": "npx webpack --config webpack.dll.config.js --env.NODE_ENV production && npx webpack --config webpack.dll.config.js --env.NODE_ENV development",
     "test:unit": "vue-cli-service test:unit",
     "test:unit:watch": "npm run test:unit -- --watch",
+    "ui": "npx vue ui",
     "add": "plop"
   },
   "keywords": [
@@ -61,7 +62,7 @@
     "raw-loader": "^3.1.0",
     "shx": "^0.3.2",
     "underscore-template-loader": "^1.0.0",
-    "vue-cli-plugin-cloud-admin": "^0.1.0",
+    "vue-cli-plugin-cloud-admin": "^0.1.2",
     "vue-cli-plugin-vusion": "^0.8.2",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9"
