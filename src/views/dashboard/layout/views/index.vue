@@ -31,7 +31,6 @@ export default {
         LDashboard,
         SNavbarRight,
     },
-
     data() {
         return {
             logo: {
@@ -72,12 +71,10 @@ export default {
                 .map((item) => item.sidebar),
         };
     },
-
     computed: {
         layoutComponent() {
             return this.hasSideBar ? 'l-dashboard' : 'l-page';
         },
-
         hasSideBar() {
             return this.sidebarConfig && this.sidebarConfig.length;
         },
