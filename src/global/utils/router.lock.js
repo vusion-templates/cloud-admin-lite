@@ -30,24 +30,21 @@ const routerLock = {
         const toQuery = to.query;
         let isChanged = false;
         locks.forEach((lock) => {
-            let included = false;
-            if (lock.exclude) {
-                included = !lock.exclude.some(includePath);
-            }
-            if (lock.include) {
-                included = lock.include.some(includePath);
-            }
-            if (included) {
-                lock.params.forEach((param) => {
-                    if (!(param in toQuery)) {
-                        isChanged = true;
-                        toQuery[param] = fromQuery[param];
-                    }
-                    if (toQuery[param] === '') {
-                        toQuery[param] = undefined;
-                    } // 美化路由
-                });
-            }
+            // 没有 include 时全通过，当前 to.path 必须是匹配收集到的每个 lock 的
+            if (lock.include && !lock.include.some(includePath))
+                return;
+            if (lock.exclude && lock.exclude.some(includePath))
+                return;
+
+            lock.params.forEach((param) => {
+                if (!(param in toQuery)) {
+                    isChanged = true;
+                    toQuery[param] = fromQuery[param];
+                }
+                if (toQuery[param] === '') {
+                    toQuery[param] = undefined;
+                } // 美化路由
+            });
         });
         if (isChanged) {
             next({
@@ -70,8 +67,8 @@ const routerLock = {
         }
     },
     install(Vue) {
-        Vue.prototype.$routerLock = function (...args) {
-            return routerLock.update(...args, this.$route, this.$router);
+        Vue.prototype.$routerLock = function (query) {
+            return routerLock.update(query, this.$route, this.$router);
         };
     },
 };
