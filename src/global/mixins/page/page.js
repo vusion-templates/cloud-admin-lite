@@ -5,7 +5,7 @@
  *     同时需要对 list total 进行赋值。
  *  2. 配额是否有剩余 lessQuota （默认是 true，在有数据的情况下会返回实际剩余配额）
  *     需要定义 loadQuota 方法（可选）主要是获取配额，同时需要对 quota 赋值配额。
- *  3. 分页控件事件响应 changePage，提供 totalPage page 取值
+ *  3. 分页控件事件响应 changePage，提供 page 取值
  *  4. 提供了获取调用远程接口参数的方法，支持传参
  * getOffset（用于接口发送 offset、limit），getPage（用于接口发送 pageNum、pageSize）
  *  5. 提供安全删除实例的方法，用于（最后一页只有一条的情况），同时会自动在实例上添加 deleting 属性
@@ -53,10 +53,6 @@ export default {
         },
         hasQuota() {
             return this.lessQuota > 0; // 配额为负数的情况
-        },
-        totalPage() {
-            const { limit, total } = this;
-            return Math.ceil(total / limit) || 1;
         },
         offset() {
             const { limit, page } = this;
