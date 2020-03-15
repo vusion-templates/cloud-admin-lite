@@ -13,7 +13,7 @@ module.exports = {
         'vue-i18n$': path.resolve(__dirname, 'node_modules/vue-i18n/dist/vue-i18n.esm.js'),
         'vue-router$': path.resolve(__dirname, 'node_modules/vue-router/dist/vue-router.esm.js'),
         '@': path.resolve(__dirname, 'src'),
-        'cloud-ui.vusion$': path.resolve(__dirname, 'ui/index.js'),
-        'cloud-ui.vusion.css$': path.resolve(__dirname, 'ui/index.css'),
+        'cloud-ui.vusion$': path.resolve(__dirname, 'node_modules/cloud-ui.vusion/dist-raw/index.js'),
+        'cloud-ui.vusion.css$': path.resolve(__dirname, 'node_modules/cloud-ui.vusion/dist-raw/index.css'),
     },
 };
