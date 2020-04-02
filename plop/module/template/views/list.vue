@@ -1,17 +1,17 @@
 <template>
 <u-linear-layout direction="vertical" gap="small">
         <u-page-sum>
-            系统更新的最新消息。相关描述可以查看
+            {{ title }}模块的列表页。
         </u-page-sum>
         <u-linear-layout>
-            <u-button color="primary" to="/{{ name }}/create">创建</u-button>
+            <u-button color="primary" icon="create" to="/{{ name }}/create">创建{{ title }}</u-button>
             <u-button square icon="refresh" @click="refresh"></u-button>
         </u-linear-layout>
         <u-table-view :class="$style.tableView" :data="list" :loading="loading">
             <u-table-view-column type="checkbox" width="8%"></u-table-view-column>
-            <u-table-view-column title="名字">
+            <u-table-view-column title="名称">
                 <template slot="cell" slot-scope="{ item }">
-                    名字
+                    名称
                 </template>
             </u-table-view-column>
             <u-table-view-column title="操作">
@@ -43,7 +43,7 @@ export default {
     mixins: [page],
     data() {
         return {
-            
+
         };
     },
     methods: {
@@ -65,5 +65,5 @@ export default {
 <style module>
 .tableView {
     vertical-align: middle;
-}   
+}
 </style>

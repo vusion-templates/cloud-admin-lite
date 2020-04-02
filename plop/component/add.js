@@ -1,6 +1,7 @@
 const path = require('path');
 const chalk = require('chalk');
-const basePath = path.join(__dirname, '../src/global/components');
+
+const basePath = path.join(__dirname, '../../src/global/components');
 
 const fixComponentName = function (name) {
     return name.replace(/^[a-z]/, (a) => a.toUpperCase()).replace(/-([a-z])/g, (a, b) => b.toUpperCase()).replace('.vue', '');
@@ -10,10 +11,10 @@ module.exports = {
         {
             type: 'input',
             name: 'name',
-            message: '组件的文件名, 如 u-text 或 u-text.vue',
+            message: '请输入组件的文件名, 如 u-text 或 u-text.vue',
             validate(value) {
                 if ((/^[a-z]-([a-z])/).test(value)) { return true; }
-                return '组件名称必须类似 u-text 或 u-text.vue';
+                return '组件名必须格式类似 u-text 或 u-text.vue';
             },
         },
         {
@@ -24,23 +25,23 @@ module.exports = {
         },
     ],
     actions(answers) {
-        const mutil = answers.name.endsWith('.vue');
+        const multi = answers.name.endsWith('.vue');
         const [root, ...sub] = answers.directory.split('/');
         sub.unshift('');
         const name = answers.name.replace(/\.vue$/, '');
-        if (!mutil) {
+        if (!multi) {
             return [
                 {
                     type: 'add',
                     path: path.join(basePath, answers.directory, answers.name + '.vue'),
-                    templateFile: path.join(__dirname, './templates/component/index.vue'),
+                    templateFile: path.join(__dirname, './template/index.vue'),
 
                 },
                 {
                     type: 'modify',
-                    pattern: /([\d\D]*)/,
+                    pattern: /\s+$/,
                     path: path.join(basePath, root, 'index.js'),
-                    template: `$1\nexport { default as ${fixComponentName(answers.name)} } from '.${sub.join('/')}/${answers.name}.vue';\n`,
+                    template: `\nexport { default as ${fixComponentName(answers.name)} } from '.${sub.join('/')}/${answers.name}.vue';\n`,
                 },
                 `use like: ${chalk.yellow(`<${name}></${name}>`)}`,
             ];
@@ -49,17 +50,17 @@ module.exports = {
             {
                 type: 'addMany',
                 destination: path.join(basePath, answers.directory, answers.name),
-                base: path.join(__dirname, './templates/component/mutil.vue'),
-                templateFiles: path.join(__dirname, './templates/component/mutil.vue') + '/**',
+                base: path.join(__dirname, './template/multi.vue'),
+                templateFiles: path.join(__dirname, './template/multi.vue') + '/**',
                 data: {
                     formatName: fixComponentName(answers.name),
                 },
             },
             {
                 type: 'modify',
-                pattern: /([\d\D]*)/,
+                pattern: /\s+$/,
                 path: path.join(basePath, root, 'index.js'),
-                template: `$1\nexport { default as ${fixComponentName(answers.name)} } from '.${sub.join('/')}/${answers.name}';\n`,
+                template: `\nexport { default as ${fixComponentName(answers.name)} } from '.${sub.join('/')}/${answers.name}';\n`,
             },
             `use like: ${chalk.yellow(`<${name}></${name}>`)}`,
         ];

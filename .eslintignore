@@ -2,4 +2,4 @@ dll
 public
 src/static
 ui
-plop/templates
+plop/**/template
