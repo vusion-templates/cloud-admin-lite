@@ -67,8 +67,15 @@ module.exports = {
                 if (!fs.existsSync(modulesOrderPath))
                     return;
                 const modulesOrderContent = fs.readFileSync(modulesOrderPath, 'utf8').trim().replace(/export default |module\.exports +=/, '');
-                // eslint-disable-next-line no-eval
-                const modulesOrder = eval(modulesOrderContent);
+                let modulesOrder;
+                try {
+                    // eslint-disable-next-line no-eval
+                    modulesOrder = eval(modulesOrderContent);
+                    if (!Array.isArray(modulesOrder))
+                        return;
+                } catch (e) {
+                    return;
+                }
                 modulesOrder.push(answers.name);
                 fs.writeFileSync(modulesOrderPath, 'export default ' + stringify(modulesOrder, null, 4) + ';\n', 'utf8');
             },
