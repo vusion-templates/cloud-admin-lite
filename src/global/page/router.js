@@ -23,14 +23,40 @@ export default function (routes, appendTitle) {
             if (called) {
                 return;
             }
-            called = true;
-            next(...args);
+            if (args && args.length) {
+                called = true;
+                next(...args);
+            }
         };
+        let p = Promise.resolve();
         to.matched.every((item) => {
-            item.meta && item.meta.auth && item.meta.auth(to, from, _next);
+            if (item.meta && item.meta.auth) {
+                p = p.then(() => {
+                    if (called) {
+                        return Promise.reject();
+                    }
+                    const out = item.meta.auth(to, from, _next);
+                    if (out && out.then) {
+                        return out;
+                    } else {
+                        return called ? Promise.reject() : Promise.resolve();
+                    }
+                });
+            }
             return !called;
         });
-        _next();
+        p.then(() => {
+            if (!called) {
+                called = true;
+                next();
+            }
+        }, () => {
+            if (!called) {
+                called = true;
+                console.error('router auth error');
+                next('/');
+            }
+        });
     });
 
     // 自动修改 title
