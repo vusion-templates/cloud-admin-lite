@@ -25,7 +25,6 @@ module.exports = (env = {}) => {
         entry: {
             vendor: [
                 'babel-polyfill',
-                'lodash',
                 'vue',
                 'vue-router',
                 // 'vue-i18n',
