@@ -6,7 +6,8 @@
     </u-crumb>
 </template>
 <script>
-import { isFunction, isObject } from 'lodash';
+import isFunction from 'lodash/isFunction';
+import isObject from 'lodash/isObject';
 export default {
     data() {
         return {

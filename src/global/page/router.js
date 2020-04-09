@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { isFunction } from 'lodash';
+import isFunction from 'lodash/isFunction';
 
 import routerLock from '@/global/utils/router.lock';
 

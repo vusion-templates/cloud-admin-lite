@@ -1,8 +1,8 @@
 <template>
 <u-linear-layout direction="vertical" gap="small">
-        <u-page-sum>
+        <u-page-summary>
             系统更新的最新消息。相关描述可以查看
-        </u-page-sum>
+        </u-page-summary>
         <u-linear-layout>
             <u-button color="primary" to="/{{ name }}/create">创建</u-button>
             <u-button square icon="refresh" @click="refresh"></u-button>

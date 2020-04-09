@@ -34,7 +34,11 @@
     </u-grid-layout>
 </template>
 <script>
+import UPortlet from '../components/u-portlet';
 export default {
+    components: {
+        UPortlet,
+    },
     data() {
         return {
 

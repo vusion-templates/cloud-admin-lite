@@ -1,8 +1,8 @@
 <template>
     <u-linear-layout direction="vertical" gap="small">
-        <u-page-sum>
+        <u-page-summary>
             从远端获取所有数据，在本地进行分页处理，点击分页的时候不会发送请求，仅在刷新时会发送请求。
-        </u-page-sum>
+        </u-page-summary>
         <u-linear-layout>
             <u-button icon="create" color="primary" @click="createItem">创建实例(方法)</u-button>
             <u-button icon="create" color="primary" to="/demo/form/basic">创建实例(路由)</u-button>

@@ -22,6 +22,6 @@
 
 <script>
 export default {
-    name: 'u-page-sum',
+    name: 'u-page-summary',
 };
 </script>
