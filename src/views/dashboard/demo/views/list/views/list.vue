@@ -33,7 +33,10 @@
                 <template slot="cell" slot-scope="scope">
                     <u-linear-layout>
                         <u-link :to="{name: 'demo.detail', query: {id: scope.item.ch_name}}">
-                            查看详情
+                            查看分类
+                        </u-link>
+                        <u-link @click="editDesc(scope.item)">
+                            修改描述
                         </u-link>
                         <u-link @click="deleteItem">
                             删除
@@ -56,12 +59,17 @@
                 <u-button :disabled="!allowBatchDelete" @click="batchDelete">删除</u-button>
             </u-linear-layout>
         </u-footbar>
+        <u-edit-desc modal-name="demo.list.editDesc"></u-edit-desc>
     </u-linear-layout>
 </template>
 <script>
 import page from '@/global/mixins/page/page';
 import noticeService from '../services/index';
+import UEditDesc from '../components/u-edit-desc.vue';
 export default {
+    components: {
+        UEditDesc,
+    },
     mixins: [page],
     data() {
         return {
@@ -121,6 +129,11 @@ export default {
                 this.$toast.show('开始删除');
             }, () => {
                 this.$toast.show('取消删除');
+            });
+        },
+        editDesc(detail) {
+            this.$modal.show('demo.list.editDesc', {
+                detail,
             });
         },
     },
