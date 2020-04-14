@@ -59,7 +59,7 @@
                 <u-button :disabled="!allowBatchDelete" @click="batchDelete">删除</u-button>
             </u-linear-layout>
         </u-footbar>
-        <u-edit-desc modal-name="demo.list.editDesc"></u-edit-desc>
+        <u-edit-desc :modal-name="modalName"></u-edit-desc>
     </u-linear-layout>
 </template>
 <script>
@@ -73,6 +73,7 @@ export default {
     mixins: [page],
     data() {
         return {
+            modalName: 'demo.list.editDesc' + (new Date() - 0),
             selected: [],
             form: {
                 search: '',
@@ -132,7 +133,7 @@ export default {
             });
         },
         editDesc(detail) {
-            this.$modal.show('demo.list.editDesc', {
+            this.$modal.show(this.modalName, {
                 detail,
             });
         },
