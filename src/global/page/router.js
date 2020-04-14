@@ -6,10 +6,11 @@ import routerLock from '@/global/utils/router.lock';
 
 Vue.use(VueRouter);
 
-export default function (routes, appendTitle) {
+export default function (routes, base, appendTitle) {
     appendTitle = appendTitle || ((a) => a);
     const router = new VueRouter({
         routes,
+        base,
     });
 
     // 自动传参

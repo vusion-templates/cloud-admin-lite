@@ -5,8 +5,11 @@
   "main": "src/views/dashboard/index.js",
   "scripts": {
     "dev": "vue-cli-service serve",
+    "dev:micro": "cross-env MICRO_APP=true vue-cli-service serve",
     "serve": "npm run dev",
+    "serve:micro": "npm run dev:micro",
     "build": "vue-cli-service build --apply-theme",
+    "build:micro": "cross-env MICRO_APP=true vue-cli-service build --apply-theme",
     "build:stage": "vue-cli-service build --mode staging",
     "build:site": "vue-cli-service build --mode site",
     "lint": "npx eslint --quiet",
@@ -70,6 +73,7 @@
     "axios": "^0.19.0",
     "babel-polyfill": "^6.26.0",
     "cloud-ui.vusion": "^0.6.14",
+    "cross-env": "^7.0.2",
     "date-fns": "^2.6.0",
     "lodash": "^4.17.15",
     "qs": "^6.8.0",
@@ -78,7 +82,9 @@
     "vue-i18n": "^8.14.0",
     "vue-router": "^3.1.2",
     "vue-template-compiler": "^2.6.10",
-    "vusion-utils": "^0.4.5"
+    "vusion-micro-app": "^0.3.1",
+    "vusion-utils": "^0.4.5",
+    "webpack-micro": "^0.4.2"
   },
   "husky": {
     "hooks": {
