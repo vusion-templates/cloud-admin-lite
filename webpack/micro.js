@@ -52,9 +52,8 @@ module.exports = {
         config.plugins.delete('prefetch-micro');
         config.plugins.delete('html-micro');
         config.optimization.splitChunks({
-            cacheGroups: {
-                vendors: false,
-                default: false,
+            chunks(chunk) {
+                return chunk.name !== microEntryName;
             },
         });
         const entryKeys = Object.keys(config.entryPoints.entries());

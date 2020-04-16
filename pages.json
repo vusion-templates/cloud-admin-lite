@@ -7,8 +7,7 @@
         "title": "dashboard",
         "inject": true,
         "chunks": [
-            "chunk-vendors",
-            "chunk-common",
+            "vendors~dashboard",
             "dashboard"
         ],
         "chunksSortMode": "manual"
