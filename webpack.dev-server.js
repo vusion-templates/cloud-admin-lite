@@ -1,7 +1,6 @@
 const host = 'localhost';
-const port = 8820;
 const path = require('path');
-module.exports = function (publicPathPrefix) {
+module.exports = function (port) {
     return {
         host,
         port,
