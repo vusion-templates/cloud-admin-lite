@@ -15,14 +15,14 @@ export default {
                 router: initRouter(data.customProps.prefix),
                 ...App,
             }).$mount(data.customProps.node);
-            publish(topic + ':mounted', new Date())();
+            publish(topic + ':mounted', new Date());
         });
         subscribe(topic + ':unmount', (data) => {
             const el = instance.$el;
             instance.$destroy();
             instance = null;
             el.parentNode.removeChild(el);
-            publish(topic + ':unmounted', new Date())();
+            publish(topic + ':unmounted', new Date());
         });
     },
 };

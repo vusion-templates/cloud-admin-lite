@@ -24,7 +24,6 @@ module.exports = (env = {}) => {
         mode: env.NODE_ENV,
         entry: {
             vendor: [
-                'babel-polyfill',
                 'vue',
                 'vue-router',
                 // 'vue-i18n',

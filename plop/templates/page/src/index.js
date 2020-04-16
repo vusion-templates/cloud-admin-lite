@@ -1,6 +1,4 @@
 import '@/global/styles/theme.css';
-
-import 'babel-polyfill';
 import App from './app.vue';
 import Vue from 'vue';
 import router from './router';

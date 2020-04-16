@@ -16,9 +16,12 @@ module.exports = {
             entry: './node_modules/vusion-micro-app/dist/index.js',
         };
     },
-    config(vueConfig) {
+    config(vueConfig, isDevelopment) {
         if (!vueConfig.publicPath.startsWith('http') || !vueConfig.publicPath.startsWith('//')) {
             console.warn('ensure master and slave app has same origin');
+        }
+        if (isDevelopment) {
+            vueConfig.publicPath = 'http://localhost:8820' + vueConfig.publicPath;
         }
         return vueConfig;
     },

@@ -3,7 +3,7 @@ const pkg = require('./package.json');
 const pages = require('./pages.json');
 
 const isDevelopment = process.env.NODE_ENV === 'development';
-const publicPathPrefix = process.env.SITE_TYPE === 'gh-pages' ? `/${pkg.name}` : '/public';
+const publicPathPrefix = process.env.SITE_TYPE === 'gh-pages' ? `/${pkg.name}` : '/';
 
 const devServer = require('./webpack.dev-server')(publicPathPrefix);
 const proxy = devServer.proxy;
@@ -20,20 +20,23 @@ const webpackOptimization = require('./webpack/optimization');
 if (isMicro) {
     webpackMicro.setup(pages);
 }
+const assetsDir = 'public';
 let baseConfig = {
     outputDir: path.resolve(__dirname, 'public'),
     publicPath: publicPathPrefix,
-    assetsDir: undefined,
+    assetsDir,
     productionSourceMap: false,
     transpileDependencies: [
         /atom-validator/,
         /vusion-utils/,
         /lodash/,
         'resize-detector',
+        /cloud-ui\.vusion/,
+        /vusion-micro-app/,
     ],
 };
 if (isMicro) {
-    baseConfig = webpackMicro.config(baseConfig);
+    baseConfig = webpackMicro.config(baseConfig, isDevelopment);
 }
 const vueConfig = {
     ...baseConfig,
@@ -45,7 +48,7 @@ const vueConfig = {
         if (isMicro) {
             webpackMicro.chain(config);
         } else {
-            webpackDll.chain(config, isDevelopment);
+            webpackDll.chain(config, publicPathPrefix, isDevelopment);
         }
         webpackStyle.chain(config);
     },

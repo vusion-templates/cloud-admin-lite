@@ -16,7 +16,7 @@ const fixDll = function () {
     return newPath;
 };
 module.exports = {
-    chain(config, isDevelopment) {
+    chain(config, publicPathPrefix, isDevelopment) {
         const manifest = require(isDevelopment ? '../dll/vendor.manifest.json' : '../dll/vendor.manifest.online.json');
         let dllPath = '../dll/vendor.js';
         if (!isDevelopment) {
@@ -26,6 +26,8 @@ module.exports = {
         entryKeys.forEach((entryKey) => {
             config.plugin(`${entryKey}-dll`).after(`html-${entryKey}`).use(AddAssetHtmlPlugin, [{
                 filepath: path.resolve(__dirname, dllPath),
+                outputPath: 'js',
+                publicPath: (publicPathPrefix + '/js').replace('//', '/'),
             }]).end();
         });
         config.plugin('dll').use(webpack.DllReferencePlugin, [{
