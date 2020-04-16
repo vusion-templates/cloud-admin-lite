@@ -3,7 +3,7 @@ const pkg = require('./package.json');
 const pages = require('./pages.json');
 
 const isDevelopment = process.env.NODE_ENV === 'development';
-const publicPathPrefix = process.env.SITE_TYPE === 'gh-pages' ? `/${pkg.name}` : '/';
+const publicPathPrefix = process.env.SITE_TYPE === 'gh-pages' ? `https://vusion-templates.github.io/${pkg.name}` : '/';
 
 const port = 8820;
 
