@@ -10,7 +10,7 @@
     </u-article>
 </template>
 <script>
-import noticeService from '../services/index';
+import noticeService from '../service';
 export default {
     data() {
         return {

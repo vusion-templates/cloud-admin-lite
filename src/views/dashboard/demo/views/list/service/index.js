@@ -1,12 +1,12 @@
-import { createService } from '@/global/utils/services';
-import apis from './apis';
-const services = createService(apis, {
+import { createService } from '@/global/utils/service';
+import api from './api';
+const service = createService(api, {
     config: {
         baseURL: 'https://api.apiopen.top/',
     },
 });
-services.loadList = function (...args) {
-    return services.$loadList(...args).then((res) => {
+service.loadList = function (...args) {
+    return service.$loadList(...args).then((res) => {
         const result = [];
         res.result.forEach((item) => {
             item.channellist.forEach((channel) => {
@@ -19,4 +19,4 @@ services.loadList = function (...args) {
         return result;
     });
 };
-export default services;
+export default service;
