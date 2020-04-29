@@ -46,9 +46,6 @@ const vueConfig = {
     chainWebpack(config) {
         webpackHtml.chain(config);
         webpackOptimization.chain(config, isDevelopment);
-        config.optimization.splitChunks({
-            common: false,
-        });
         if (isMicro) {
             webpackMicro.chain(config);
         } else {
