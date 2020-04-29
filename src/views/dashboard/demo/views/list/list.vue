@@ -64,8 +64,8 @@
 </template>
 <script>
 import page from '@/global/mixins/page/page';
-import noticeService from '../service';
-import UEditDesc from '../components/u-edit-desc.vue';
+import noticeService from '@/views/dashboard/demo/service';
+import UEditDesc from './components/u-edit-desc.vue';
 export default {
     components: {
         UEditDesc,

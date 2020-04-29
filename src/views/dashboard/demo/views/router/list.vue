@@ -42,7 +42,7 @@
 </template>
 <script>
 import routerPage from '@/global/mixins/page/page.router';
-import noticeService from '../service';
+import noticeService from '@/views/dashboard/demo/service';
 export default {
     mixins: [routerPage],
     data() {
