@@ -33,3 +33,6 @@ coverage
 
 # Test
 test/cases/*/dest
+
+#tmp
+.tmp

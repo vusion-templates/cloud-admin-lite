@@ -1,4 +1,4 @@
-import { isArray, mergeWith } from 'lodash';
+import mergeWith from 'lodash/mergeWith';
 const formatModuleConfig = function (moduleConfig) {
     const modules = {}; // { [name: string]: { [env: string]: {...} } }
 
@@ -9,7 +9,7 @@ const formatModuleConfig = function (moduleConfig) {
     if (modules.global) {
         Object.keys(modules).filter((key) => key !== 'global').forEach((key) => {
             modules[key] = mergeWith({}, modules.global, modules[key], (a, b) => {
-                if (isArray(a) || isArray(b)) {
+                if (Array.isArray(a) || Array.isArray(b)) {
                     return a && b ? b : (a || b);
                 }
             });

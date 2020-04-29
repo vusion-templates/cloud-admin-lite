@@ -1,8 +1,8 @@
 <template>
     <u-linear-layout direction="vertical" gap="small">
-        <u-page-sum>
+        <u-page-summary>
             常见的路由组织方式页
-        </u-page-sum>
+        </u-page-summary>
         <u-linear-layout type="flex" justify="end">
             <u-search v-model="form.search" placeholder="搜索"></u-search>
         </u-linear-layout>

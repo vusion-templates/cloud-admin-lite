@@ -12,7 +12,7 @@
         </div>
         <u-navbar-dropdown style="margin-right: 10px;">
             <template #title>
-                <u-avatar :src="src" :size="36" :class="$style.avatar"></u-avatar>
+                <u-avatar shape="circle" :class="$style.avatar"></u-avatar>
                 <span :class="$style.username">{{ userInfo.username }}</span>
             </template>
             <template #default>
@@ -57,9 +57,9 @@ export default {
 </script>
 <style module>
 .avatar {
-    /* (64px-36px)/2 */
-    margin-top: 12px;
-    margin-bottom: 12px;
+    /* (64px - 44px) / 2 */
+    margin-top: 10px;
+    margin-bottom: 10px;
     margin-right: 10px;
 }
 .username {

@@ -1,8 +1,8 @@
 <template>
-<u-linear-layout direction="vertical" gap="small">
-        <u-page-sum>
+    <u-linear-layout direction="vertical" gap="small">
+        <u-page-summary>
             {{ title }}模块的列表页。
-        </u-page-sum>
+        </u-page-summary>
         <u-linear-layout>
             <u-button color="primary" icon="create" to="/{{ name }}/create">创建{{ title }}</u-button>
             <u-button square icon="refresh" @click="refresh"></u-button>

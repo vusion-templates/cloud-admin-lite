@@ -1,8 +1,8 @@
 <template>
     <u-linear-layout direction="vertical" gap="small">
-        <u-page-sum>
+        <u-page-summary>
             常见的列表页(无分页)
-        </u-page-sum>
+        </u-page-summary>
         <u-linear-layout justify="space-between">
             <u-linear-layout display="inline">
                 <u-button icon="create" color="primary" @click="createItem">创建实例(方法)</u-button>

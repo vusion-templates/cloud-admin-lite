@@ -1,8 +1,8 @@
 <template>
     <u-linear-layout direction="vertical" gap="small">
-        <u-page-sum>
+        <u-page-summary>
             系统更新的最新消息。相关描述可以查看<u-link href="https://vusion.github.io/cloud-ui/components/u-actions">链接</u-link>
-        </u-page-sum>
+        </u-page-summary>
         <u-linear-layout>
             <u-button square icon="refresh" @click="refresh"></u-button>
         </u-linear-layout>
