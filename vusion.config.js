@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
     type: 'app',
-    docs: false,
+    designer: true,
     staticPath: './src/static',
     srcPath: './src',
     libraryPath: './src/global',
