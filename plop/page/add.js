@@ -7,6 +7,7 @@ module.exports = {
         {
             type: 'input',
             name: 'name',
+            required: true,
             message: '请输入入口页名称（如"register"，将作为文件夹名、路径名等使用）',
             validate(value) {
                 if (value) { return true; }
@@ -30,7 +31,7 @@ module.exports = {
             function (answers) {
                 const pages = require('../../pages.json');
                 if (pages[name]) {
-                    throw new Error('This page has been added');
+                    throw new Error('该页面已经存在！');
                 }
                 pages[name] = {
                     entry: `./src/views/${name}/index.js`,
@@ -61,12 +62,12 @@ module.exports = {
                 templateFile: path.join(base, 'index.html'),
             },
             [
-                `Page ${chalk.blue(name)} has been initialized. You can ${chalk.green(`restart dev server`)} and open ${chalk.blue(`/${name}.html`)} to see it`,
-                `Something need to know:`,
-                `  src entry file path is ${chalk.yellow(`src/views/${name}/index.js`)}`,
-                `  html file path is ${chalk.yellow(`src/pages/${name}.html`)}`,
-                `  webpack entry config (vue pages config) in ${chalk.yellow(`pages.json`)}`,
-                `  proxy in ${chalk.yellow('webpack.dev-server.js')} may need to be updated`,
+                `页面 ${chalk.blue(name)} 已经添加成功。你需要${chalk.green(`重新启动 dev server`)}，然后打开 ${chalk.blue(`/${name}.html`)} 即可查看。`,
+                `需要注意以下几点：`,
+                `  入口 JS 文件为 ${chalk.yellow(`src/views/${name}/index.js`)}`,
+                `  入口页面模板为 ${chalk.yellow(`src/pages/${name}.html`)}`,
+                `  Webpack 配置 (vue pages 配置) 在 ${chalk.yellow(`pages.json`)} 中`,
+                `  代理在 ${chalk.yellow('webpack.dev-server.js')} 中，可能需要修改`,
             ].join('\n'),
         ];
     },

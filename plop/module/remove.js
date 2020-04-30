@@ -10,6 +10,7 @@ module.exports = {
         {
             type: 'list',
             name: 'page',
+            required: true,
             message: '请选择模块所在的入口页',
             choices(answers) {
                 const pages = [];
@@ -25,6 +26,7 @@ module.exports = {
         {
             type: 'list',
             name: 'name',
+            required: true,
             message: '请选择要删除的模块',
             choices(answers) {
                 const modules = [];
@@ -67,7 +69,7 @@ module.exports = {
                 fs.writeFileSync(modulesOrderPath, 'export default ' + stringify(modulesOrder, null, 4) + ';\n', 'utf8');
             },
             [
-                `Module ${name} has been removed.`,
+                `模块 ${name} 已经被删除。`,
             ].join('\n'),
         ];
     },
