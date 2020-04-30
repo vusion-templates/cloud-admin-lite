@@ -1,9 +1,11 @@
 <template>
     <u-linear-layout direction="vertical" gap="small">
         <u-page-summary>
-            系统更新的最新消息。相关描述可以查看<u-link href="https://vusion.github.io/cloud-ui/components/u-actions">链接</u-link>
+            从远端获取所有数据，在本地进行分页处理，点击分页的时候不会发送请求，仅在刷新时会发送请求。
         </u-page-summary>
         <u-linear-layout>
+            <u-button icon="create" color="primary" @click="createItem">创建实例(方法)</u-button>
+            <u-button icon="create" color="primary" to="/demo/form/basic">创建实例(路由)</u-button>
             <u-button square icon="refresh" @click="refresh"></u-button>
         </u-linear-layout>
         <u-table-view :class="$style.tableView" :data="list" :loading="loading" value-field="name" :values="selected">
@@ -21,7 +23,7 @@
             <u-table-view-column title="操作">
                 <template slot="cell" slot-scope="scope">
                     <u-linear-layout>
-                        <u-link :to="{ path: '/notice/detail', query: {id: scope.item.ch_name}}">
+                        <u-link :to="{name: 'demo.detail', query: {id: scope.item.ch_name}}">
                             查看详情
                         </u-link>
                     </u-linear-layout>
@@ -46,7 +48,7 @@
 </template>
 <script>
 import page from '@/global/mixins/page/page';
-import noticeService from '../service';
+import noticeService from '@/views/dashboard/demo/service';
 export default {
     mixins: [page],
     data() {
@@ -71,12 +73,7 @@ export default {
     },
     methods: {
         loadList() {
-            const page = this.getPage();
-            return noticeService.loadList({
-                query: {
-                    page: page.pageNum,
-                },
-            }).then((result) => {
+            return noticeService.loadList().then((result) => {
                 this.originList = result;
                 this.total = result.length;
             });
@@ -88,11 +85,14 @@ export default {
                 console.log('取消删除');
             });
         },
+        createItem() {
+            this.$toast.show('创建实例');
+        },
     },
 };
 </script>
 <style module>
-.tableView {
-    vertical-align: middle;
+.tableView  {
+
 }
 </style>
