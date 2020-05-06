@@ -17,6 +17,7 @@ module.exports = {
         {
             type: 'input',
             name: 'name',
+            required: true,
             message: '请输入模块名（将作为文件夹名、路径名等使用）',
             validate(value) {
                 if (value) { return true; }
@@ -31,6 +32,7 @@ module.exports = {
         {
             type: 'list',
             name: 'page',
+            required: true,
             message: '添加至',
             choices: pages,
             when() {
@@ -80,11 +82,11 @@ module.exports = {
                 fs.writeFileSync(modulesOrderPath, 'export default ' + stringify(modulesOrder, null, 4) + ';\n', 'utf8');
             },
             [
-                `Module ${name} has been added.`,
-                `Something need to know:`,
-                `  module path is ${chalk.yellow(`src/views/${answers.page}/${answers.name}`)}`,
-                `  you can modify module order of sidebar in file ${chalk.yellow(`src/views/${answers.page}/modules.order.js`)}`,
-                `  change title and other config in file ${chalk.yellow(`src/views/${answers.page}/${answers.name}/module/base.js`)}`,
+                `模块 ${name} 已经添加成功。`,
+                `需要注意以下几点：`,
+                `  模块路径在 ${chalk.yellow(`src/views/${answers.page}/${answers.name}`)}`,
+                `  如果要修改模块在侧边栏的位置：${chalk.yellow(`src/views/${answers.page}/modules.order.js`)}`,
+                `  如果要修改模块标题和其它配置：${chalk.yellow(`src/views/${answers.page}/${answers.name}/module/base.js`)}`,
             ].join('\n'),
         ];
     },

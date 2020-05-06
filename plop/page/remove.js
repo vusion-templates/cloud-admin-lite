@@ -9,6 +9,7 @@ module.exports = {
         {
             type: 'list',
             name: 'name',
+            required: true,
             message: '请选择要删除的入口页名称',
             choices(answers) {
                 const pages = [];
@@ -37,10 +38,10 @@ module.exports = {
                 fs.writeFileSync(path.join(__dirname, '../../pages.json'), JSON.stringify(pages, null, 4));
             },
             [
-                `Page ${name} has been removed. You need to ${chalk.green(`restart dev server`)}`,
-                `Something need to know:`,
-                `  webpack entry config (vue pages config) in ${chalk.yellow(`pages.json`)}`,
-                `  proxy in ${chalk.yellow('webpack.dev-server.js')} may need to be updated`,
+                `页面 ${name} 已经被删除。你需要${chalk.green(`重新启动 dev server`)}。`,
+                `需要注意以下几点：`,
+                `  Webpack 配置 (vue pages 配置) 在 ${chalk.yellow(`pages.json`)} 中`,
+                `  代理在 ${chalk.yellow('webpack.dev-server.js')} 中，可能需要修改`,
             ].join('\n'),
         ];
     },
