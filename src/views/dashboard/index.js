@@ -9,7 +9,8 @@ import '@/global/styles/index.css';
 import './modules';
 import micro from './micro';
 // import { initI18n } from '@/global/page/i18n';
-if (window.__MICROAPP__) {
+
+if (window.microApp && window.microApp.isMicro) {
     micro.init(initRouter);
 } else {
     const app = new Vue({

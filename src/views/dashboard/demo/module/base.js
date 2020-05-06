@@ -67,6 +67,19 @@ export default {
                     },
                 ],
             },
+            {
+                subnav: [
+                    {
+                        title: '微前端',
+                        children: [
+                            {
+                                title: 'cloud-admin',
+                                to: '/demo/micro',
+                            },
+                        ],
+                    },
+                ],
+            },
         ],
     },
 };

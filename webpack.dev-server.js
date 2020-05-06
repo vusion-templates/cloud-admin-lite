@@ -1,5 +1,6 @@
 const host = 'localhost';
 const path = require('path');
+const pages = require('./pages.json');
 module.exports = function (port) {
     return {
         host,
@@ -13,6 +14,12 @@ module.exports = function (port) {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
             'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
+        },
+        historyApiFallback: {
+            rewrites: Object.keys(pages).map((k) => ({
+                from: new RegExp('^' + k + '/'),
+                to: '/' + k,
+            })),
         },
         // proxy: [{
         //     context: ['**', `!${publicPathPrefix}/**`, '!/', '!/index.html', '!/index.html/'],

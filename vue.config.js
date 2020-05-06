@@ -45,13 +45,14 @@ const vueConfig = {
     pages,
     chainWebpack(config) {
         webpackHtml.chain(config);
-        webpackOptimization.chain(config, isDevelopment);
+        webpackOptimization.chain(config, isDevelopment, pages);
         if (isMicro) {
             webpackMicro.chain(config);
         } else {
             webpackDll.chain(config, publicPathPrefix, isDevelopment);
         }
         webpackStyle.chain(config);
+        config.output.jsonpFunction('webpackJsonp' + pkg.name);
     },
     devServer,
     pluginOptions: {

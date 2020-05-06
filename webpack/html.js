@@ -1,7 +1,10 @@
+const pages = require('../pages.json');
 module.exports = {
     chain(config) {
-        config.plugins.delete('preload-dashboard');
-        config.plugins.delete('prefetch-dashboard');
+        Object.keys(pages).forEach((pageName) => {
+            config.plugins.delete('preload-' + pageName);
+            config.plugins.delete('prefetch-' + pageName);
+        });
         config.module.rule('ftl')
             .test(/\.ftl$/i)
             .use('underscore-template')

@@ -48,18 +48,20 @@ module.exports = {
         config.plugin('micro-name-plugin').use(webpack.DefinePlugin, [{
             MICRO_NAME: JSON.stringify(microConfig.name),
         }]);
-        config.plugins.delete('preload-micro');
-        config.plugins.delete('prefetch-micro');
-        config.plugins.delete('html-micro');
-        config.optimization.splitChunks({
-            chunks(chunk) {
-                return chunk.name !== microEntryName;
-            },
-        });
+        config.plugins.delete('html-' + microEntryName);
+
         const entryKeys = Object.keys(config.entryPoints.entries());
         config.plugin('icon-font-plugin').tap((args) => {
-            args[0].entries = entryKeys.filter((i) => i !== 'micro');
+            args[0].entries = entryKeys.filter((i) => i !== microEntryName);
             return args;
         });
+
+        const splitChunks = config.optimization.get('splitChunks');
+        if (splitChunks) {
+            splitChunks.cacheGroups.vendors.chunks = function (chunk) {
+                return chunk.name !== microEntryName;
+            };
+            config.optimization.splitChunks(splitChunks);
+        }
     },
 };

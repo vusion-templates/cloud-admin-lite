@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const util = require('./util');
 module.exports = {
-    chain(config, isDevelopment) {
+    chain(config, isDevelopment, pages) {
         if (!isDevelopment) {
             config.plugin('namedchunk').use(webpack.NamedChunksPlugin, [
                 (chunk) => {
@@ -23,6 +23,11 @@ module.exports = {
             ]);
         } else {
             config.plugin('namedmodule').use(webpack.NamedModulesPlugin);
+        }
+        const splitChunks = config.optimization.get('splitChunks');
+        if (splitChunks) {
+            delete splitChunks.cacheGroups.common;
+            config.optimization.splitChunks(splitChunks);
         }
     },
 };

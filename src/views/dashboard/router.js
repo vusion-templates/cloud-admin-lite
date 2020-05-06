@@ -7,5 +7,5 @@ export function initRouter(base) {
     if (routerInstance) {
         return routerInstance;
     }
-    return (routerInstance = router(routes, base, (title) => title + ' - ' + appConfig.title));
+    return (routerInstance = router(routes, base || process.env.VUE_APP_BASEURL || '/dashboard', (title) => title + ' - ' + appConfig.title));
 }

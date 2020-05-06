@@ -11,6 +11,7 @@ export default function (routes, base, appendTitle) {
     const router = new VueRouter({
         routes,
         base,
+        mode: 'history',
     });
 
     // 自动传参

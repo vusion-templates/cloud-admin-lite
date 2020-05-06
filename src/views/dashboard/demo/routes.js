@@ -212,5 +212,27 @@ export default {
                 },
             ],
         },
+        {
+            path: 'micro',
+            component: LWrapper,
+            meta: {
+                title: '微前端',
+                crumb: '微前端',
+            },
+            children: [
+                {
+                    path: '',
+                    redirect: 'cloud-admin',
+                },
+                {
+                    path: 'cloud-admin',
+                    component: () => import(/* webpackChunkName: 'demo' */ './views/micro/cloud-admin.vue'),
+                    meta: {
+                        title: 'cloud-admin',
+                        crumb: 'cloud-admin',
+                    },
+                },
+            ],
+        },
     ],
 };
