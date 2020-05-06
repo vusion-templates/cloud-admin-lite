@@ -24,7 +24,6 @@ if (isMicro) {
 }
 const assetsDir = 'public';
 let baseConfig = {
-    outputDir: path.resolve(__dirname, 'public'),
     publicPath: publicPathPrefix,
     assetsDir,
     productionSourceMap: false,

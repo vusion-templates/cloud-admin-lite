@@ -7,7 +7,7 @@ set -e
 npm run build:site
 
 # navigate into the build output directory
-cd public/
+cd dist/
 
 cp index.html 404.html
 
