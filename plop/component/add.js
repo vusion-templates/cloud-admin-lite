@@ -40,7 +40,7 @@ module.exports = {
                 {
                     type: 'modify',
                     pattern: /\s+$/,
-                    path: path.join(basePath, root, 'index.js'),
+                    path: path.join(basePath, 'index.js'),
                     template: `\nexport { default as ${fixComponentName(answers.name)} } from '.${sub.join('/')}/${answers.name}.vue';\n`,
                 },
                 `use like: ${chalk.yellow(`<${name}></${name}>`)}`,
@@ -59,7 +59,7 @@ module.exports = {
             {
                 type: 'modify',
                 pattern: /\s+$/,
-                path: path.join(basePath, root, 'index.js'),
+                path: path.join(basePath, 'index.js'),
                 template: `\nexport { default as ${fixComponentName(answers.name)} } from '.${sub.join('/')}/${answers.name}';\n`,
             },
             `use like: ${chalk.yellow(`<${name}></${name}>`)}`,
