@@ -8,7 +8,9 @@
 <script>
 import isFunction from 'lodash/isFunction';
 import isObject from 'lodash/isObject';
+import { MSubscriber } from 'cloud-ui.vusion';
 export default {
+    mixins: [MSubscriber],
     data() {
         return {
             crumbs: [],
@@ -43,6 +45,11 @@ export default {
             },
             immediate: true,
         },
+    },
+    created() {
+        this.$subscribe('custom.crumb', (value) => {
+            this.crumbs = value;
+        });
     },
 };
 </script>
