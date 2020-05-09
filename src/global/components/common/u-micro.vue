@@ -1,11 +1,11 @@
 <template>
-    <div v-if="loading">
-        <u-loading size="large">
-        </u-loading>
-    </div>
-    <div :class="$style.container" :key="$route.path"
-        v-html="renderDom || defaultDom" v-else>
-
+    <div :class="$style.container">
+        <div v-show="loading">
+            <u-loading size="large"></u-loading>
+        </div>
+        <div :key="$route.path" :class="$style.wrap"
+            v-html="renderDom || defaultDom" v-show="!loading">
+        </div>
     </div>
 </template>
 <script>
@@ -23,7 +23,7 @@ export default {
             type: String,
         },
         config: Object,
-        entries: Object,
+        entries: [Object, String],
         masterName: {
             type: String,
             required: true,
@@ -62,23 +62,9 @@ export default {
     },
     methods: {
         loadEntries(entries) {
-            if (!entries || !Object.keys(entries)) {
-                micro.getEntries(this.masterName).then((appEntries) => {
-                    const entries = appEntries.find((item) => item.name === this.slaveName);
-                    this.registerApp(entries);
-                });
-            } else {
-                const micro = window.micro = window.micro || {};
-                const microConfig = micro.config = micro.config || {};
-                const apps = microConfig[this.masterName] = microConfig[this.masterName] || [];
-                if (!apps.map((i) => i.name).includes(this.slaveName)) {
-                    apps.push({
-                        name: this.slaveName,
-                        entries,
-                    });
-                }
+            micro.loadEntries(entries, this.masterName, this.slaveName).then((entries) => {
                 this.registerApp(entries);
-            }
+            });
         },
         getConfig() {
             const location = window.location;
@@ -86,11 +72,7 @@ export default {
             const activePath = pathname;
             const prefix = this.$route.path;
             return merge({
-                isActive(location) {
-                    const pathname = location.pathname;
-                    const path = pathname;
-                    return path.startsWith(activePath + '/') || path === activePath;
-                },
+                activeWhen: [activePath],
                 customProps: {
                     node: '#' + this.nodeId,
                     prefix,
@@ -124,5 +106,10 @@ export default {
         bottom: 0;
         left: 40px;
         right: 40px;
+    }
+    .wrap {
+        position: relative;
+        width: 100%;
+        height: 100%;
     }
 </style>

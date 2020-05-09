@@ -1,6 +1,6 @@
 const microPlugin = require('webpack-micro');
 const webpack = require('webpack');
-const path = require('path');
+const util = require('./util');
 const microConfig = require('../micro.config.json');
 const microEntryName = microConfig.entryName;
 module.exports = {
@@ -25,15 +25,15 @@ module.exports = {
         }
         return vueConfig;
     },
-    chain(config) {
+    chain(config, isDevelopment) {
         config.plugin('wrap-micro-plugin').use(microPlugin.wrap, [
             {
                 microName: microConfig.name,
                 entry: microEntryName,
             },
         ]);
-        config.plugin('assets-micro-plugin').use(microPlugin.plugin, [
-            {
+        [util.getCommitId(), 'latest'].forEach((filename) => {
+            const data = {
                 record: false,
                 refresh: false,
                 micro: {
@@ -41,10 +41,32 @@ module.exports = {
                         name: microConfig.name,
                     },
                 },
-                path: path.join(__dirname, '../.tmp'),
                 entry: microEntryName,
-            },
-        ]);
+                useCompilerPath: true,
+                keepInMemory: true,
+            };
+            const prefix = isDevelopment ? '' : './public/js/';
+            config.plugin(`assets-micro-plugin-${filename}`).use(microPlugin.plugin, [
+                {
+                    ...data,
+                    filename: `${prefix}${filename}.json`,
+                },
+            ]);
+            config.plugin(`assets-micro-plugin-${filename}-js`).use(microPlugin.plugin, [
+                {
+                    ...data,
+                    filename: `${prefix}${filename}.js`,
+                    processOutput(assets) {
+                        return `;(function(){
+var m=window.micro=window.micro||{};
+var c=m.subApps=m.subApps||{};
+c["${microConfig.name}"]=${JSON.stringify(assets)};
+m.subApps=c;})();`;
+                    },
+                },
+            ]);
+        });
+
         config.plugin('micro-name-plugin').use(webpack.DefinePlugin, [{
             MICRO_NAME: JSON.stringify(microConfig.name),
         }]);

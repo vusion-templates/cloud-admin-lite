@@ -46,7 +46,7 @@ const vueConfig = {
         webpackHtml.chain(config);
         webpackOptimization.chain(config, isDevelopment, pages);
         if (isMicro) {
-            webpackMicro.chain(config);
+            webpackMicro.chain(config, isDevelopment);
         } else {
             webpackDll.chain(config, publicPathPrefix, isDevelopment);
         }
