@@ -11,6 +11,7 @@ export default {
                 console.error('repeat trigger');
                 return;
             }
+            microApp.customProps = data.customProps;
             instance = new Vue({
                 router: initRouter(data.customProps.prefix),
                 ...App,

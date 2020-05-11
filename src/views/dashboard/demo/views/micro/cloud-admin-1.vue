@@ -14,7 +14,8 @@ export default {
         return {
             masterName: appConfig.name,
             slaveName: 'demo.cloud-admin',
-            entries: 'https://vusion-templates.github.io/cloud-admin/public/js/latest.js',
+            entries: 'https://vusion-templates.github.io/cloud-admin/public/js/latest.js?t=' + (new Date() - 0),
+            // entries: 'http://localhost:8830/latest.js?t=' + (new Date() - 0),
         };
     },
     methods: {

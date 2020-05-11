@@ -221,15 +221,19 @@ export default {
             },
             children: [
                 {
-                    path: '',
-                    redirect: 'cloud-admin',
+                    path: 'cloud-admin-1**',
+                    component: () => import(/* webpackChunkName: 'demo' */ './views/micro/cloud-admin-1.vue'),
+                    meta: {
+                        title: 'cloud-admin-1',
+                        crumb: 'cloud-admin-1',
+                    },
                 },
                 {
-                    path: 'cloud-admin',
-                    component: () => import(/* webpackChunkName: 'demo' */ './views/micro/cloud-admin.vue'),
+                    path: 'cloud-admin-2**',
+                    component: () => import(/* webpackChunkName: 'demo' */ './views/micro/cloud-admin-2.vue'),
                     meta: {
-                        title: 'cloud-admin',
-                        crumb: 'cloud-admin',
+                        title: 'cloud-admin-2',
+                        crumb: 'cloud-admin-2',
                     },
                 },
             ],

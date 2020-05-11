@@ -10,6 +10,12 @@ export default [
         ],
     },
     { path: '*', beforeEnter(to, from, next) {
+        if (window.microApp && window.microApp.isMicro) {
+            if (!location.pathname.startsWith(window.microApp.prefix)) {
+                next();
+                return;
+            }
+        }
         next('/exception/404'); // 无法匹配的链接跳转到 404
     } },
 ];

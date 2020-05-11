@@ -3,7 +3,7 @@
         <div v-show="loading">
             <u-loading size="large"></u-loading>
         </div>
-        <div :key="$route.path" :class="$style.wrap"
+        <div :class="$style.wrap"
             v-html="renderDom || defaultDom" v-show="!loading">
         </div>
     </div>
@@ -35,7 +35,10 @@ export default {
     },
     data() {
         const nodeId = 'micro-' + uuidv4().replace(/-/g, '');
+        const last = this.$route.matched[this.$route.matched.length - 1];
+        const prefix = (this.$router.options.base + last.path.replace('**', '')).replace(/\/$/, '');
         return {
+            prefix,
             nodeId,
             domReady: false,
             defaultDom: `<div id="${nodeId}"></div>`,
@@ -70,12 +73,11 @@ export default {
             const location = window.location;
             const pathname = location.pathname;
             const activePath = pathname;
-            const prefix = this.$route.path;
             return merge({
-                activeWhen: [activePath],
+                urlRule: [activePath],
                 customProps: {
                     node: '#' + this.nodeId,
-                    prefix,
+                    prefix: this.prefix,
                 },
             }, this.config);
         },
@@ -93,6 +95,9 @@ export default {
                 this.inited = true;
                 this.$nextTick(() => {
                     micro.start();
+                    if (this.$route.query._m) {
+                        this.$router.push(this.$route.query._m);
+                    }
                 });
             }
         },
