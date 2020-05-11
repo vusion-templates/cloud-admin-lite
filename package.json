@@ -20,6 +20,7 @@
     "test:unit:watch": "npm run test:unit -- --watch",
     "ui": "npx vue ui",
     "manage": "plop",
+    "prepublishOnly": "cp .gitignore _.gitignore",
     "screenshot": "vusion screenshot --server public/index.html -o screenshots/0.png -w 1440 -h 900 && vusion screenshot --server public/index.html#/demo/list/basic -o screenshots/1.png -w 1440 -h 900 -d 200"
   },
   "keywords": [
