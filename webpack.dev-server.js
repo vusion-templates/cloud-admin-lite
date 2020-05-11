@@ -15,12 +15,6 @@ module.exports = function (port) {
             'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
             'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
         },
-        historyApiFallback: {
-            rewrites: Object.keys(pages).map((k) => ({
-                from: new RegExp('^' + k + '/'),
-                to: '/' + k,
-            })),
-        },
         // proxy: [{
         //     context: ['**', `!${publicPathPrefix}/**`, '!/', '!/index.html', '!/index.html/'],
         //     target: 'http://test.com', // add host 127.0.0.1 test.com
