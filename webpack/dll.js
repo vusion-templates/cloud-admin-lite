@@ -26,8 +26,8 @@ module.exports = {
         entryKeys.forEach((entryKey) => {
             config.plugin(`${entryKey}-dll`).after(`html-${entryKey}`).use(AddAssetHtmlPlugin, [{
                 filepath: path.resolve(__dirname, dllPath),
-                outputPath: 'js',
-                publicPath: (publicPathPrefix + '/js').replace('//', '/'),
+                outputPath: 'public/js',
+                publicPath: (publicPathPrefix + '/public/js').replace('//public/', '/public/'),
             }]).end();
         });
         config.plugin('dll').use(webpack.DllReferencePlugin, [{
