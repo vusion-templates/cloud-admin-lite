@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const chalk = require('chalk');
+const { fixSlash } = require('../utils');
 
 module.exports = {
     prompts: [
@@ -50,9 +51,9 @@ module.exports = {
             },
             {
                 type: 'addMany',
-                destination: dest,
-                base: path.join(base, 'src'),
-                templateFiles: path.join(base, 'src/**'),
+                destination: fixSlash(dest),
+                base: fixSlash(path.join(base, 'src')),
+                templateFiles: fixSlash(path.join(base, 'src/**')),
             },
             {
                 type: 'add',

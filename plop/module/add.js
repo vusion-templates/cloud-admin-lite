@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const chalk = require('chalk');
 const stringify = require('javascript-stringify').stringify;
+const { fixSlash } = require('../utils');
 
 const viewsRoot = path.join(__dirname, '../../src/views');
 const pages = [];
@@ -57,9 +58,9 @@ module.exports = {
         return [
             {
                 type: 'addMany',
-                destination: path.join(pagePath, answers.name),
-                base,
-                templateFiles: base + '/**',
+                destination: fixSlash(path.join(pagePath, answers.name)),
+                base: fixSlash(base),
+                templateFiles: fixSlash(base + '/**'),
             },
             function () {
                 if (!answers.addToSidebar)
