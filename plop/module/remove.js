@@ -58,14 +58,20 @@ module.exports = {
                 let modulesOrder;
                 try {
                     // eslint-disable-next-line no-eval
-                    modulesOrder = eval(modulesOrderContent);
-                    if (!Array.isArray(modulesOrder))
+                    modulesOrder = eval('(function(){return ' + modulesOrderContent + '})()');
+                    if (!Array.isArray(modulesOrder.sidebar))
+                        return;
+                    if (!Array.isArray(modulesOrder.navbar))
+                        return;
+                    if (!Array.isArray(modulesOrder.normal))
                         return;
                 } catch (e) {
                     return;
                 }
-                const indexOf = modulesOrder.indexOf(answers.name);
-                ~indexOf && modulesOrder.splice(indexOf, 1);
+                Object.keys(modulesOrder).forEach((key) => {
+                    const indexOf = modulesOrder[key].indexOf(answers.name);
+                    ~indexOf && modulesOrder[key].splice(indexOf, 1);
+                });
                 fs.writeFileSync(modulesOrderPath, 'export default ' + stringify(modulesOrder, null, 4) + ';\n', 'utf8');
             },
             [

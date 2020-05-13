@@ -1,4 +1,7 @@
-// 用于指定模块顺序
-export default [
-    'overview',
-];
+export default {
+    sidebar: [
+        'overview',
+    ],
+    navbar: [],
+    normal: [],
+};

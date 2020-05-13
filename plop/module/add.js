@@ -11,7 +11,11 @@ fs.readdirSync(viewsRoot).forEach((innerDir) => {
         pages.push(innerDir);
     }
 });
-
+const sortChoices = [
+    '不添加',
+    '添加到侧边导航栏',
+    '添加到顶部导航栏',
+];
 module.exports = {
     prompts: [
         {
@@ -40,10 +44,11 @@ module.exports = {
             },
         },
         {
-            type: 'confirm',
+            type: 'list',
             name: 'addToSidebar',
-            default: true,
-            message: '是否添加到侧边栏？',
+            choices: sortChoices,
+            default: 1,
+            message: '是否添加到导航栏',
         },
     ],
     actions(answers) {
@@ -62,9 +67,9 @@ module.exports = {
                 templateFiles: base + '/**',
             },
             function () {
-                if (!answers.addToSidebar)
+                const index = sortChoices.indexOf(answers.addToSidebar);
+                if (index === -1)
                     return;
-
                 const modulesOrderPath = path.join(pagePath, 'modules.order.js');
                 if (!fs.existsSync(modulesOrderPath))
                     return;
@@ -72,20 +77,29 @@ module.exports = {
                 let modulesOrder;
                 try {
                     // eslint-disable-next-line no-eval
-                    modulesOrder = eval(modulesOrderContent);
-                    if (!Array.isArray(modulesOrder))
+                    modulesOrder = eval('(function(){return ' + modulesOrderContent + '})()');
+                    if (!Array.isArray(modulesOrder.sidebar))
+                        return;
+                    if (!Array.isArray(modulesOrder.navbar))
+                        return;
+                    if (!Array.isArray(modulesOrder.normal))
                         return;
                 } catch (e) {
                     return;
                 }
-                modulesOrder.push(answers.name);
+                const map = {
+                    1: 'sidebar',
+                    2: 'navbar',
+                };
+                modulesOrder[map[index]].push(answers.name);
+                modulesOrder.normal.push(answers.name);
                 fs.writeFileSync(modulesOrderPath, 'export default ' + stringify(modulesOrder, null, 4) + ';\n', 'utf8');
             },
             [
                 `模块 ${name} 已经添加成功。`,
                 `需要注意以下几点：`,
                 `  模块路径在 ${chalk.yellow(`src/views/${answers.page}/${answers.name}`)}`,
-                `  如果要修改模块在侧边栏的位置：${chalk.yellow(`src/views/${answers.page}/modules.order.js`)}`,
+                `  如果要修改模块的排序：${chalk.yellow(`src/views/${answers.page}/modules.order.js`)}`,
                 `  如果要修改模块标题和其它配置：${chalk.yellow(`src/views/${answers.page}/${answers.name}/module/base.js`)}`,
             ].join('\n'),
         ];

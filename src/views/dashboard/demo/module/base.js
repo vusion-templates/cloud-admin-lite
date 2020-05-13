@@ -1,5 +1,9 @@
 export default {
     module: 'demo',
+    navbar: {
+        title: 'demo',
+        to: '/demo',
+    },
     sidebar: {
         title: 'demo',
         children: [

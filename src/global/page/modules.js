@@ -17,7 +17,7 @@ const formatModuleConfig = function (moduleConfig) {
     }
     return modules;
 };
-const sort = function (modules, modulesOrder) {
+export const sort = function (modules, modulesOrder) {
     return modulesOrder.map((moduleName) => {
         if (typeof moduleName === 'string' && moduleName !== '|') {
             return modules[moduleName];
@@ -26,7 +26,7 @@ const sort = function (modules, modulesOrder) {
         }
     });
 };
-export default function (importFiles, modulesOrder) {
+export default function (importFiles) {
     let routes = [];
     const config = [];
 
@@ -52,6 +52,5 @@ export default function (importFiles, modulesOrder) {
     return {
         routes,
         modules,
-        sortedModules: sort(modules, modulesOrder),
     };
 }

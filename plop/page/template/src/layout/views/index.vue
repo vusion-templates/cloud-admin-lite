@@ -31,7 +31,6 @@ export default {
         LDashboard,
         SNavbarRight,
     },
-
     data() {
         return {
             logo: {
@@ -40,44 +39,26 @@ export default {
             userInfo: {
                 username: 'username',
             },
-            navbarConfig: [
-                {
-                    title: 'Cloud UI',
-                    href:
-                        'https://vusion.github.io/cloud-ui/components/quickstart',
-                },
-                {
-                    title: 'Vusion 官网',
-                    href: 'https://vusion.github.io',
-                },
-                '|',
-                {
-                    title: '模板文档',
-                    href: 'https://vusion-templates.github.io/cloud-admin-site',
-                },
-                {
-                    title: 'GitHub',
-                    href:
-                        'https://github.com/vusion-templates/cloud-admin-lite',
-                },
-            ],
-            sidebarConfig: moduleInfos.sortedModules
+            navbarConfig: moduleInfos.navbar
                 .filter(
                     (item) =>
                         item
-                        && item.module
-                        && item.exist !== false
-                        && item.sidebar,
+                        && (item.module ? (item.exist !== false && item.navbar) : true),
                 )
-                .map((item) => item.sidebar),
+                .map((item) => (item.module ? item.navbar : item)),
+            sidebarConfig: moduleInfos.sidebar
+                .filter(
+                    (item) =>
+                        item
+                        && (item.module ? (item.exist !== false && item.sidebar) : true),
+                )
+                .map((item) => (item.module ? item.sidebar : item)),
         };
     },
-
     computed: {
         layoutComponent() {
             return this.hasSideBar ? 'l-dashboard' : 'l-page';
         },
-
         hasSideBar() {
             return this.sidebarConfig && this.sidebarConfig.length;
         },
