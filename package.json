@@ -1,7 +1,7 @@
 {
   "name": "cloud-admin-lite",
   "description": "base on vue cloud-ui.vusion template",
-  "version": "0.6.10",
+  "version": "0.7.0",
   "main": "src/views/dashboard/index.js",
   "scripts": {
     "dev": "vue-cli-service serve",
