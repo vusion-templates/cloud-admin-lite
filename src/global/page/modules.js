@@ -26,21 +26,33 @@ export const sort = function (modules, modulesOrder) {
         }
     });
 };
+const formatServices = function (services, module, serviceFiles) {
+    const service = services[module] = services[module] || {};
+    serviceFiles.keys().forEach((key) => {
+        const serviceFileContent = serviceFiles(key).default;
+        const fileName = key.replace('./service/', '').replace('.js', '');
+        if (fileName !== 'api') {
+            service[fileName] = serviceFileContent;
+        }
+    });
+};
 export default function (importFiles) {
     let routes = [];
     const config = [];
+    const services = {};
 
     importFiles.keys().forEach((key) => {
         const moduleItem = importFiles(key).default;
         if (moduleItem.routes) {
             routes.push(moduleItem.routes);
         }
-        if (moduleItem.config) {
-            if (!moduleItem.config.module) {
-                console.error('must have module attr');
-            }
-            config.push(moduleItem.config);
+        if (!moduleItem.config || !moduleItem.config.module) {
+            throw new Error('must have config module:', key);
         }
+        if (moduleItem.services) {
+            formatServices(services, moduleItem.config.module, moduleItem.services);
+        }
+        config.push(moduleItem.config);
     });
     routes = routes.map((moduleRoutes) => {
         if (typeof moduleRoutes === 'function') {
@@ -49,8 +61,10 @@ export default function (importFiles) {
         return moduleRoutes;
     });
     const modules = formatModuleConfig(config);
+    console.log(services);
     return {
         routes,
         modules,
+        services,
     };
 }

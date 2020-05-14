@@ -6,10 +6,11 @@ import { initRouter } from './router';
 import '@/global/page';
 import './library';
 import '@/global/styles/index.css';
-import './modules';
+import modules from './modules';
 import micro from './micro';
 // import { initI18n } from '@/global/page/i18n';
 
+Vue.prototype.$services = Object.assign({}, Vue.prototype.$services, modules.services);
 if (window.microApp && window.microApp.isMicro) {
     micro.init(initRouter);
 } else {
