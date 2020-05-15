@@ -69,7 +69,6 @@ export default function (importFiles) {
         return moduleRoutes;
     });
     const modules = formatModuleConfig(config);
-    console.log(services);
     return {
         routes,
         modules,
