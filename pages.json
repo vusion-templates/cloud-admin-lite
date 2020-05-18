@@ -2,7 +2,7 @@
     "dashboard": {
         "entry": "./src/views/dashboard/index.js",
         "template": "./src/pages/dashboard.html",
-        "filename": "index.html",
+        "filename": "dashboard.html",
         "favicon": "./src/pages/favicon.ico",
         "title": "dashboard",
         "inject": true,
