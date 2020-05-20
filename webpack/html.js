@@ -13,7 +13,7 @@ module.exports = {
                 filename: 'index.html',
                 templateContent: `<body>此为生成的 index 页面，可以创建相应的 index 页面或者修改 pages.json 中的 filename 进行覆盖。<br>
 目前可访问页面：<br>
-        ${Object.values(pages).map((page) => `<a href="/${page.filename}">${page.filename}</a>`).join('<br>')}</body>`,
+        ${Object.values(pages).map((page) => `<a href="/${page.filename.replace('.html', '')}">${page.filename}</a>`).join('<br>')}</body>`,
                 chunks: [],
             }]); // 顺序不能错，一定要在其他 html 之前
         }
