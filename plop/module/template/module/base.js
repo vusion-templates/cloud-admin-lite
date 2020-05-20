@@ -1,6 +1,6 @@
 export default {
     module: '{{ name }}',
-    sidebar: {
+    {{ layout }}: {
         title: '{{ title }}',
         to: '/{{ name }}',
     },

@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const chalk = require('chalk');
-const stringify = require('javascript-stringify').stringify;
+const Utils = require('../utils');
 
 const viewsRoot = path.join(__dirname, '../../src/views');
 const pages = [];
@@ -12,10 +12,11 @@ fs.readdirSync(viewsRoot).forEach((innerDir) => {
     }
 });
 const sortChoices = [
-    '不添加',
     '添加到侧边导航栏',
     '添加到顶部导航栏',
+    '不添加',
 ];
+
 module.exports = {
     prompts: [
         {
@@ -47,7 +48,16 @@ module.exports = {
             type: 'list',
             name: 'addToSidebar',
             choices: sortChoices,
-            default: 1,
+            default(answers) {
+                const pagePath = path.join(viewsRoot, answers.page || pages[0]);
+                const appConfig = Utils.getAppConfig(pagePath);
+                if (appConfig.layout) {
+                    if (Utils.layoutMap.includes(appConfig.layout)) {
+                        return Utils.layoutMap.indexOf(appConfig.layout);
+                    }
+                }
+                return 0;
+            },
             message: '是否添加到导航栏',
         },
     ],
@@ -58,7 +68,8 @@ module.exports = {
 
         const base = path.join(__dirname, './template');
         const pagePath = path.join(viewsRoot, answers.page);
-
+        const layoutIndex = sortChoices.indexOf(answers.addToSidebar);
+        answers.layout = Utils.layoutMap[layoutIndex];
         return [
             {
                 type: 'addMany',
@@ -67,33 +78,15 @@ module.exports = {
                 templateFiles: base + '/**',
             },
             function () {
-                const index = sortChoices.indexOf(answers.addToSidebar);
-                if (index === -1)
+                if (layoutIndex === -1)
                     return;
-                const modulesOrderPath = path.join(pagePath, 'modules.order.js');
-                if (!fs.existsSync(modulesOrderPath))
-                    return;
-                const modulesOrderContent = fs.readFileSync(modulesOrderPath, 'utf8').trim().replace(/export default |module\.exports +=/, '');
-                let modulesOrder;
-                try {
-                    // eslint-disable-next-line no-eval
-                    modulesOrder = eval('(function(){return ' + modulesOrderContent + '})()');
-                    if (!Array.isArray(modulesOrder.sidebar))
-                        return;
-                    if (!Array.isArray(modulesOrder.navbar))
-                        return;
-                    if (!Array.isArray(modulesOrder.normal))
-                        return;
-                } catch (e) {
-                    return;
+                const modulesOrder = Utils.getModuleOrder(pagePath);
+                if (modulesOrder) {
+                    if (modulesOrder[Utils.layoutMap[layoutIndex]])
+                        modulesOrder[Utils.layoutMap[layoutIndex]].push(answers.name);
+                    modulesOrder.normal.push(answers.name);
+                    Utils.setModuleOrder(pagePath, modulesOrder);
                 }
-                const map = {
-                    1: 'sidebar',
-                    2: 'navbar',
-                };
-                modulesOrder[map[index]].push(answers.name);
-                modulesOrder.normal.push(answers.name);
-                fs.writeFileSync(modulesOrderPath, 'export default ' + stringify(modulesOrder, null, 4) + ';\n', 'utf8');
             },
             [
                 `模块 ${name} 已经添加成功。`,
