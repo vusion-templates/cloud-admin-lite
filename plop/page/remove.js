@@ -19,6 +19,9 @@ module.exports = {
                         pages.push(innerDir);
                     }
                 });
+                if (!pages.length) {
+                    throw new Error('请先添加 page');
+                }
                 return pages;
             },
         },

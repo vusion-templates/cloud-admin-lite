@@ -50,6 +50,9 @@ module.exports = {
             name: 'addToSidebar',
             choices: sortChoices,
             default(answers) {
+                if (!pages.length) {
+                    throw new Error('请先添加 page');
+                }
                 const pagePath = path.join(viewsRoot, answers.page || pages[0]);
                 const appConfig = Utils.getAppConfig(pagePath);
                 if (appConfig.layout) {

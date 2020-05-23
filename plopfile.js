@@ -1,3 +1,7 @@
+const fse = require('fs-extra');
+const path = require('path');
+fse.ensureDirSync(path.join(__dirname, './src/views'));
+
 const promptDirectory = require('inquirer-directory');
 const componentGenerator = require('./plop/component/add');
 const addPageGenerator = require('./plop/page/add');
