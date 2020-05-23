@@ -16,7 +16,7 @@ module.exports = function (port) {
             'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
         },
         proxy: [{
-            context: ['/api/**'],
+            context: ['^/api/**'],
             target: 'http://target.com', // Add host 127.0.0.1 target.com
         }],
     };
