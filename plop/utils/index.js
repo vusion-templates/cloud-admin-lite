@@ -36,4 +36,7 @@ module.exports = {
         const modulesOrderPath = path.join(pagePath, 'modules.order.js');
         fs.writeFileSync(modulesOrderPath, 'export default ' + stringify(modulesOrder, null, 4) + ';\n', 'utf8');
     },
+    fixSlash(filePath) {
+        return filePath.split(path.sep).join('/');
+    },
 };

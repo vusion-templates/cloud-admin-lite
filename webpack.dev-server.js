@@ -1,6 +1,6 @@
 const host = 'localhost';
 const path = require('path');
-const pages = require('./pages.json');
+
 module.exports = function (port) {
     return {
         host,
@@ -15,9 +15,9 @@ module.exports = function (port) {
             'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
             'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
         },
-        // proxy: [{
-        //     context: ['**', `!${publicPathPrefix}/**`, '!/', '!/index.html', '!/index.html/'],
-        //     target: 'http://test.com', // add host 127.0.0.1 test.com
-        // }],
+        proxy: [{
+            context: ['^/api/**'],
+            target: 'http://target.com', // Add host 127.0.0.1 target.com
+        }],
     };
 };

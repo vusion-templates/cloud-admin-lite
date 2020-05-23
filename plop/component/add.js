@@ -1,5 +1,6 @@
 const path = require('path');
 const chalk = require('chalk');
+const { fixSlash } = require('../utils');
 
 const basePath = path.join(__dirname, '../../src/global/components');
 
@@ -49,9 +50,9 @@ module.exports = {
         return [
             {
                 type: 'addMany',
-                destination: path.join(basePath, answers.directory, answers.name),
-                base: path.join(__dirname, './template/multi.vue'),
-                templateFiles: path.join(__dirname, './template/multi.vue') + '/**',
+                destination: fixSlash(path.join(basePath, answers.directory, answers.name)),
+                base: fixSlash(path.join(__dirname, './template/multi.vue')),
+                templateFiles: fixSlash(path.join(__dirname, './template/multi.vue') + '/**'),
                 data: {
                     formatName: fixComponentName(answers.name),
                 },

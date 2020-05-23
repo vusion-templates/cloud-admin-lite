@@ -2,11 +2,13 @@ const path = require('path');
 const fs = require('fs');
 const chalk = require('chalk');
 const Utils = require('../utils');
+const { fixSlash } = Utils;
 const layoutChoices = [
     '左侧主导航',
     '顶部主导航',
     '无导航',
 ];
+
 module.exports = {
     prompts: [
         {
@@ -64,9 +66,9 @@ module.exports = {
             },
             {
                 type: 'addMany',
-                destination: dest,
-                base: path.join(base, 'src'),
-                templateFiles: path.join(base, 'src/**'),
+                destination: fixSlash(dest),
+                base: fixSlash(path.join(base, 'src')),
+                templateFiles: fixSlash(path.join(base, 'src/**')),
             },
             {
                 type: 'add',
