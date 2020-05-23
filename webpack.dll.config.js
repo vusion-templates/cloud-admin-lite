@@ -4,7 +4,7 @@ const webpack = require('webpack');
 module.exports = (env = {}) => {
     // Dll 生成路径
     const dllDir = path.resolve(__dirname, './dll');
-    const publicPath = '/public';
+    const publicPath = '/dist';
 
     // 开发模式的文件信息
     let config = {
@@ -24,8 +24,6 @@ module.exports = (env = {}) => {
         mode: env.NODE_ENV,
         entry: {
             vendor: [
-                'babel-polyfill',
-                'lodash',
                 'vue',
                 'vue-router',
                 // 'vue-i18n',

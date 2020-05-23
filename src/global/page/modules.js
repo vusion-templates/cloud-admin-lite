@@ -1,4 +1,4 @@
-import { isArray, mergeWith } from 'lodash';
+import mergeWith from 'lodash/mergeWith';
 const formatModuleConfig = function (moduleConfig) {
     const modules = {}; // { [name: string]: { [env: string]: {...} } }
 
@@ -9,7 +9,7 @@ const formatModuleConfig = function (moduleConfig) {
     if (modules.global) {
         Object.keys(modules).filter((key) => key !== 'global').forEach((key) => {
             modules[key] = mergeWith({}, modules.global, modules[key], (a, b) => {
-                if (isArray(a) || isArray(b)) {
+                if (Array.isArray(a) || Array.isArray(b)) {
                     return a && b ? b : (a || b);
                 }
             });
@@ -17,7 +17,7 @@ const formatModuleConfig = function (moduleConfig) {
     }
     return modules;
 };
-const sort = function (modules, modulesOrder) {
+export const sort = function (modules, modulesOrder) {
     return modulesOrder.map((moduleName) => {
         if (typeof moduleName === 'string' && moduleName !== '|') {
             return modules[moduleName];
@@ -26,21 +26,41 @@ const sort = function (modules, modulesOrder) {
         }
     });
 };
-export default function (importFiles, modulesOrder) {
+const formatServices = function (services, module, serviceFiles) {
+    const service = services[module] = services[module] || {};
+    serviceFiles.keys().forEach((key) => {
+        const serviceFileContent = serviceFiles(key).default;
+        const moduleServiceName = key.replace('./service/', '').replace('.js', '').split('/').filter((i) => i !== 'index');
+        if (!moduleServiceName.length) {
+            moduleServiceName.push('index');
+        }
+        if (!moduleServiceName.includes('api')) {
+            service[moduleServiceName.reduce((pre, current) => {
+                if (pre) {
+                    current = current.replace(/^[a-z]/, (s) => s.toUpperCase());
+                }
+                return pre + current;
+            }, '')] = serviceFileContent;
+        }
+    });
+};
+export default function (importFiles) {
     let routes = [];
     const config = [];
+    const services = {};
 
     importFiles.keys().forEach((key) => {
         const moduleItem = importFiles(key).default;
         if (moduleItem.routes) {
             routes.push(moduleItem.routes);
         }
-        if (moduleItem.config) {
-            if (!moduleItem.config.module) {
-                console.error('must have module attr');
-            }
-            config.push(moduleItem.config);
+        if (!moduleItem.config || !moduleItem.config.module) {
+            throw new Error('must have config module:', key);
         }
+        if (moduleItem.services) {
+            formatServices(services, moduleItem.config.module, moduleItem.services);
+        }
+        config.push(moduleItem.config);
     });
     routes = routes.map((moduleRoutes) => {
         if (typeof moduleRoutes === 'function') {
@@ -52,6 +72,6 @@ export default function (importFiles, modulesOrder) {
     return {
         routes,
         modules,
-        sortedModules: sort(modules, modulesOrder),
+        services,
     };
 }

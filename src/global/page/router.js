@@ -1,15 +1,17 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { isFunction } from 'lodash';
+import isFunction from 'lodash/isFunction';
 
 import routerLock from '@/global/utils/router.lock';
 
 Vue.use(VueRouter);
 
-export default function (routes, appendTitle) {
+export default function (routes, base, appendTitle) {
     appendTitle = appendTitle || ((a) => a);
     const router = new VueRouter({
         routes,
+        base,
+        mode: 'history',
     });
 
     // 自动传参
@@ -23,14 +25,40 @@ export default function (routes, appendTitle) {
             if (called) {
                 return;
             }
-            called = true;
-            next(...args);
+            if (args && args.length) {
+                called = true;
+                next(...args);
+            }
         };
+        let p = Promise.resolve();
         to.matched.every((item) => {
-            item.meta && item.meta.auth && item.meta.auth(to, from, _next);
+            if (item.meta && item.meta.auth) {
+                p = p.then(() => {
+                    if (called) {
+                        return Promise.reject();
+                    }
+                    const out = item.meta.auth(to, from, _next);
+                    if (out && out.then) {
+                        return out;
+                    } else {
+                        return called ? Promise.reject() : Promise.resolve();
+                    }
+                });
+            }
             return !called;
         });
-        _next();
+        p.then(() => {
+            if (!called) {
+                called = true;
+                next();
+            }
+        }, () => {
+            if (!called) {
+                called = true;
+                console.error('router auth error');
+                next('/');
+            }
+        });
     });
 
     // 自动修改 title

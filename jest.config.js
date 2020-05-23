@@ -11,12 +11,11 @@ module.exports = {
         '^.+\\.jsx?$': 'babel-jest',
     },
     transformIgnorePatterns: [
-        '/node_modules/',
     ],
     moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/src/$1',
-        '^cloud-ui.vusion.css$': '<rootDir>/ui/index.css',
-        '^cloud-ui.vusion$': '<rootDir>/ui/index.js',
+        '^cloud-ui.vusion.css$': '<rootDir>/node_modules/cloud-ui.vusion/dist-raw/index.css',
+        '^cloud-ui.vusion$': '<rootDir>/node_modules/cloud-ui.vusion/dist-raw/index.js',
     },
     snapshotSerializers: [
         'jest-serializer-vue',

@@ -1,10 +1,15 @@
 const promptDirectory = require('inquirer-directory');
-const moduleGenerator = require('./plop/module');
-const componentGenerator = require('./plop/component');
-const pageGenerator = require('./plop/page');
+const componentGenerator = require('./plop/component/add');
+const addPageGenerator = require('./plop/page/add');
+const removePageGenerator = require('./plop/page/remove');
+const addModuleGenerator = require('./plop/module/add');
+const removeModuleGenerator = require('./plop/module/remove');
+
 module.exports = function (plop) {
     plop.setPrompt('directory', promptDirectory);
     plop.setGenerator('global component', componentGenerator);
-    plop.setGenerator('page', pageGenerator);
-    plop.setGenerator('module', moduleGenerator);
+    plop.setGenerator('add-page', addPageGenerator);
+    plop.setGenerator('remove-page', removePageGenerator);
+    plop.setGenerator('add-module', addModuleGenerator);
+    plop.setGenerator('remove-module', removeModuleGenerator);
 };

@@ -3,9 +3,8 @@
         "baseUrl": "./",
         "paths": {
             "@/*": ["./src/*"],
-            "cloud-ui.vusion.css": ["./ui/index.css"],
-            "cloud-ui.vusion": ["./ui/index.js"]
+            "cloud-ui.vusion.css": ["./node_modules/cloud-ui.vusion/dist-raw/index.css"]
         }
     },
-    "exclude": ["node_modules", "public", "dll"]
+    "exclude": ["node_modules", "public", "dist", "dll", "plop"]
 }

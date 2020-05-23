@@ -8,4 +8,4 @@
 
 [demo](https://vusion-templates.github.io/cloud-admin/)
 
-[模板 demo](https://vusion-templates.github.io/cloud-admin-template/)
+[模板 demo](https://vusion-templates.github.io/cloud-admin-lite/)

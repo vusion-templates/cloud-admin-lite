@@ -25,6 +25,7 @@ node_modules/
 
 # Build Output
 public/
+dist/
 
 # Coverage
 lib-cov
@@ -33,3 +34,6 @@ coverage
 
 # Test
 test/cases/*/dest
+
+#tmp
+.tmp

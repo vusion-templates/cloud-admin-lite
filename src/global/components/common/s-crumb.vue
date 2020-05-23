@@ -6,7 +6,8 @@
     </u-crumb>
 </template>
 <script>
-import { isFunction, isObject } from 'lodash';
+import isFunction from 'lodash/isFunction';
+import isObject from 'lodash/isObject';
 import { MSubscriber } from 'cloud-ui.vusion';
 export default {
     mixins: [MSubscriber],
@@ -49,6 +50,11 @@ export default {
             },
             immediate: true,
         },
+    },
+    created() {
+        this.$subscribe('custom.crumb', (value) => {
+            this.crumbs = value;
+        });
     },
 };
 </script>
