@@ -13,9 +13,9 @@
     </div>
 </template>
 <script>
-import { MSubscriber } from 'cloud-ui.vusion';
+import { MSubscriber, MPublisher } from 'cloud-ui.vusion';
 export default {
-    mixins: [MSubscriber],
+    mixins: [MSubscriber, MPublisher],
     subscribe: {
         'demo.detail'(detail) {
             this.detail = detail;
@@ -25,6 +25,29 @@ export default {
         return {
             detail: {},
         };
+    },
+    watch: {
+        $route: {
+            handler(current, prev) {
+                if (current.fullPath !== (prev && prev.fullPath)) {
+                    this.$publish('custom.crumb', [
+                        {
+                            title: '自定义面包屑-1',
+                            to: '/overview',
+                        },
+                        {
+                            title: '自定义面包屑-2',
+                            to: '/demo/form',
+                        },
+                        {
+                            title: '当前页',
+                            type: 'text',
+                        },
+                    ]);
+                }
+            },
+            immediate: true,
+        },
     },
 };
 </script>
