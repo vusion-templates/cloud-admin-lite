@@ -8,9 +8,6 @@ const publicPathPrefix = process.env.SITE_TYPE === 'gh-pages' ? `https://vusion-
 const port = 8810;
 
 const devServer = require('./webpack.dev-server')(port);
-const proxy = devServer.proxy;
-// vue-cli 对 proxy 不支持 context 的自定义
-delete devServer.proxy;
 
 const isMicro = !!process.env.MICRO_APP;
 const webpackMicro = require('./webpack/micro');
@@ -43,7 +40,7 @@ const vueConfig = {
     ...baseConfig,
     pages,
     chainWebpack(config) {
-        webpackHtml.chain(config);
+        webpackHtml.chain(config, isDevelopment);
         webpackOptimization.chain(config, isDevelopment, pages);
         if (isMicro) {
             webpackMicro.chain(config, isDevelopment);
@@ -54,9 +51,6 @@ const vueConfig = {
         config.output.jsonpFunction('webpackJsonp' + pkg.name);
     },
     devServer,
-    pluginOptions: {
-        proxy,
-    },
 };
 
 module.exports = vueConfig;

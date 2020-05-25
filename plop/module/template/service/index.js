@@ -1,10 +1,6 @@
 import { createService } from '@/global/utils/service';
-import apis from './apis';
+import apis from './api';
 
-const service = createService(apis, {
-    config: {
-        baseURL: '',
-    },
-});
+const service = createService(apis);
 
 export default service;

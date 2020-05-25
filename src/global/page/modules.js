@@ -30,18 +30,20 @@ const formatServices = function (services, module, serviceFiles) {
     const service = services[module] = services[module] || {};
     serviceFiles.keys().forEach((key) => {
         const serviceFileContent = serviceFiles(key).default;
-        const moduleServiceName = key.replace('./service/', '').replace('.js', '').split('/').filter((i) => i !== 'index');
-        if (!moduleServiceName.length) {
-            moduleServiceName.push('index');
+        const moduleServiceName = key.replace('./service/', '').replace('.js', '').split('/');
+        if (moduleServiceName.length > 1) {
+            const last = moduleServiceName.pop();
+            if (last !== 'index') {
+                moduleServiceName.push(last);
+            }
         }
-        if (!moduleServiceName.includes('api')) {
-            service[moduleServiceName.reduce((pre, current) => {
-                if (pre) {
-                    current = current.replace(/^[a-z]/, (s) => s.toUpperCase());
-                }
-                return pre + current;
-            }, '')] = serviceFileContent;
-        }
+        const namespace = moduleServiceName.reduce((pre, current) => {
+            if (pre) {
+                current = current.replace(/^[a-z]/, (s) => s.toUpperCase()).replace(/-([a-z])/g, (a, s) => s.toUpperCase());
+            }
+            return pre + current;
+        }, '');
+        service[namespace] = serviceFileContent;
     });
 };
 export default function (importFiles) {
