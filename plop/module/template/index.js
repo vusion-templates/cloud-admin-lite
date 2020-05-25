@@ -4,5 +4,5 @@ import routes from './routes';
 export default {
     config,
     routes,
-    services: require.context('./', true, /\/service\/(.*?)\.js/),
+    services: require.context('./', true, /\/service\/(.*?)\.js$/),
 };
