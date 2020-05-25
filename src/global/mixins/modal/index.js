@@ -1,5 +1,6 @@
 import cache from './cache';
 export default {
+    resetModal: true, // 设置是否需要reset
     props: {
         showModal: { type: Boolean, default: false },
     },
@@ -23,6 +24,8 @@ export default {
             this.show = !!value;
         });
         this.$watch('show', (value) => {
+            if (this.$options.resetModal && !value)
+                this.resetModal();
             this.$emit('update:showModal', value);
         });
     },
@@ -44,6 +47,14 @@ export default {
         close(data) {
             Object.assign(this, data);
             this.show = false;
+        },
+        resetModal() {
+            const staticData = (this.$options.staticData || []).slice();
+            const resetData = this.$options.data.apply(this);
+            staticData.push('show');
+            for (const name of staticData)
+                delete resetData[name];
+            Object.assign(this, resetData);
         },
     },
 };
