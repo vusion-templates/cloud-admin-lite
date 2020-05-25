@@ -15,9 +15,10 @@ module.exports = function (port) {
             'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
             'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
         },
-        proxy: [{
-            context: ['^/api/**'],
-            target: 'http://target.com', // Add host 127.0.0.1 target.com
-        }],
+        proxy: {
+            '^/api/': {
+                target: 'http://target.com', // Add host 127.0.0.1 target.com
+            },
+        },
     };
 };

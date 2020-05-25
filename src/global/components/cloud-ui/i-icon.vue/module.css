@@ -1,7 +1,9 @@
 @import 'cloud-ui.vusion/src/components/i-icon.vue/module.css';
-.root[name="notice"]:before {
+.root::before {
     font-size: inherit;
-    margin: 0px;
-    vertical-align: middle;
-    icon-font: url(./assets/notice.svg);
+    vertical-align: initial;
+    margin: 0;
+}
+.root[name="notice"]::before {
+    icon-font: url('i-material-design.vue/assets/outlined/notifications.svg');
 }

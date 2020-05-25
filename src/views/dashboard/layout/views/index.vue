@@ -26,6 +26,7 @@
 import moduleInfos from '../../modules';
 import LDashboard from '@/global/layouts/l-dashboard.vue';
 import SNavbarRight from '../components/s-navbar-right.vue';
+import appConfig from '@/views/dashboard/app.config';
 export default {
     components: {
         LDashboard,
@@ -34,7 +35,7 @@ export default {
     data() {
         return {
             logo: {
-                sub: '模板',
+                sub: appConfig.title,
             },
             userInfo: {
                 username: 'username',
