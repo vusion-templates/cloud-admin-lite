@@ -40,7 +40,7 @@ const vueConfig = {
     ...baseConfig,
     pages,
     chainWebpack(config) {
-        webpackHtml.chain(config);
+        webpackHtml.chain(config, isDevelopment);
         webpackOptimization.chain(config, isDevelopment, pages);
         if (isMicro) {
             webpackMicro.chain(config, isDevelopment);
