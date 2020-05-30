@@ -1,7 +1,7 @@
 {
   "name": "cloud-admin-template",
   "description": "base on vue cloud-ui.vusion",
-  "version": "0.8.13",
+  "version": "0.8.14",
   "scripts": {
     "dev": "vue-cli-service serve",
     "dev:micro": "cross-env MICRO_APP=true vue-cli-service serve",
