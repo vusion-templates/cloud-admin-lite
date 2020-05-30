@@ -24,10 +24,7 @@ export default {
         },
         config: Object,
         entries: [Object, String],
-        masterName: {
-            type: String,
-            required: true,
-        },
+        masterName: String,
         slaveName: {
             type: String,
             required: true,
