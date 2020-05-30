@@ -14,7 +14,7 @@ const isPromise = function (func) {
     return func && typeof func.then === 'function';
 };
 const requester = function (requestInfo) {
-    const { url, config } = requestInfo;
+    const { url, config = {} } = requestInfo;
     const { path, method, body = {}, headers = {}, query = {} } = url;
     let baseURL = '';
     if (config && config.baseURL) {
