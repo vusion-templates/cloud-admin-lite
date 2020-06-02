@@ -7,7 +7,7 @@ module.exports = {
                 injectH: false,
             },
             polyfills: [
-                'es6.symbol',
+                'es.symbol',
             ],
         }],
     ],

@@ -79,10 +79,12 @@ export default {
                             {
                                 title: 'cloud-admin-1',
                                 to: '/demo/micro/cloud-admin-1/demo/form/setting',
+                                activeRule: '/demo/micro/cloud-admin-1/',
                             },
                             {
                                 title: 'cloud-admin-2',
                                 to: '/demo/micro/cloud-admin-2/demo/detail/info',
+                                activeRule: '/demo/micro/cloud-admin-2/',
                             },
                         ],
                     },

@@ -12,6 +12,18 @@ export default function (routes, base, appendTitle) {
         routes,
         base,
         mode: 'history',
+        scrollBehavior(to, from, savedPosition) {
+            if (to.hash) {
+                return {
+                    selector: to.hash,
+                };
+            }
+            if (savedPosition) {
+                return savedPosition;
+            } else {
+                return { x: 0, y: 0 };
+            }
+        },
     });
 
     // 自动传参
