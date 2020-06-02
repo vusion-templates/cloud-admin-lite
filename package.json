@@ -30,6 +30,10 @@
     "cloud-ui",
     "template"
   ],
+  "template": {
+    "name": "cloud-admin-template",
+    "version": "0.8.x"
+  },
   "author": "zhangsanshi5566@gmail.com",
   "repository": {
     "type": "git",
