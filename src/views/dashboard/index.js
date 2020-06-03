@@ -15,6 +15,7 @@ if (window.microApp && window.microApp.isMicro) {
     micro.init(initRouter);
 } else {
     const app = new Vue({
+        name: 'app',
         router: initRouter(),
         ...App,
         // i18n: initI18n(),

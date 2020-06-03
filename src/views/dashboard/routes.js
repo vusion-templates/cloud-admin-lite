@@ -1,9 +1,9 @@
 import Layout from './layout/views/index.vue';
-import AppConfig from './app.config';
+import appConfig from './app.config';
 import moduleInfos from './modules';
 import utils from '@/global/utils';
-let defaultRoute = AppConfig.router.defaults;
-let notFoundRoute = AppConfig.router.notFound;
+let defaultRoute = appConfig.router.defaults;
+let notFoundRoute = appConfig.router.notFound;
 
 if (!utils.hasRoute(moduleInfos.routes, defaultRoute)) {
     if (moduleInfos.routes.length) {
