@@ -1,4 +1,4 @@
-import routes from '!@vusion/routes-loader?scopeName=notice!./routesMap';
+import routes from './routes.map.js?scopeName=notice';
 import config from './module/base';
 export default {
     routes,

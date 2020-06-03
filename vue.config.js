@@ -13,6 +13,7 @@ const isMicro = !!process.env.MICRO_APP;
 const webpackMicro = require('./webpack/micro');
 const webpackDll = require('./webpack/dll');
 const webpackStyle = require('./webpack/style');
+const webpackRoutes = require('./webpack/routes');
 const webpackHtml = require('./webpack/html');
 const webpackOptimization = require('./webpack/optimization');
 
@@ -48,6 +49,7 @@ const vueConfig = {
             webpackDll.chain(config, publicPathPrefix, isDevelopment);
         }
         webpackStyle.chain(config);
+        webpackRoutes.chain(config);
         config.output.jsonpFunction('webpackJsonp' + pkg.name);
     },
     devServer,

@@ -1,4 +1,4 @@
-import routes from '!@vusion/routes-loader?scopeName=exception!./routesMap';
+import routes from './routes.map.js?scopeName=exception';
 import config from './module/base';
 export default {
     routes,

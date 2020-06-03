@@ -1,4 +1,4 @@
-import routes from '!@vusion/routes-loader?scopeName=account!./routesMap';
+import routes from './routes.map.js?scopeName=account';
 import config from './module/base';
 export default {
     routes,
