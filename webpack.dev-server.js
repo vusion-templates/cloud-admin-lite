@@ -17,7 +17,7 @@ module.exports = function (port) {
         },
         proxy: {
             '^/api/': {
-                target: 'http://target.com', // Add host 127.0.0.1 target.com
+                target: 'http://target.com', // Add your proxy target
             },
         },
     };
