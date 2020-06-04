@@ -6,8 +6,8 @@ export default {
     },
     center: {
         meta: {
-            title: '个人中心',
-            crumb: '个人中心',
+            title: '基本信息',
+            crumb: '基本信息',
         },
     },
     setting: {

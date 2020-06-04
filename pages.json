@@ -4,7 +4,7 @@
         "template": "./src/pages/dashboard.html",
         "filename": "dashboard.html",
         "favicon": "./src/pages/favicon.ico",
-        "title": "dashboard",
+        "title": "管理系统",
         "inject": true,
         "chunks": [
             "chunk-vendors",

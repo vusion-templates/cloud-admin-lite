@@ -13,7 +13,7 @@ export default {
         return {
             tabs: [
                 {
-                    title: '个人中心',
+                    title: '基本信息',
                     to: '/account/center',
                 },
                 {
