@@ -14,7 +14,7 @@ export default {
             tabs: [
                 {
                     title: '列表页',
-                    to: '/demo/list/tabs/list',
+                    to: '/demo/list/tabs/basic',
                 },
                 {
                     title: '本地分页',

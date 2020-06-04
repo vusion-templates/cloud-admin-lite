@@ -1,4 +1,4 @@
-import routes from './routes';
+import routes from './routes.map.js?scopeName=demo';
 import config from './module/base';
 export default {
     routes,
