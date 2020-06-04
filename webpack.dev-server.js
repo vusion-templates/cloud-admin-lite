@@ -5,6 +5,7 @@ module.exports = function (port) {
     return {
         host,
         port,
+        progress: !process.env.SERVER_DEVELOP,
         open: true,
         disableHostCheck: true,
         contentBase: path.join(__dirname),
