@@ -1,7 +1,7 @@
 {
   "name": "cloud-admin-template",
   "description": "base on vue cloud-ui.vusion",
-  "version": "0.8.24",
+  "version": "0.8.25",
   "scripts": {
     "cache-install": "npx cache-install",
     "dev": "vue-cli-service serve",
@@ -60,7 +60,7 @@
     "babel-eslint": "^10.1.0",
     "babel-jest": "^23.6.0",
     "chalk": "^3.0.0",
-    "cloud-admin-sdk": "^0.1.5",
+    "cloud-admin-sdk": "^0.1.6",
     "copy-webpack-plugin": "^5.0.4",
     "core-js": "^3.6.5",
     "cross-env": "^7.0.2",
