@@ -1,4 +1,4 @@
-import App from './app.vue';
+import App from './index.vue';
 import Vue from 'vue';
 export default {
     init(initRouter) {

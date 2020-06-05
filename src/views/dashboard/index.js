@@ -1,7 +1,7 @@
 import '@/global/styles/theme.css';
 
 import Vue from 'vue';
-import App from './app.vue';
+import App from './index.vue';
 import { initRouter } from './router';
 import '@/global/page';
 import './library';
