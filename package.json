@@ -1,7 +1,7 @@
 {
   "name": "cloud-admin-template",
   "description": "base on vue cloud-ui.vusion",
-  "version": "0.8.28",
+  "version": "0.8.29",
   "scripts": {
     "cache-install": "npx cache-install",
     "dev": "vue-cli-service serve",
