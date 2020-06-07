@@ -23,6 +23,7 @@ export default {
             type: String,
         },
         config: Object,
+        activeFn: Function,
         entries: [Object, String],
         masterName: String,
         slaveName: {
@@ -40,6 +41,7 @@ export default {
             domReady: false,
             defaultDom: `<div id="${nodeId}"></div>`,
             loading: true,
+            configSingle: {},
         };
     },
     watch: {
@@ -54,6 +56,9 @@ export default {
                 this.loadEntries(entries);
             },
             immediate: true,
+        },
+        config(config) {
+            merge(this.configSingle, config);
         },
     },
     mounted() {
@@ -70,8 +75,10 @@ export default {
             const location = window.location;
             const pathname = location.pathname;
             const activePath = pathname;
-            return merge({
-                urlRule: [activePath],
+            return merge(this.configSingle, {
+                urlRule: [this.activeFn || function (target) {
+                    return target.pathname.startsWith(activePath);
+                }],
                 customProps: {
                     node: '#' + this.nodeId,
                     prefix: this.prefix,

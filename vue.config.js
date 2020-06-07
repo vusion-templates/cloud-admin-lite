@@ -1,16 +1,23 @@
-const path = require('path');
 const pkg = require('./package.json');
 const pages = require('./pages.json');
-
+const argv = require('minimist')(process.argv.slice(2));
+if (argv.pages) {
+    argv.pages = argv.pages.split(',');
+    Object.keys(pages).forEach((key) => {
+        if (!argv.pages.includes(key))
+            delete pages[key];
+    });
+}
 const isDevelopment = process.env.NODE_ENV === 'development';
 const publicPathPrefix = process.env.SITE_TYPE === 'gh-pages' ? `https://vusion-templates.github.io/${pkg.name}` : '/';
 
-const port = 8810;
+const port = argv.port || 8810;
 
 const devServer = require('./webpack.dev-server')(port);
 
-const isMicro = !!process.env.MICRO_APP;
 const webpackMicro = require('./webpack/micro');
+const isMicro = webpackMicro.isMicro(pages);
+
 const webpackDll = require('./webpack/dll');
 const webpackStyle = require('./webpack/style');
 const webpackRoutes = require('./webpack/routes');
