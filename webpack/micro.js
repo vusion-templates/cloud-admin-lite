@@ -6,7 +6,7 @@ module.exports = {
     isMicro(pages) {
         const pagesValue = Object.values(pages);
         if (pagesValue.length > 1) {
-            if (pagesValue.filter((i) => i.micro)) {
+            if (pagesValue.find((i) => i.micro)) {
                 console.error('microApp only support single build');
                 process.exit(1);
             }

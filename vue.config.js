@@ -8,6 +8,14 @@ if (argv.pages) {
             delete pages[key];
     });
 }
+if (Object.keys(pages).length > 1) {
+    Object.keys(pages).forEach((key) => {
+        if (pages[key].micro) {
+            console.warn(`page[${key}] is microApp`);
+            delete pages[key];
+        }
+    });
+}
 const isDevelopment = process.env.NODE_ENV === 'development';
 const publicPathPrefix = process.env.SITE_TYPE === 'gh-pages' ? `https://vusion-templates.github.io/${pkg.name}` : '/';
 
