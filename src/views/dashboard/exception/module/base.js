@@ -1,5 +1,6 @@
 export default {
     module: 'exception',
+    title: '异常页',
     sidebar: {
         title: '异常页',
         children: [
