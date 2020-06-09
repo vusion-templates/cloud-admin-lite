@@ -1,6 +1,9 @@
 import { createService } from '@/global/utils/service';
 import api from './api';
-const service = createService(api, {
+import apiConfig from './api.config';
+import merge from 'lodash/merge';
+
+const service = createService(merge(api, apiConfig), {
     config: {
         baseURL: 'https://api.apiopen.top/',
     },
