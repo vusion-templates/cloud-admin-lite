@@ -23,6 +23,8 @@ const requester = function (requestInfo) {
             throw new Error('set baseURL only support cross domain');
         }
     }
+    const postprocess = config && config.postprocess || ((result) => result);
+
     headers['Content-Type'] = headers['Content-Type'] || 'application/json';
     const req = axios({
         params: query,
@@ -34,14 +36,15 @@ const requester = function (requestInfo) {
         withCredentials: !baseURL,
     });
     return req.then(({ data }) => {
-        if ((data.code + '').startsWith('2')) {
+        if (data.code === undefined) // 不是 code 格式的不处理
             return data;
-        }
+        if ((data.code + '').startsWith('2'))
+            return data;
         return Promise.reject({
             code: data.code,
             msg: data.msg,
         });
-    }).catch((err) => {
+    }).then(postprocess).catch((err) => {
         // 处理code
         let handleOut;
         if (err === 'expired request') {
@@ -69,5 +72,11 @@ const requester = function (requestInfo) {
     });
 };
 export const createService = function createService(apiSchemaList, serviceConfig) {
-    return new Service(apiSchemaList, serviceConfig, requester);
+    const service = new Service(apiSchemaList, serviceConfig, requester);
+    service.use((ctx, next) => {
+        if (ctx.config && ctx.config.preprocess)
+            ctx.config.preprocess(ctx);
+        return next();
+    });
+    return service;
 };

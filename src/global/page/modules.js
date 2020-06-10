@@ -30,7 +30,7 @@ const formatServices = function (services, module, serviceFiles) {
     const service = services[module] = services[module] || {};
     serviceFiles.keys().forEach((key) => {
         const serviceFileContent = serviceFiles(key).default;
-        const moduleServiceName = key.replace('./service/', '').replace('.js', '').split('/');
+        const moduleServiceName = key.replace('./services/', '').replace('.js', '').split('/');
         if (moduleServiceName.length > 1) {
             const last = moduleServiceName.pop();
             if (last !== 'index') {
