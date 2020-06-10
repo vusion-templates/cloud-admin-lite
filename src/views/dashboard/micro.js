@@ -13,6 +13,7 @@ export default {
             }
             microApp.customProps = data.customProps;
             instance = new Vue({
+                name: 'app',
                 router: initRouter(data.customProps.prefix),
                 ...App,
             }).$mount(data.customProps.node);
@@ -22,6 +23,7 @@ export default {
             const el = instance.$el;
             instance.$destroy();
             instance = null;
+            microApp.customProps = null;
             el.parentNode.removeChild(el);
             publish(topic + ':unmounted', new Date());
         });

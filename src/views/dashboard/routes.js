@@ -1,4 +1,5 @@
 import Layout from './layout/views/index.vue';
+import { LWrapper } from 'cloud-ui.vusion';
 import appConfig from './app.config';
 import moduleInfos from './modules';
 import utils from '@/global/utils';
@@ -20,7 +21,7 @@ if (!utils.hasRoute(moduleInfos.routes, notFoundRoute)) {
 export default [
     {
         path: '/',
-        component: Layout,
+        component: appConfig.layout === 'noNav' ? LWrapper : Layout,
         children: [
             { path: '', redirect: defaultRoute },
             ...moduleInfos.routes,
