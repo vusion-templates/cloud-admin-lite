@@ -1,11 +1,12 @@
 export default {
     module: 'demo',
+    title: 'Demo',
     navbar: {
-        title: 'demo',
+        title: 'Demo',
         to: '/demo',
     },
     sidebar: {
-        title: 'demo',
+        title: 'Demo',
         children: [
             {
                 subnav: [
