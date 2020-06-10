@@ -48,7 +48,7 @@
 </template>
 <script>
 import page from '@/global/mixins/page/page';
-import noticeService from '@/views/dashboard/demo/service';
+import noticeService from '@/views/dashboard/demo/services/instance';
 export default {
     mixins: [page],
     data() {

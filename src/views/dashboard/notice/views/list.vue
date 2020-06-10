@@ -46,7 +46,7 @@
 </template>
 <script>
 import page from '@/global/mixins/page/page';
-import noticeService from '../service';
+import noticeService from '../services/instance';
 export default {
     mixins: [page],
     data() {
