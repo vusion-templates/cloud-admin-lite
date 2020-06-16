@@ -26,8 +26,15 @@ const requester = function (requestInfo) {
     });
     return req;
 };
-export const createService = function createService(apiSchemaList, serviceConfig) {
-    const service = new Service(apiSchemaList, serviceConfig, requester);
-    addConfigs(service);
-    return service;
+const service = new Service(requester);
+addConfigs(service);
+export const createService = function createService(apiSchemaList, serviceConfig, dynamicServices) {
+    const fixServiceConfig = serviceConfig || {};
+    fixServiceConfig.config = fixServiceConfig.config || {};
+    Object.assign(fixServiceConfig.config, {
+        httpCode: true,
+        httpError: true,
+    });
+    serviceConfig = fixServiceConfig;
+    return service.generator(apiSchemaList, dynamicServices, serviceConfig);
 };

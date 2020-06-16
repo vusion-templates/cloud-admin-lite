@@ -52,12 +52,4 @@ export default function (service) {
     }
     service.postConfig.set('httpCode', httpCode);
     service.postConfig.set('httpError', httpError);
-
-    const fixServiceConfig = service.serviceConfig || {};
-    fixServiceConfig.config = fixServiceConfig.config || {};
-    Object.assign(fixServiceConfig.config, {
-        httpCode: true,
-        httpError: true,
-    });
-    service.serviceConfig = fixServiceConfig;
 }
