@@ -3,14 +3,18 @@ import errHandles from './errHandles';
 const isPromise = function (func) {
     return func && typeof func.then === 'function';
 };
-function httpCode({ data }, params, requestInfo) {
+function httpCode(response, params, requestInfo) {
+    const data = response.data;
     if ((data.code === undefined) || (data.code + '').startsWith('2')) {
-        return data;
+        return response;
     }
     return Promise.reject({
         code: data.code,
         msg: data.msg,
     });
+}
+function shortResponse(response, params, requestInfo) {
+    return response.data;
 }
 const httpError = {
     reject(err, params, requestInfo) {
@@ -52,4 +56,5 @@ export default function (service) {
     }
     service.postConfig.set('httpCode', httpCode);
     service.postConfig.set('httpError', httpError);
+    service.postConfig.set('shortResponse', shortResponse);
 }

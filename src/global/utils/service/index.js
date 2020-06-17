@@ -23,6 +23,9 @@ const requester = function (requestInfo) {
         data: formatContentType(headers['Content-Type'], body),
         headers,
         withCredentials: !baseURL,
+        xsrfCookieName: 'csrfToken',
+        xsrfHeaderName: 'x-csrf-token',
+
     });
     return req;
 };
@@ -34,6 +37,7 @@ export const createService = function createService(apiSchemaList, serviceConfig
     Object.assign(fixServiceConfig.config, {
         httpCode: true,
         httpError: true,
+        shortResponse: true,
     });
     serviceConfig = fixServiceConfig;
     return service.generator(apiSchemaList, dynamicServices, serviceConfig);
