@@ -16,10 +16,10 @@ module.exports = function (port) {
             'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
             'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
         },
-        proxy: {
-            '^/api/': {
-                target: 'http://target.com', // Add your proxy target
-            },
-        },
+        proxy: [{
+            context: ['/gateway/**'],
+            changeOrigin: true,
+            target: 'http://api.gateway.lowcode',
+        }],
     };
 };
