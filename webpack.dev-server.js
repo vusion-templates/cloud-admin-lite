@@ -20,6 +20,11 @@ module.exports = function (port) {
             context: ['/gateway/**'],
             changeOrigin: true,
             target: 'http://api.gateway.lowcode',
+            autoRewrite: true,
+            onProxyReq(proxyReq, req, res) {
+                proxyReq.removeHeader('x-forwarded-port');
+                proxyReq.removeHeader('x-forwarded-host');
+            },
         }],
     };
 };
