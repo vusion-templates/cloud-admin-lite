@@ -1,5 +1,6 @@
 const host = 'localhost';
 const path = require('path');
+const pkg = require('./package.json');
 
 module.exports = function (port) {
     return {
@@ -17,8 +18,32 @@ module.exports = function (port) {
             'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
         },
         proxy: {
-            '^/api/': {
-                target: 'http://target.com', // Add your proxy target
+            '^/gateway/': {
+                target: 'http://api.gateway.lowcode',
+                changeOrigin: true,
+                autoRewrite: true,
+                onProxyReq(proxyReq, req, res) {
+                    proxyReq.removeHeader('x-forwarded-proto');
+                    proxyReq.removeHeader('x-forwarded-host');
+                    proxyReq.removeHeader('x-forwarded-port');
+                    proxyReq.removeHeader('x-forwarded-for');
+
+                    const cookies = {};
+                    let cookie = proxyReq.getHeader('cookie');
+                    cookie = typeof cookie === 'string' ? cookie.split('; ') : cookie;
+                    if (Array.isArray(cookie)) {
+                        cookie.forEach((item) => {
+                            const arr = item.split('=');
+                            if (arr.length === 2)
+                                cookies[arr[0].toLowerCase()] = arr[1].trim();
+                        });
+                    }
+                    cookies.authorization && proxyReq.setHeader('authorization', cookies.authorization);
+                    cookies.userName && proxyReq.setHeader('UserName', cookies.userName);
+                    proxyReq.setHeader('DomainName', pkg.name.replace(/-client$/, ''));
+
+                    // console.log(proxyReq.path, proxyReq.getHeaders());
+                },
             },
         },
     };
