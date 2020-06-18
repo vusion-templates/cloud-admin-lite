@@ -16,15 +16,16 @@ module.exports = function (port) {
             'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
             'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
         },
-        proxy: [{
-            context: ['/gateway/**'],
-            changeOrigin: true,
-            target: 'http://api.gateway.lowcode',
-            autoRewrite: true,
-            onProxyReq(proxyReq, req, res) {
-                proxyReq.removeHeader('x-forwarded-port');
-                proxyReq.removeHeader('x-forwarded-host');
+        proxy: {
+            '^/gateway/': {
+                target: 'http://api.gateway.lowcode',
+                changeOrigin: true,
+                autoRewrite: true,
+                onProxyReq(proxyReq, req, res) {
+                    proxyReq.removeHeader('x-forwarded-port');
+                    proxyReq.removeHeader('x-forwarded-host');
+                },
             },
-        }],
+        },
     };
 };
