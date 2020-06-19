@@ -9,7 +9,9 @@ export default {
         options.toast = options.toast || '没有访问该页面的权限';
         const router = options.router;
 
-        // VUE_APP_DEVELOPMENT
+        /**
+         * 账号与权限中心验证
+         */
         const base = router.options.base.replace(/\/$/, '');
         const DomainName = pkg.name.replace(/-client$/, '');
 
@@ -25,7 +27,8 @@ export default {
             $auth = Vue.prototype.$auth = {};
             resources.forEach((resource) => $auth[resource.ResourceValue] = resource);
 
-            toComponents.forEach((comp) => comp._updateVisibleByAuth());
+            toComponents.forEach((comp) => comp.updateStateByAuth());
+            authComponents.forEach((comp) => comp.updateStateByAuth());
         }).catch((e) => {
             // 获取权限异常
             promise = undefined;
@@ -37,14 +40,13 @@ export default {
         if (process.env.VUE_APP_DESIGNER)
             return;
 
-        // 账号与权限中心验证
         router.beforeEach((to, from, next) => {
             if (to.path === options.redirect || to.redirectedFrom === options.redirect)
                 return next();
 
             const checkAuth = () => {
-                const routePath = base + to.path;
-                if ($auth[routePath])
+                const authPath = base + to.path;
+                if ($auth[authPath])
                     next();
                 else {
                     options.toast && Vue.prototype.$toast.show(options.toast);
@@ -61,22 +63,26 @@ export default {
             }
         });
 
-        // 自动隐藏组件功能
+        /**
+         * 自动隐藏路由组件功能
+         */
         const toComponents = [];
         if (options.autoHide) {
             Vue.mixin({
                 mounted() {
                     if (this.to) {
                         toComponents.push(this);
-                        this._updateVisibleByAuth();
+                        this.updateVisibleByAuth();
                     }
                 },
                 destroyed() {
-                    const index = toComponents.indexOf(this);
-                    ~index && toComponents.splice(index, 1);
+                    if (this.to) {
+                        const index = toComponents.indexOf(this);
+                        ~index && toComponents.splice(index, 1);
+                    }
                 },
                 methods: {
-                    _updateVisibleByAuth() {
+                    updateVisibleByAuth() {
                         if (!this.to || !$auth)
                             return;
 
@@ -84,12 +90,51 @@ export default {
                         if (typeof to === 'object')
                             to = to.path;
 
-                        const routePath = base + to;
-                        this.$el && (this.$el.style.display = $auth[routePath] ? '' : 'none');
+                        const authPath = base + to;
+                        this.$el && (this.$el.style.display = $auth[authPath] ? '' : 'none');
                     },
                 },
             });
         }
+
+        /**
+         * 组件权限项功能
+         */
+        const authComponents = [];
+        Vue.mixin({
+            mounted() {
+                if (this.$attrs['vusion-auth-id']) {
+                    authComponents.push(this);
+                    this.updatePropByAuth();
+                }
+            },
+            destroyed() {
+                if (this.$attrs['vusion-auth-id']) {
+                    const index = authComponents.indexOf(this);
+                    ~index && authComponents.splice(index, 1);
+                }
+            },
+            methods: {
+                updatePropByAuth() {
+                    if (!this.$attrs['vusion-auth-id'] || !$auth)
+                        return;
+
+                    const authPath = `${base + this.$route.path}/${this.$attrs['vusion-auth-id']}`;
+                    this.$el && (this.$el.style.display = $auth[authPath] ? '' : 'none');
+
+                    if (this.$attrs['vusion-auth-actions']) {
+                        const actions = this.$attrs['vusion-auth-actions'].split(',');
+                        actions.forEach((action) => {
+                            action = action.trim();
+                            const authPath = `${base + this.$route.path}/${this.$attrs['vusion-auth-id']}/${action}`;
+                            if (action === 'enabled') {
+                                this._props.disabled = !$auth[authPath];
+                            }
+                        });
+                    }
+                },
+            },
+        });
     },
 };
 
