@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import isFunction from 'lodash/isFunction';
 
 import routerLock from '@/global/utils/router.lock';
+import auth from '@/global/page/auth';
 
 Vue.use(VueRouter);
 
@@ -29,6 +30,12 @@ export default function (routes, base, appendTitle) {
     // 自动传参
     router.beforeEach(routerLock.beforeEach);
     Vue.use(routerLock);
+    Vue.use(auth, {
+        redirect: '/',
+        router,
+        toast: '没有访问该页面的权限',
+        autoHide: true,
+    });
 
     // 权限验证
     router.beforeEach((to, from, next) => {
