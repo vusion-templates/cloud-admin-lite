@@ -6,67 +6,58 @@ export default {
     install(Vue, options = {}) {
         let $auth = Vue.prototype.$auth = undefined;
         options.redirect = options.redirect || '/';
+        options.toast = options.toast || '没有访问该页面的权限';
         const router = options.router;
 
         // VUE_APP_DEVELOPMENT
         const base = router.options.base.replace(/\/$/, '');
         const DomainName = pkg.name.replace(/-client$/, '');
-        authService.GetResources({
-            body: {
-                filter: {
-                    DomainName,
-                    ResourceType: 'ui',
-                },
+
+        let promise;
+        const getUserResources = () => authService.GetUserResources({
+            query: {
+                DomainName,
+                UserName: cookie.get('userName'),
             },
-        }).then((resources) => { // 目前返回授权的资源树有问题，暂时用这个模拟
-            return Promise.all(resources.map((resource) =>
-                authService.IsUserHasPermission({
-                    body: {
-                        UserName: cookie.get('userName'),
-                        DomainName,
-                        ResourceValue: resource.ResourceValue,
-                        ResourceType: resource.ResourceType,
-                    },
-                    config: {
-                        noLocalError: true,
-                    },
-                }).then((result) => {
-                    if (result.Result === 'true')
-                        return resource;
-                }).catch((e) => {
-                    // 不处理
-                    return undefined;
-                })));
-        }).then((resources) => {
-            resources = resources.filter((resource) => !!resource);
-            console.log(resources);
+        }).then((result) => { // 目前返回授权的资源树有问题，暂时用这个模拟
+            const resources = result.items.filter((resource) => resource.ResourceType === 'ui');
 
             $auth = Vue.prototype.$auth = {};
             resources.forEach((resource) => $auth[resource.ResourceValue] = resource);
 
-            const routePath = base + router.currentRoute.path;
-            if (!$auth[routePath] && routePath !== options.redirect) {
-                options.toast && Vue.prototype.$toast.show(options.toast);
-                router.replace(options.redirect);
-            }
-
-            // autoHide
             toComponents.forEach((comp) => comp._updateVisibleByAuth());
+        }).catch((e) => {
+            // 获取权限异常
+            promise = undefined;
         });
+        // 需要在外面调，因为有些路由是初始的，不进 beforeEach
+        promise = getUserResources();
+
+        // designer 环境放行权限
+        if (process.env.VUE_APP_DESIGNER)
+            return;
 
         // 账号与权限中心验证
         router.beforeEach((to, from, next) => {
             if (to.path === options.redirect || to.redirectedFrom === options.redirect)
                 return next();
-            if (!$auth) // 刚开始没有的时候不处理
-                return next();
 
-            const routePath = base + to.path;
-            if ($auth[routePath])
-                next();
-            else {
-                options.toast && Vue.prototype.$toast.show(options.toast);
-                next(options.redirect);
+            const checkAuth = () => {
+                const routePath = base + to.path;
+                if ($auth[routePath])
+                    next();
+                else {
+                    options.toast && Vue.prototype.$toast.show(options.toast);
+                    next(options.redirect);
+                }
+            };
+
+            if ($auth) {
+                checkAuth();
+            } else {
+                if (!promise)
+                    promise = getUserResources();
+                promise.then(() => checkAuth());
             }
         });
 

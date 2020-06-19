@@ -1,13 +1,11 @@
 {
-    "GetResources": {
+    "GetUserResources": {
         "url": {
-            "method": "post",
+            "method": "get",
             "path": "/gateway/nuims/nuims",
             "query": {
-                "Action": "GetResources",
-                "Version": "2020-06-01",
-                "Offset": 0,
-                "Limit": 10000
+                "Action": "GetUserResources",
+                "Version": "2020-06-01"
             }
         }
     },
