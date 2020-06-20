@@ -4,49 +4,76 @@ import pkg from '../../../package.json';
 
 export default {
     install(Vue, options = {}) {
-        let $auth = Vue.prototype.$auth = undefined;
         options.redirect = options.redirect || '/';
         options.toast = options.toast || '没有访问该页面的权限';
+        options.allowList = [].concat(['/login'], options.allowList);
         const router = options.router;
+
+        const base = router.options.base.replace(/\/$/, '');
+        const DomainName = pkg.name.replace(/-client$/, '');
 
         /**
          * 账号与权限中心验证
          */
-        const base = router.options.base.replace(/\/$/, '');
-        const DomainName = pkg.name.replace(/-client$/, '');
-
-        let promise;
-        const getUserResources = () => authService.GetUserResources({
-            query: {
-                DomainName,
-                UserName: cookie.get('userName'),
+        const $auth = Vue.prototype.$auth = {
+            _map: undefined,
+            _promise: undefined,
+            /**
+             * 权限项是否初始化
+             */
+            isInit() {
+                return !!this._map;
             },
-        }).then((result) => { // 目前返回授权的资源树有问题，暂时用这个模拟
-            const resources = result.items.filter((resource) => resource.ResourceType === 'ui');
+            /**
+             * 初始化权限项。目前就是从接口获取权限项
+             */
+            init() {
+                if (this._promise)
+                    return this._promise;
+                else {
+                    return this._promise = authService.GetUserResources({
+                        query: {
+                            DomainName,
+                            UserName: cookie.get('userName'),
+                        },
+                    }).then((result) => {
+                        const resources = result.items.filter((resource) => resource.ResourceType === 'ui');
 
-            $auth = Vue.prototype.$auth = {};
-            resources.forEach((resource) => $auth[resource.ResourceValue] = resource);
+                        // 初始化权限项
+                        $auth._map = new Map();
+                        resources.forEach((resource) => $auth._map.set(resource.ResourceValue, resource));
 
-            toComponents.forEach((comp) => comp.updateStateByAuth());
-            authComponents.forEach((comp) => comp.updateStateByAuth());
-        }).catch((e) => {
-            // 获取权限异常
-            promise = undefined;
-        });
-        // 需要在外面调，因为有些路由是初始的，不进 beforeEach
-        promise = getUserResources();
+                        toComponents.forEach((comp) => comp._updateVisibleByAuth());
+                        authComponents.forEach((comp) => comp._updatePropByAuth());
+                    }).catch((e) => {
+                        // 获取权限异常
+                        this._promise = undefined;
+                    });
+                }
+            },
+            /**
+             * 是否有权限
+             * @param {*} authPath 权限路径，如 /dashboard/entity/list
+             */
+            has(authPath) {
+                return this._map.has(authPath);
+            },
+        };
 
-        // designer 环境放行权限
+        // designer 环境直接放行权限
         if (process.env.VUE_APP_DESIGNER)
             return;
 
+        // 需要在外面初始化，因为有些路由是初始的，不进 beforeEach
+        $auth.init();
         router.beforeEach((to, from, next) => {
+            if (options.allowList.includes(to.path))
+                return next();
             if (to.path === options.redirect || to.redirectedFrom === options.redirect)
                 return next();
 
             const checkAuth = () => {
-                const authPath = base + to.path;
-                if ($auth[authPath])
+                if ($auth.isInit() && $auth.has(base + to.path))
                     next();
                 else {
                     options.toast && Vue.prototype.$toast.show(options.toast);
@@ -54,13 +81,10 @@ export default {
                 }
             };
 
-            if ($auth) {
+            if ($auth.isInit())
                 checkAuth();
-            } else {
-                if (!promise)
-                    promise = getUserResources();
-                promise.then(() => checkAuth());
-            }
+            else
+                $auth.init().then(() => checkAuth());
         });
 
         /**
@@ -72,7 +96,7 @@ export default {
                 mounted() {
                     if (this.to) {
                         toComponents.push(this);
-                        this.updateVisibleByAuth();
+                        this._updateVisibleByAuth();
                     }
                 },
                 destroyed() {
@@ -82,16 +106,15 @@ export default {
                     }
                 },
                 methods: {
-                    updateVisibleByAuth() {
-                        if (!this.to || !$auth)
+                    _updateVisibleByAuth() {
+                        if (!this.to || !$auth.isInit())
                             return;
 
-                        let to = this.to;
-                        if (typeof to === 'object')
-                            to = to.path;
+                        let toPath = this.to;
+                        if (typeof toPath === 'object')
+                            toPath = toPath.path;
 
-                        const authPath = base + to;
-                        this.$el && (this.$el.style.display = $auth[authPath] ? '' : 'none');
+                        this.$el && (this.$el.style.display = $auth.has(base + toPath) ? '' : 'none');
                     },
                 },
             });
@@ -105,7 +128,7 @@ export default {
             mounted() {
                 if (this.$attrs['vusion-auth-id']) {
                     authComponents.push(this);
-                    this.updatePropByAuth();
+                    this._updatePropByAuth();
                 }
             },
             destroyed() {
@@ -115,12 +138,12 @@ export default {
                 }
             },
             methods: {
-                updatePropByAuth() {
-                    if (!this.$attrs['vusion-auth-id'] || !$auth)
+                _updatePropByAuth() {
+                    if (!this.$attrs['vusion-auth-id'] || !$auth.isInit())
                         return;
 
                     const authPath = `${base + this.$route.path}/${this.$attrs['vusion-auth-id']}`;
-                    this.$el && (this.$el.style.display = $auth[authPath] ? '' : 'none');
+                    this.$el && (this.$el.style.display = $auth.has(authPath) ? '' : 'none');
 
                     if (this.$attrs['vusion-auth-actions']) {
                         const actions = this.$attrs['vusion-auth-actions'].split(',');
@@ -128,7 +151,7 @@ export default {
                             action = action.trim();
                             const authPath = `${base + this.$route.path}/${this.$attrs['vusion-auth-id']}/${action}`;
                             if (action === 'enabled') {
-                                this._props.disabled = !$auth[authPath];
+                                this._props.disabled = !$auth.has(authPath);
                             }
                         });
                     }
