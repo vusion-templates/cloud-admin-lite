@@ -42,9 +42,6 @@ export default {
                         // 初始化权限项
                         $auth._map = new Map();
                         resources.forEach((resource) => $auth._map.set(resource.ResourceValue, resource));
-
-                        toComponents.forEach((comp) => comp._updateVisibleByAuth());
-                        authComponents.forEach((comp) => comp._updatePropByAuth());
                     }).catch((e) => {
                         // 获取权限异常
                         this._promise = undefined;
@@ -57,6 +54,16 @@ export default {
              */
             has(authPath) {
                 return this._map.has(authPath);
+            },
+            /**
+             * 是否有当前路由下的子权限
+             * @param {*} subPath 子权限路径，如 /createButton/enabled
+             */
+            hasSub(subPath) {
+                const currentPath = base + router.currentRoute.path;
+                if (subPath[0] !== '/')
+                    subPath = '/' + subPath;
+                return this.has(currentPath + subPath);
             },
         };
 
@@ -88,70 +95,56 @@ export default {
         });
 
         /**
-         * 自动隐藏路由组件功能
+         * - 组件权限项功能
+         * - 自动隐藏路由组件功能
+         * 实现该需求无非三种方案：
+         *     - 源码修改 v-show 或 disabled 属性，比如 :disabled="!$auth.hasSub('createButton/enabled') || !canSubmit"，
+         *       从而从根本上改变 render 函数，有一定风险+恶心
+         *     - 在 beforeUpdate 和 updated 阶段植入一些东西，缺点就是每次 updated 都会走一遍
+         *     - 修改原组件 disabled 属性等，不是很推荐。在外层包装组件也属于这种情况
          */
-        const toComponents = [];
-        if (options.autoHide) {
-            Vue.mixin({
-                mounted() {
-                    if (this.to) {
-                        toComponents.push(this);
-                        this._updateVisibleByAuth();
-                    }
-                },
-                destroyed() {
-                    if (this.to) {
-                        const index = toComponents.indexOf(this);
-                        ~index && toComponents.splice(index, 1);
-                    }
-                },
-                methods: {
-                    _updateVisibleByAuth() {
-                        if (!this.to || !$auth.isInit())
-                            return;
+        Vue.mixin({
+            props: {
+                vusionAuth: { type: [Boolean, String] },
+                vusionAuthActions: { type: Array },
+            },
+            mounted() {
+                // 目前只开放权限显隐
+                this._updateVisibleByAuth();
+            },
+            updated() {
+                this._updateVisibleByAuth();
+            },
+            methods: {
+                _updateVisibleByAuth() {
+                    if (!(options.autoHide && this.to || this.vusionAuth))
+                        return;
+                    if (!$auth.isInit())
+                        return;
 
+                    let visible = true;
+                    if (options.autoHide && this.to) {
                         let toPath = this.to;
                         if (typeof toPath === 'object')
                             toPath = toPath.path;
 
-                        this.$el && (this.$el.style.display = $auth.has(base + toPath) ? '' : 'none');
-                    },
+                        visible = visible && $auth.has(base + toPath);
+                    } else {
+                        const authPath = `${base + this.$route.path}/${this.vusionAuth === true ? this.$vnode.data.ref : this.vusionAuth}`;
+                        visible = visible && $auth.has(authPath);
+                    }
+
+                    this.$el && (this.$el.style.display = visible ? '' : 'none');
                 },
-            });
-        }
-
-        /**
-         * 组件权限项功能
-         */
-        const authComponents = [];
-        Vue.mixin({
-            mounted() {
-                if (this.$attrs['vusion-auth-id']) {
-                    authComponents.push(this);
-                    this._updatePropByAuth();
-                }
-            },
-            destroyed() {
-                if (this.$attrs['vusion-auth-id']) {
-                    const index = authComponents.indexOf(this);
-                    ~index && authComponents.splice(index, 1);
-                }
-            },
-            methods: {
                 _updatePropByAuth() {
-                    if (!this.$attrs['vusion-auth-id'] || !$auth.isInit())
-                        return;
-
-                    const authPath = `${base + this.$route.path}/${this.$attrs['vusion-auth-id']}`;
-                    this.$el && (this.$el.style.display = $auth.has(authPath) ? '' : 'none');
-
-                    if (this.$attrs['vusion-auth-actions']) {
-                        const actions = this.$attrs['vusion-auth-actions'].split(',');
+                    if (this.vusionAuth && this.vusionAuthActions) {
+                        const actions = this.vusionAuthActions;
                         actions.forEach((action) => {
                             action = action.trim();
-                            const authPath = `${base + this.$route.path}/${this.$attrs['vusion-auth-id']}/${action}`;
+                            const authPath = `${base + this.$route.path}/${this.vusionAuth}/${action}`;
                             if (action === 'enabled') {
-                                this._props.disabled = !$auth.has(authPath);
+                                // 直接赋值属性姿势不太好
+                                this.disabled = this.disabled || !$auth.has(authPath);
                             }
                         });
                     }
