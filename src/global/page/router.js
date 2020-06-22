@@ -3,11 +3,11 @@ import VueRouter from 'vue-router';
 import isFunction from 'lodash/isFunction';
 
 import routerLock from '@/global/utils/router.lock';
-import auth from '@/global/page/auth/vue';
+import Auth from '@/global/page/auth/vue';
 
 Vue.use(VueRouter);
 
-export default function (routes, base, appendTitle, requireAuth) {
+export default function (routes, base, appendTitle, auth) {
     appendTitle = appendTitle || ((a) => a);
     const router = new VueRouter({
         routes,
@@ -30,8 +30,8 @@ export default function (routes, base, appendTitle, requireAuth) {
     // 自动传参
     router.beforeEach(routerLock.beforeEach);
     Vue.use(routerLock);
-    requireAuth && Vue.use(auth, {
-        redirect: '/',
+    auth && Vue.use(Auth, {
+        redirect: auth.redirect || '/',
         router,
         autoHide: true,
     });
