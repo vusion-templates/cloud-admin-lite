@@ -1,73 +1,31 @@
-import cookie from '@/global/utils/cookie';
-import authService from '../services/auth';
-import pkg from '../../../package.json';
+import $auth from './index';
 
 export default {
     install(Vue, options = {}) {
+        // 只关心鉴权的跳转，没 login 是有问题的状态
         options.redirect = options.redirect || '/';
-        options.toast = options.toast || '没有访问该页面的权限';
-        options.allowList = [].concat(['/login'], options.allowList);
-        const router = options.router;
+        options.allowList = [].concat([], options.allowList);
 
+        const router = options.router;
         const base = router.options.base.replace(/\/$/, '');
-        const DomainName = pkg.name.replace(/-client$/, '');
 
         /**
-         * 账号与权限中心验证
+         * 是否有当前路由下的子权限
+         * 该方法只能在 Vue 中调用
+         * @param {*} subPath 子权限路径，如 /createButton/enabled
          */
-        const $auth = Vue.prototype.$auth = {
-            _map: undefined,
-            _promise: undefined,
-            /**
-             * 权限项是否初始化
-             */
-            isInit() {
-                return !!this._map;
-            },
-            /**
-             * 初始化权限项。目前就是从接口获取权限项
-             */
-            init() {
-                if (this._promise)
-                    return this._promise;
-                else {
-                    return this._promise = authService.GetUserResources({
-                        query: {
-                            DomainName,
-                            UserName: cookie.get('userName'),
-                        },
-                    }).then((result) => {
-                        const resources = result.items.filter((resource) => resource.ResourceType === 'ui');
-
-                        // 初始化权限项
-                        $auth._map = new Map();
-                        resources.forEach((resource) => $auth._map.set(resource.ResourceValue, resource));
-                    }).catch((e) => {
-                        // 获取权限异常
-                        this._promise = undefined;
-                    });
-                }
-            },
-            /**
-             * 是否有权限
-             * @param {*} authPath 权限路径，如 /dashboard/entity/list
-             */
-            has(authPath) {
-                return this._map.has(authPath);
-            },
-            /**
-             * 是否有当前路由下的子权限
-             * @param {*} subPath 子权限路径，如 /createButton/enabled
-             */
-            hasSub(subPath) {
-                const currentPath = base + router.currentRoute.path;
-                if (subPath[0] !== '/')
-                    subPath = '/' + subPath;
-                return this.has(currentPath + subPath);
-            },
+        $auth.hasSub = function (subPath) {
+            const currentPath = base + router.currentRoute.path;
+            if (subPath[0] !== '/')
+                subPath = '/' + subPath;
+            return this.has(currentPath + subPath);
         };
+        /**
+         * 账号与权限中心
+         */
+        Vue.prototype.$auth = $auth;
 
-        // designer 环境直接放行权限
+        // designer 环境直接放行认证和鉴权
         if (process.env.VUE_APP_DESIGNER)
             return;
 
@@ -76,22 +34,24 @@ export default {
         router.beforeEach((to, from, next) => {
             if (options.allowList.includes(to.path))
                 return next();
-            if (to.path === options.redirect || to.redirectedFrom === options.redirect)
+
+            const redirect = typeof options.redirect === 'function' ? options.redirect(to) : options.redirect;
+            if (to.path === redirect || to.redirectedFrom === redirect)
                 return next();
 
-            const checkAuth = () => {
-                if ($auth.isInit() && $auth.has(base + to.path))
-                    next();
-                else {
-                    options.toast && Vue.prototype.$toast.show(options.toast);
-                    next(options.redirect);
-                }
-            };
-
-            if ($auth.isInit())
-                checkAuth();
-            else
-                $auth.init().then(() => checkAuth());
+            $auth.getUserInfo().then(() => {
+                $auth.getUserResources().then(() => {
+                    if ($auth.has(base + to.path))
+                        next();
+                    else
+                        throw new Error('Unauthorized');
+                }).catch((e) => {
+                    Vue.prototype.$toast.show('没有访问该页面的权限');
+                    next(redirect);
+                });
+            }).catch(() => {
+                window.location.href = '/';
+            });
         });
 
         /**
