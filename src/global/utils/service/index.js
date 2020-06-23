@@ -34,6 +34,7 @@ export const createService = function createService(apiSchemaList, serviceConfig
     Object.assign(fixServiceConfig.config, {
         httpCode: true,
         httpError: true,
+        shortResponse: true,
     });
     serviceConfig = fixServiceConfig;
     return service.generator(apiSchemaList, dynamicServices, serviceConfig);

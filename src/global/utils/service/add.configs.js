@@ -3,14 +3,18 @@ import errHandles from './errHandles';
 const isPromise = function (func) {
     return func && typeof func.then === 'function';
 };
-function httpCode({ data }, params, requestInfo) {
+function httpCode(response, params, requestInfo) {
+    const data = response.data;
     if ((data.code === undefined) || (data.code + '').startsWith('2')) {
-        return data;
+        return response;
     }
     return Promise.reject({
         code: data.code,
         msg: data.msg,
     });
+}
+function shortResponse(response, params, requestInfo) {
+    return response.data;
 }
 const httpError = {
     reject(err, params, requestInfo) {
@@ -23,17 +27,17 @@ const httpError = {
         }
         if (err.code) {
             let handle = errHandles[err.code];
-            if (!handle && !config.noAlert)
+            if (!handle)
                 handle = errHandles.defaults;
 
             if (handle) {
-                handleOut = handle.bind(this)({
+                handleOut = handle({
                     config, baseURL: (config.baseURL || ''), url, method, body, headers,
                 }, err);
             }
         } else if (err.code === undefined) {
             if (!config.noLocalError)
-                handleOut = errHandles.localError.bind(this)(err);
+                handleOut = errHandles.localError(err);
         }
 
         if (isPromise(handleOut))
@@ -52,4 +56,5 @@ export default function (service) {
     }
     service.postConfig.set('httpCode', httpCode);
     service.postConfig.set('httpError', httpError);
+    service.postConfig.set('shortResponse', shortResponse);
 }
