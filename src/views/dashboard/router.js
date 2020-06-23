@@ -4,5 +4,10 @@ import routes from './routes';
 let routerInstance;
 export default routerInstance;
 export function initRouter(base) {
-    return (routerInstance = router(routes, (base || process.env.VUE_APP_BASEURL || '/dashboard'), (title) => title + ' - ' + appConfig.title));
+    routerInstance = router(
+        routes,
+        (base || process.env.VUE_APP_BASEURL || '/dashboard'),
+        (title) => title + ' - ' + appConfig.title,
+    );
+    return routerInstance;
 }
