@@ -1,7 +1,7 @@
 {
   "name": "cloud-admin-lite",
   "description": "base on vue cloud-ui.vusion template",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "main": "src/views/dashboard/index.js",
   "scripts": {
     "cache-install": "npx cache-install",
