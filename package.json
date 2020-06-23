@@ -57,7 +57,7 @@
     "babel-eslint": "^10.1.0",
     "babel-jest": "^23.6.0",
     "chalk": "^3.0.0",
-    "cloud-admin-sdk": "^0.1.11",
+    "cloud-admin-sdk": "^0.1.14",
     "copy-webpack-plugin": "^5.0.4",
     "core-js": "^3.6.5",
     "cross-env": "^7.0.2",
@@ -127,7 +127,7 @@
       ".circleci/**"
     ],
     "type": "template",
-    "title": "Vusion Lite",
+    "title": "Vusion Template",
     "category": "basic",
     "base": "vue",
     "ui": "cloud-ui.vusion",

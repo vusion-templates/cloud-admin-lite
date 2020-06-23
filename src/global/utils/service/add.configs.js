@@ -21,24 +21,20 @@ const httpError = {
         const { url, config = {} } = requestInfo;
         const { method, body = {}, headers = {} } = url;
         // 处理code
-        let handleOut;
         if (err === 'expired request') {
             throw err;
         }
-        if (err.code) {
-            let handle = errHandles[err.code];
-            if (!handle && !config.noAlert)
+        let handle;
+        if (!err.code) {
+            handle = errHandles.localError;
+        } else {
+            handle = errHandles[err.code];
+            if (!handle)
                 handle = errHandles.defaults;
-
-            if (handle) {
-                handleOut = handle.bind(this)({
-                    config, baseURL: (config.baseURL || ''), url, method, body, headers,
-                }, err);
-            }
-        } else if (err.code === undefined) {
-            if (!config.noLocalError)
-                handleOut = errHandles.localError.bind(this)(err);
         }
+        const handleOut = handle({
+            config, baseURL: (config.baseURL || ''), url, method, body, headers,
+        }, err);
 
         if (isPromise(handleOut))
             return handleOut;
