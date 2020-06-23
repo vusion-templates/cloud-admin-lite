@@ -10,7 +10,7 @@
                 </u-link>
             </u-badge>
         </div>
-        <u-navbar-dropdown style="margin-right: 10px;">
+        <u-navbar-dropdown style="margin-right: 10px;" v-if="userInfo">
             <template #title>
                 <u-avatar shape="circle" :class="$style.avatar"></u-avatar>
                 <span :class="$style.username">{{ userInfo.username }}</span>
@@ -22,6 +22,12 @@
                 </u-navbar-menu>
             </template>
         </u-navbar-dropdown>
+        <template v-else>
+            <u-navbar>
+                <u-navbar-item
+                    href="/login">登录</u-navbar-item>
+            </u-navbar>
+        </template>
     </div>
 </template>
 <script>

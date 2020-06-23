@@ -40,20 +40,6 @@ export default {
             userInfo: {
                 username: 'username',
             },
-            navbarConfig: moduleInfos.navbar
-                .filter(
-                    (item) =>
-                        item
-                        && (item.module ? (item.exist !== false && item.navbar) : true),
-                )
-                .map((item) => (item.module ? item.navbar : item)),
-            sidebarConfig: moduleInfos.sidebar
-                .filter(
-                    (item) =>
-                        item
-                        && (item.module ? (item.exist !== false && item.sidebar) : true),
-                )
-                .map((item) => (item.module ? item.sidebar : item)),
         };
     },
     computed: {
@@ -62,6 +48,36 @@ export default {
         },
         hasSideBar() {
             return this.sidebarConfig && this.sidebarConfig.length;
+        },
+        navbarConfig() {
+            const userInfo = this.userInfo;
+            return this.formatNavConfig(moduleInfos.navbar, 'navbar', !!userInfo);
+        },
+        sidebarConfig() {
+            const userInfo = this.userInfo;
+            return this.formatNavConfig(moduleInfos.sidebar, 'sidebar', !!userInfo);
+        },
+    },
+    methods: {
+        formatNavConfig(moduleList, navName, isLogin) {
+            return moduleList
+                .filter(
+                    (item) =>
+                        item
+                        && (item.module ? (item.exist !== false && item[navName] && (isLogin ? true : (item.auth && item.auth.login) === false)) : true),
+                ).filter((item, index, arr) => {
+                    if (item === '|') {
+                        if (index === 0) {
+                            return false;
+                        } else if (arr[index - 1] === '|') {
+                            return false;
+                        } else if (arr.length - 1 === index) {
+                            return false;
+                        }
+                    }
+                    return true;
+                })
+                .map((item) => (item.module ? item[navName] : item));
         },
     },
 };
