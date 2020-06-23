@@ -54,20 +54,43 @@ export default {
             });
         });
 
+
         /**
          * - 组件权限项功能
          * - 自动隐藏路由组件功能
          * 实现该需求无非三种方案：
          *     - 源码修改 v-show 或 disabled 属性，比如 :disabled="!$auth.hasSub('createButton/enabled') || !canSubmit"，
          *       从而从根本上改变 render 函数，有一定风险+恶心
-         *     - 在 beforeUpdate 和 updated 阶段植入一些东西，缺点就是每次 updated 都会走一遍
+         *     - 在 updated 阶段植入一些东西，缺点就是每次 updated 都会走一遍
          *     - 修改原组件 disabled 属性等，不是很推荐。在外层包装组件也属于这种情况
          */
-        Vue.mixin({
-            props: {
-                vusionAuth: { type: [Boolean, String] },
-                vusionAuthActions: { type: Array },
+        /**
+         * 权限指令
+         * value 绑定权限项，如果不传则使用 ref 名
+         * modifiers 的名字用于子权限行为，组件属性那里有问题，暂时没有实现
+         */
+        const vAuth = {
+            handle(el, binding, vnode, oldVnode) {
+                const data = {
+                    value: binding.value || '',
+                    actions: Object.keys(binding.modifiers),
+                };
+
+                const authPath = `${base + router.currentRoute.path}/${data.value ? data.value : vnode.data.ref}`;
+                const visible = $auth.has(authPath);
+
+                el && (el.style.display = visible ? '' : 'none');
             },
+            bind(el, binding, vnode, oldVnode) {
+                vAuth.handle(el, binding, vnode, oldVnode);
+            },
+            update(el, binding, vnode, oldVnode) {
+                vAuth.handle(el, binding, vnode, oldVnode);
+            },
+        };
+        Vue.directive('auth', vAuth);
+
+        Vue.mixin({
             mounted() {
                 // 目前只开放权限显隐
                 this._updateVisibleByAuth();
@@ -77,7 +100,10 @@ export default {
             },
             methods: {
                 _updateVisibleByAuth() {
-                    if (!(options.autoHide && this.to || this.vusionAuth))
+                    if (!(options.autoHide && this.to))
+                        return;
+                    // 有 v-auth 了就不处理 to 的了。
+                    if (this.$vnode.data.directives && this.$vnode.data.directives.some((directive) => directive.name === 'auth'))
                         return;
                     if (!$auth.isInit())
                         return;
@@ -89,25 +115,9 @@ export default {
                             toPath = toPath.path;
 
                         visible = visible && $auth.has(base + toPath);
-                    } else {
-                        const authPath = `${base + this.$route.path}/${this.vusionAuth === true ? this.$vnode.data.ref : this.vusionAuth}`;
-                        visible = visible && $auth.has(authPath);
                     }
 
                     this.$el && (this.$el.style.display = visible ? '' : 'none');
-                },
-                _updatePropByAuth() {
-                    if (this.vusionAuth && this.vusionAuthActions) {
-                        const actions = this.vusionAuthActions;
-                        actions.forEach((action) => {
-                            action = action.trim();
-                            const authPath = `${base + this.$route.path}/${this.vusionAuth}/${action}`;
-                            if (action === 'enabled') {
-                                // 直接赋值属性姿势不太好
-                                this.disabled = this.disabled || !$auth.has(authPath);
-                            }
-                        });
-                    }
                 },
             },
         });
