@@ -3,11 +3,21 @@ import VueRouter from 'vue-router';
 import isFunction from 'lodash/isFunction';
 
 import routerLock from '@/global/utils/router.lock';
+import AuthPlugin from './auth/vue';
+import { loginAuth } from './auth/router';
+import { runAway } from './auth';
 
 Vue.use(VueRouter);
 
-export default function (routes, base, appendTitle) {
+export default function (routes, base, appendTitle, authOptions) {
     appendTitle = appendTitle || ((a) => a);
+    authOptions = Object.assign({
+        tipMessage: '没有访问该页面的权限',
+        noLogin() {
+            window.location.href = '/';
+        },
+        redirect: '/',
+    }, authOptions);
     const router = new VueRouter({
         routes,
         base,
@@ -29,7 +39,12 @@ export default function (routes, base, appendTitle) {
     // 自动传参
     router.beforeEach(routerLock.beforeEach);
     Vue.use(routerLock);
-
+    Vue.use(AuthPlugin, {
+        base,
+        router,
+        autoHide: true,
+    });
+    runAway(authOptions.domainName);
     // 权限验证
     router.beforeEach((to, from, next) => {
         let called = false;
@@ -49,7 +64,12 @@ export default function (routes, base, appendTitle) {
                     if (called) {
                         return Promise.reject();
                     }
-                    const out = item.meta.auth(to, from, _next);
+                    let out;
+                    if (item.meta.auth === 'loginAuth') {
+                        out = loginAuth(to, from, _next, base + to.path, authOptions);
+                    } else {
+                        out = item.meta.auth(to, from, _next);
+                    }
                     if (out && out.then) {
                         return out;
                     } else {

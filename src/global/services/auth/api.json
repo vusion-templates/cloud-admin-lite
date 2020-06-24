@@ -1,0 +1,42 @@
+{
+    "Authentication": {
+        "url": {
+            "method": "post",
+            "path": "/gateway/nuims/nuims",
+            "query": {
+                "Action": "Authentication",
+                "Version": "2020-06-01"
+            }
+        }
+    },
+    "GetUser": {
+        "url": {
+            "method": "get",
+            "path": "/gateway/nuims/nuims",
+            "query": {
+                "Action": "GetUser",
+                "Version": "2020-06-01"
+            }
+        }
+    },
+    "GetUserResources": {
+        "url": {
+            "method": "get",
+            "path": "/gateway/nuims/nuims",
+            "query": {
+                "Action": "GetUserResources",
+                "Version": "2020-06-01"
+            }
+        }
+    },
+    "IsUserHasPermission": {
+        "url": {
+            "method": "post",
+            "path": "/gateway/nuims/nuims",
+            "query": {
+                "Action": "IsUserHasPermission",
+                "Version": "2020-06-01"
+            }
+        }
+    }
+}
