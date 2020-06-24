@@ -1,25 +1,14 @@
 import $auth from './index';
+import { hasSub } from './router';
 
 export default {
     install(Vue, options = {}) {
-        // 只关心鉴权的跳转，没 login 是有问题的状态
-        options.redirect = options.redirect || '/';
         options.allowList = [].concat([], options.allowList);
 
         const router = options.router;
-        const base = router.options.base.replace(/\/$/, '');
+        const base = options.base.replace(/\/$/, '');
 
-        /**
-         * 是否有当前路由下的子权限
-         * 该方法只能在 Vue 中调用
-         * @param {*} subPath 子权限路径，如 /createButton/enabled
-         */
-        $auth.hasSub = function (subPath) {
-            const currentPath = base + router.currentRoute.path;
-            if (subPath[0] !== '/')
-                subPath = '/' + subPath;
-            return this.has(currentPath + subPath);
-        };
+        $auth.hasSub = hasSub(base, router);
         /**
          * 账号与权限中心
          */
@@ -28,32 +17,6 @@ export default {
         // designer 环境直接放行认证和鉴权
         if (process.env.VUE_APP_DESIGNER)
             return;
-
-        // 需要在外面初始化，因为有些路由是初始的，不进 beforeEach
-        $auth.init();
-        router.beforeEach((to, from, next) => {
-            if (options.allowList.includes(to.path))
-                return next();
-
-            const redirect = typeof options.redirect === 'function' ? options.redirect(to) : options.redirect;
-            if (to.path === redirect || to.redirectedFrom === redirect)
-                return next();
-
-            $auth.getUserInfo().then(() => {
-                $auth.getUserResources().then(() => {
-                    if ($auth.has(base + to.path))
-                        next();
-                    else
-                        throw new Error('Unauthorized');
-                }).catch((e) => {
-                    Vue.prototype.$toast.show('没有访问该页面的权限');
-                    next(redirect);
-                });
-            }).catch(() => {
-                window.location.href = '/';
-            });
-        });
-
 
         /**
          * - 组件权限项功能

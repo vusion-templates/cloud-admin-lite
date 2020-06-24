@@ -1,36 +1,38 @@
-import cookie from '@/global/utils/cookie';
 import authService from '@/global/services/auth';
-import pkg from '../../../../package.json';
 
 let userInfoPromise = null;
 let userResourcesPromise = null;
-export default {
+const maxTimes = 3;
+const request = function (times) {
+    return authService.check({
+        config: {
+            noErrorTip: true,
+        },
+    }).catch((err) => {
+        times--;
+        if (times > 0) {
+            return request(times);
+        } else {
+            throw err;
+        }
+    });
+};
+const auth = {
     _map: undefined,
-    getUserInfo() {
-        if (userInfoPromise)
-            return userInfoPromise;
-        else {
-            return userInfoPromise = authService.GetUser({
-                config: {
-                    noErrorTip: true,
-                },
-                query: {
-                    // 等接口好了去除
-                    UserName: cookie.get('userName'),
-                },
+    getUserInfo(times = 1) {
+        if (!userInfoPromise) {
+            userInfoPromise = request(times).catch((e) => {
+                userInfoPromise = undefined;
+                throw e;
             });
         }
+        return userInfoPromise;
     },
-    getUserResources() {
-        const DomainName = pkg.name.replace(/-client$/, '');
-
-        if (userResourcesPromise)
-            return userResourcesPromise;
-        else {
-            return userResourcesPromise = authService.GetUserResources({
+    getUserResources(DomainName) {
+        if (!userResourcesPromise) {
+            userResourcesPromise = authService.GetUserResources({
                 query: {
                     DomainName,
-                    UserName: cookie.get('userName'),
                 },
             }).then((result) => {
                 const resources = result.items.filter((resource) => resource.ResourceType === 'ui');
@@ -43,6 +45,7 @@ export default {
                 userResourcesPromise = undefined;
             });
         }
+        return userResourcesPromise;
     },
     /**
      * 权限服务是否初始化
@@ -53,8 +56,8 @@ export default {
     /**
      * 初始化权限服务
      */
-    init() {
-        return this.getUserInfo().then(() => this.getUserResources());
+    init(domainName, times) {
+        return this.getUserInfo(times || maxTimes).then(() => this.getUserResources(domainName));
     },
     /**
      * 是否有权限
@@ -63,4 +66,9 @@ export default {
     has(authPath) {
         return this._map.has(authPath);
     },
+};
+export default auth;
+
+export const runAway = function (domainName, times) {
+    auth.init(domainName, times);
 };
