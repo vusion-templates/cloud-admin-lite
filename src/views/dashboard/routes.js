@@ -5,6 +5,7 @@ import moduleInfos from './modules';
 import utils from '@/global/utils';
 let defaultRoute = appConfig.router.defaults;
 let notFoundRoute = appConfig.router.notFound;
+let unauthorized = appConfig.router.unauthorized;
 
 if (!utils.hasRoute(moduleInfos.routes, defaultRoute)) {
     if (moduleInfos.routes.length) {
@@ -17,6 +18,16 @@ if (!utils.hasRoute(moduleInfos.routes, defaultRoute)) {
 if (!utils.hasRoute(moduleInfos.routes, notFoundRoute)) {
     notFoundRoute = '/';
 }
+
+if (!utils.hasRoute(moduleInfos.routes, unauthorized)) {
+    unauthorized = '/';
+}
+
+Object.assign(appConfig.router, {
+    defaultRoute,
+    notFoundRoute,
+    unauthorized,
+});
 
 export default [
     {

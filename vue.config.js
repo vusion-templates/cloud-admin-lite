@@ -42,7 +42,7 @@ let baseConfig = {
     productionSourceMap: false,
     transpileDependencies: [
         /atom-validator/,
-        /vusion-utils/,
+        /@vusion\/utils/,
         /lodash/,
         'resize-detector',
         /cloud-ui\.vusion/,
