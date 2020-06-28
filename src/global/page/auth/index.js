@@ -69,6 +69,6 @@ const auth = {
 };
 export default auth;
 
-export const runAway = function (domainName, times) {
+export const runAhead = function (domainName, times) {
     auth.init(domainName, times);
 };
