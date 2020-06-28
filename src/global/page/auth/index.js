@@ -4,7 +4,7 @@ let userInfoPromise = null;
 let userResourcesPromise = null;
 const maxTimes = 3;
 const request = function (times) {
-    return authService.check({
+    return authService.GetUser({
         config: {
             noErrorTip: true,
         },
