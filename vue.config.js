@@ -41,8 +41,6 @@ let baseConfig = {
     assetsDir,
     productionSourceMap: false,
     transpileDependencies: [
-        /atom-validator/,
-        /@vusion\/utils/,
         /lodash/,
         'resize-detector',
         /cloud-ui\.vusion/,
