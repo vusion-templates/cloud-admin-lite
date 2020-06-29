@@ -5,12 +5,15 @@ import isFunction from 'lodash/isFunction';
 import routerLock from '@/global/utils/router.lock';
 import AuthPlugin from './auth/vue';
 import { loginAuth } from './auth/router';
-import { runAway } from './auth';
+import { runAhead } from './auth';
 
 Vue.use(VueRouter);
 
 export default function (routes, base, appendTitle, authOptions) {
     appendTitle = appendTitle || ((a) => a);
+    if (authOptions) {
+        runAhead(authOptions);
+    }
     authOptions = Object.assign({
         tipMessage: '没有访问该页面的权限',
         noLogin() {
@@ -44,7 +47,6 @@ export default function (routes, base, appendTitle, authOptions) {
         router,
         autoHide: true,
     });
-    runAway();
     // 权限验证
     router.beforeEach((to, from, next) => {
         let called = false;

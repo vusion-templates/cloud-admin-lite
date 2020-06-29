@@ -15,9 +15,9 @@ export default {
     },
     'list/tabs': {
         meta: {
-            title: '列表页',
+            title: '列表页集合',
             crumb: {
-                title: '列表页',
+                title: '列表页集合',
             },
         },
     },

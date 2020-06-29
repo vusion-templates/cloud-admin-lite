@@ -97,6 +97,15 @@
     "vusion-micro": "^0.2.4",
     "vusion-micro-app": "^0.4.2"
   },
+  "forceUpdate": {
+    "@vusion/utils": true,
+    "request-pre": true,
+    "cloud-ui.vusion": true,
+    "cloud-admin-template-sdk": true,
+    "vusion-micro-app": true,
+    "vue-cli-plugin-vusion": true,
+    "vusion-micro": true
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"

@@ -1,3 +1,28 @@
+<template>
+    <div :class="$style.root">
+        <header :class="$style.head">
+            <slot name="head"></slot>
+        </header>
+        <aside :class="$style.side">
+            <slot name="side"></slot>
+        </aside>
+        <main :class="$style.main">
+            <slot name="main">
+                <div :class="$style.content">
+                    <slot></slot>
+                </div>
+            </slot>
+        </main>
+    </div>
+</template>
+<script>
+export const LDashboard = {
+    name: 'l-dashboard',
+};
+
+export default LDashboard;
+</script>
+<style module>
 .root {
     position: relative;
     left: 0;
@@ -42,3 +67,5 @@
 .root[demo] .head, .root[demo] .side, .root[demo] .main {
     position: absolute;
 }
+
+</style>

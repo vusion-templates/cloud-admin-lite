@@ -16,6 +16,11 @@ export default {
             crumbs: [],
         };
     },
+    subscribe: {
+        'custom.crumb'(crumb) {
+            this.crumbs = crumb;
+        },
+    },
     watch: {
         $route: {
             handler(to, from) {
@@ -49,11 +54,6 @@ export default {
             },
             immediate: true,
         },
-    },
-    created() {
-        this.$subscribe('custom.crumb', (value) => {
-            this.crumbs = value;
-        });
     },
 };
 </script>

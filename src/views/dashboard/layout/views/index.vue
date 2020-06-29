@@ -24,7 +24,7 @@
 
 <script>
 import moduleInfos from '../../modules';
-import LDashboard from '@/global/layouts/l-dashboard.vue';
+import LDashboard from '../components/l-dashboard.vue';
 import SNavbarRight from '../components/s-navbar-right.vue';
 import appConfig from '@/views/dashboard/app.config';
 export default {
