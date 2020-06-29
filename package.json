@@ -57,7 +57,7 @@
     "babel-eslint": "^10.1.0",
     "babel-jest": "^23.6.0",
     "chalk": "^3.0.0",
-    "cloud-admin-sdk": "^0.2.1",
+    "cloud-admin-template-sdk": "^0.0.1",
     "copy-webpack-plugin": "^5.0.4",
     "core-js": "^3.6.5",
     "cross-env": "^7.0.2",
@@ -103,7 +103,7 @@
     "@vusion/utils": true,
     "request-pre": true,
     "cloud-ui.vusion": true,
-    "cloud-admin-sdk": true,
+    "cloud-admin-template-sdk": true,
     "vusion-micro-app": true,
     "vue-cli-plugin-vusion": true,
     "vusion-micro": true
